@@ -146,7 +146,7 @@ class Usuarios
         return $row;
     }
 
-    function list($filter) {
+    public function list($filter) {
         $array = array();
         if (is_array($filter)) {
             $filterSql = "WHERE ";

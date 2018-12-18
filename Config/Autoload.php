@@ -6,7 +6,7 @@ class autoload
     {
         session_start();
         $_SESSION["cod_pedido"] = isset($_SESSION["cod_pedido"]) ? $_SESSION["cod_pedido"] : substr(md5(uniqid(rand())), 0, 10);
-        define('URL', "http://".$_SERVER['HTTP_HOST']."/cms-joa");
+        define('URL', "http://".$_SERVER['HTTP_HOST']."/pintureria%20ariel");
         define('CANONICAL', "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"]);
         define('TITULO', "Pintureria Ariel");
         define('TELEFONO', "5555555");
@@ -30,8 +30,8 @@ class autoload
     public static function runAdmin()
     {
         session_start();
-        define('URLSITE',"http://".$_SERVER['HTTP_HOST']."/cms-joa/admin");
-        define('URL', "http://".$_SERVER['HTTP_HOST']."/cms-joa/admin");
+        define('URLSITE',"http://".$_SERVER['HTTP_HOST']."/pintureria%20ariel/admin");
+        define('URL', "http://".$_SERVER['HTTP_HOST']."/pintureria ariel/admin");
         require_once "../Clases/Zebra_Image.php";
         spl_autoload_register(
             function ($clase)
