@@ -51,7 +51,7 @@ class Pedidos
 
     public function cambiar_estado()
     {
-        $sql   = "UPDATE `pedidos` SET `estado`='{$this->estado}',`tipo`='{$this->tipo}',`usuario`='{$this->usuario}' WHERE `cod`='{$this->cod}'";
+        $sql   = "UPDATE `pedidos` SET `estado`='{$this->estado}' WHERE `cod`='{$this->cod}'";
         $query = $this->con->sql($sql);
         return $query;
     }
@@ -66,8 +66,16 @@ class Pedidos
     public function view()
     {
         $sql   = "SELECT * FROM `pedidos` WHERE cod = '{$this->cod}' ORDER BY id DESC";
-        $notas = $this->con->sqlReturn($sql);
-        $row   = mysqli_fetch_assoc($notas);
+        $pedidos = $this->con->sqlReturn($sql);
+        $row   = mysqli_fetch_assoc($pedidos);
+        return $row;
+    }
+
+    public function info()
+    {
+        $sql = "SELECT * FROM `pedidos` WHERE cod = '{$this->cod}' GROUP BY cod";
+        $pedidos = $this->con->sqlReturn($sql);
+        $row = mysqli_fetch_assoc($pedidos);
         return $row;
     }
 
@@ -81,10 +89,10 @@ class Pedidos
         }
 
         $sql   = "SELECT * FROM `pedidos` $filterSql  ORDER BY id DESC";
-        $notas = $this->con->sqlReturn($sql);
+        $pedidos = $this->con->sqlReturn($sql);
 
-        if ($notas) {
-            while ($row = mysqli_fetch_assoc($notas)) {
+        if ($pedidos) {
+            while ($row = mysqli_fetch_assoc($pedidos)) {
                 $array[] = $row;
             }
             return $array;

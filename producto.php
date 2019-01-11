@@ -13,10 +13,9 @@ $carrito = new Clases\Carrito();
 $id = isset($_GET["id"]) ? $_GET["id"] : '';
 $productos->set("id", $id);
 $productData = $productos->view();
-$imagenes->set("cod", $productData['cod']);
-$imagenesData = $imagenes->listForProduct();
+
 $filter = array("categoria ='" . $productData['categoria'] . "'");
-$productDataRel = $productos->listWithOps($filter, '', '');
+$productDataRel = $productos->listWithOps($filter, '', '0,12');
 if (($key = array_search($productData, $productDataRel)) !== false) {
     unset($productDataRel[$key]);
 }
@@ -34,7 +33,7 @@ foreach ($categoriasData as $val) {
 $carro = $carrito->return();
 $carroEnvio = $carrito->checkEnvio();
 
-$template->set("title", "Pinturería Ariel | " . ucfirst($productData['titulo']));
+$template->set("title", ucfirst($productData['titulo']));
 $template->set("description", $productData['description']);
 $template->set("keywords", $productData['keywords']);
 $template->set("favicon", LOGO);
@@ -46,7 +45,7 @@ $template->themeInit();
         <?php $template->themeNav(); ?>
 
         <!-- BREADCRUMBS -->
-        <div id="sns_breadcrumbs" class="wrap">
+        <div id="sns_breadcrumbs" class="wrap mb-20">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -74,68 +73,58 @@ $template->themeInit();
         <!-- AND BREADCRUMBS -->
 
         <!-- CONTENT -->
-        <div id="sns_content" class="wrap layout-m">
+        <div id="sns_content" class="wrap layout-m ">
             <div class="container">
                 <div class="row">
-                    <div id="sns_main" class="col-md-12 col-main">
+                    <div id="sns_main" class="col-md-12 col-main mb-60">
                         <div id="sns_mainmidle">
                             <div class="product-view sns-product-detail">
                                 <div class="product-essential clearfix">
                                     <div class="row row-img">
 
                                         <div class="product-img-box col-md-4 col-sm-5">
-                                            <?php
-                                            if (count($imagenesData) > 1) {
-                                                ?>
-                                                <div class="detail-img">
-                                                    <img id="imgFront" src="<?= URL . '/' . $imagenesData[0]['ruta'] ?>" alt="<?= $productData['titulo']; ?>">
-                                                </div>
-                                                <div class="small-img">
-                                                    <div id="sns_thumbail" class="owl-carousel owl-theme">
-                                                        <?php
-                                                        foreach ($imagenesData as $imgM) {
-                                                            ?>
-                                                            <div class="item" style="background:url('<?= URL . '/' . $imgM['ruta'] ?>') no-repeat center center/contain;height:100px;width:100px;overflow:hidden" onclick="$('#imgFront').attr('src','<?= URL . '/' . $imgM['ruta'] ?>')"></div>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                    </div>
-                                                </div>
-                                                <?php
-                                            } else {
-                                                ?>
-                                                <div class="detail-img">
-                                                    <img src="<?= URL . '/assets/archivos/sin_imagen.jpg' ?>" alt="<?= $productData['titulo']; ?>">
-                                                </div>
-                                                <?php
-                                            }
-                                            ?>
+                                            <?php $cod_productoExp = explode("/", $productData['cod_producto']); ?>
+                                            <?php $cod_productoRemp = str_replace("/", "-", $productData['cod_producto']); ?>
+                                            <?php $urlImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg'; ?>
+                                            <?php if ($funciones->fileExists($urlImg) === true) { ?>
+                                                <?php $rutaImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg'; ?>
+                                            <?php } else { ?>
+                                                <?php $rutaImg = URL . '/assets/archivos/sin_imagen.jpg'; ?>
+                                            <?php } ?>
+                                            <div class="detail-img">
+                                                <img id="imgFront" src="<?= $rutaImg; ?>" alt="<?= $productData['titulo']; ?>">
+                                            </div>
 
                                         </div>
                                         <div id="product_shop" class="product-shop col-md-8 col-sm-7">
                                             <div class="item-inner product_list_style">
                                                 <div class="item-info">
                                                     <div class="item-title">
-                                                        <a><?= ucfirst($productData['titulo']); ?></a>
+                                                        <h1 class="fs-20"><?= ucfirst($productData['titulo']); ?></h1>
                                                     </div>
                                                     <div class="item-price">
                                                         <div class="price-box">
                                                     <span class="regular-price">
                                                         <span class="price">
-                                                            <?php
-                                                            if ($productData['precioDescuento'] > 0) {
-                                                                ?>
-                                                                <span class="precioD1">$ <?= $productData['precioDescuento']; ?></span>
-                                                                <span class="precioD2">$ <?= $productData['precio']; ?></span>
-                                                                <?php
-                                                            } else {
-                                                                ?>
-                                                                <span class="precioD1">$ <?= $productData['precio']; ?></span>
-                                                                <?php
-                                                            }
-                                                            ?>
-                                                        </span>
-
+                                                             <?php
+                                                             if (@$_SESSION["usuarios"]["descuento"] == 1) {
+                                                                 if ($productData['precio'] != $productData['precio_mayorista']) {
+                                                                     ?>
+                                                                     <span class="precio1">$ <?= $productData['precio_mayorista']; ?></span>
+                                                                     <span class="precio2">$ <?= $productData['precio']; ?></span>
+                                                                     <?php
+                                                                 } else {
+                                                                     ?>
+                                                                     <span class="precio1">$ <?= $productData['precio']; ?></span>
+                                                                     <?php
+                                                                 }
+                                                             } else {
+                                                                 ?>
+                                                                 <span class="precio1">$ <?= $productData['precio']; ?></span>
+                                                                 <?php
+                                                             }
+                                                             ?>
+ </span>
                                                     </span>
                                                         </div>
                                                     </div>
@@ -148,9 +137,11 @@ $template->themeInit();
                                                         }
                                                         ?>
                                                     </div>
-                                                    <div class="desc std">
-                                                        <h5>Breve descripción</h5>
-                                                        <p><?= $productData['description']; ?></p>
+                                                    <div class="std">
+                                                        <?php if ($productData['description'] != '') {
+                                                            echo "<h5>Breve descripción</h5>" . $productData['description'];
+                                                        }
+                                                        ?>
                                                     </div>
 
                                                     <div class="actions">
@@ -168,11 +159,23 @@ $template->themeInit();
                                                             } else {
                                                                 $carrito->set("precio", $productData['precioDescuento']);
                                                             }
+
+
+                                                            if (@$_SESSION["usuarios"]["descuento"] == 1) {
+                                                                if ($productData['precio'] != $productData['precio_mayorista']) {
+                                                                    $carrito->set("precio", $productData['precio_mayorista']);
+                                                                } else {
+                                                                    $carrito->set("precio", $productData['precio']);
+                                                                }
+                                                            } else {
+                                                                $carrito->set("precio", $productData['precio']);
+                                                            }
+
                                                             $carrito->add();
                                                             $funciones->headerMove(CANONICAL . "?success");
                                                         }
                                                         if (strpos(CANONICAL, "success") == true) {
-                                                            echo "<div class='alert alert-success'>Agregaste un producto a tu carrito, querés <a href='" . URL . "/carrito'>pasar por caja</a> o <a href='" . URL . "/productos'>seguir comprando</a></div>";
+                                                            echo "<div class='alert alert-success'>Agregaste un producto a tu carrito, querés <a href='" . URL . "/carrito'><b>pasar por caja</b></a> o <a href='" . URL . "/productos'><b>seguir comprando</b></a></div>";
                                                         }
                                                         ?>
                                                         <form method="post">
@@ -188,18 +191,9 @@ $template->themeInit();
                                                         </form>
                                                     </div>
                                                     <div>
-                                                        <!--
-                                                <div style="display: inline-block;">
-                                                    <div class="fb-share-button" data-href="<?= URL . '/producto/' . $funciones->normalizar_link($producData['titulo']) . "/" . $productData['id'] ?>" data-layout="button" data-size="large" data-mobile-iframe="false"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.estudiorochayasoc.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
-                                                </div>
-                                                <div  style="display: inline-block;">
-                                                    <a class="twitter-share-button" data-size="large"
-                                                       href="https://twitter.com/intent/tweet">
-                                                        Tweet</a>
-                                                </div>-->
-                                                        <div class="mt-5">
+                                                        <div class="mt-5 mb-50">
                                                             <!-- AddToAny BEGIN -->
-                                                            <label>Compartir en:</label>
+                                                            <label class="mt-20"><b>Compartir en:</b></label>
                                                             <!-- AddToAny BEGIN -->
                                                             <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
                                                                 <a class="a2a_button_facebook"></a>
@@ -212,7 +206,6 @@ $template->themeInit();
                                                             <script async src="https://static.addtoany.com/menu/page.js"></script>
                                                             <!-- AddToAny END -->
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -253,7 +246,7 @@ $template->themeInit();
                                 $banners->set("vistas", $value);
                                 $banners->increaseViews();
                                 ?>
-                                <div class="block block-banner banner5">
+                                <div class="block block-banner banner5 mt-40">
                                     <a href="<?= $banRandSide2['link'] ?>">
                                         <img src="<?= URL . '/' . $imgRandSide2['ruta'] ?>" alt="<?= $banRandSide2['nombre'] ?>">
                                     </a>
@@ -263,28 +256,30 @@ $template->themeInit();
                             ?>
                         </div>
                         <div id="sns_mainm" class="col-md-9 mt-20">
-                            <div id="sns_description" class="description mt-15">
-                                <div class="sns_producttaps_wraps1">
-                                    <h3 class="detail-none">Descripción
-                                        <i class="fa fa-align-justify"></i>
-                                    </h3>
-                                    <!-- Nav tabs -->
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        <li role="presentation" class="active style-detail"><a aria-controls="home" role="tab" data-toggle="tab">Descripción</a></li>
-                                    </ul>
-                                    <!-- Tab panes -->
-                                    <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane active" id="home">
-                                            <div class="style1">
-                                                <p class="top">
-                                                    <?= $productData['desarrollo']; ?>
-                                                </p>
+                            <?php if ($productData['desarrollo'] != '') { ?>
+                                <div id="sns_description" class="description mt-15">
+                                    <div class="sns_producttaps_wraps1">
+                                        <h3 class="detail-none">Descripción
+                                            <i class="fa fa-align-justify"></i>
+                                        </h3>
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li role="presentation" class="active style-detail"><a aria-controls="home" role="tab" data-toggle="tab">Descripción</a></li>
+                                        </ul>
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active" id="home">
+                                                <div class="style1">
+                                                    <p class="top">
+                                                        <?= $productData['desarrollo']; ?>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="products-upsell">
+                            <?php } ?>
+                            <div class="products-upsell mt-40">
                                 <div class="detai-products1">
                                     <div class="title visible-md visible-lg">
                                         <h3>Productos relacionados</h3>
@@ -297,9 +292,15 @@ $template->themeInit();
                                             <?php
                                             foreach ($productDataRel as $rel) {
                                                 $productosRel1 = $productDataRel[array_rand($productDataRel)];
-                                                $imagenes->set("cod", $productosRel1['cod']);
-                                                $imgProRel1 = $imagenes->view();
                                                 ?>
+                                                <?php $cod_productoExp = explode("/", $productosRel1['cod_producto']); ?>
+                                                <?php $cod_productoRemp = str_replace("/", "-", $productosRel1['cod_producto']); ?>
+                                                <?php $urlImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg'; ?>
+                                                <?php if ($funciones->fileExists($urlImg) === true) { ?>
+                                                    <?php $rutaImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg'; ?>
+                                                <?php } else { ?>
+                                                    <?php $rutaImg = URL . '/assets/archivos/sin_imagen.jpg'; ?>
+                                                <?php } ?>
                                                 <div class="item">
                                                     <div class="item-inner">
                                                         <div class="prd">
@@ -314,7 +315,7 @@ $template->themeInit();
                                                                     ?>
                                                                 </div>
                                                                 <a class="product-image have-additional" href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosRel1['titulo']) . "/" . $productosRel1['id'] ?>">
-                                                                    <span class="img-main" style="height:200px;background:url(<?= URL . '/' . $imgProRel1['ruta'] ?>) no-repeat center center/contain;">
+                                                                    <span class="img-main" style="height:200px;background:url(<?= $rutaImg; ?>) no-repeat center center/contain;">
                                                                     </span>
                                                                 </a>
                                                             </div>
@@ -322,7 +323,8 @@ $template->themeInit();
                                                                 <div class="info-inner">
                                                                     <div class="item-title">
                                                                         <a href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosRel1['titulo']) . "/" . $productosRel1['id'] ?>">
-                                                                            <?= ucfirst($productosRel1['titulo']) ?> </a>
+                                                                            <?= ucfirst($productosRel1['titulo']) ?>
+                                                                        </a>
                                                                     </div>
                                                                     <div class="item-price">
                                                                         <div class="price-box">

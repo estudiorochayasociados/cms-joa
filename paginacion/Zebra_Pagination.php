@@ -1,5 +1,5 @@
 <?php
-<?php
+
 
 class Zebra_Pagination
 {

@@ -24,11 +24,11 @@ if ($borrarImg != '') {
 if (isset($_POST["agregar"])) {
     $count = 0;
     $cod = $slide["cod"];
-    $sliders->set("id", $id);
     $sliders->set("cod", $cod);
     $sliders->set("titulo", $funciones->antihack_mysqli(isset($_POST["titulo"]) ? $_POST["titulo"] : ''));
     $sliders->set("subtitulo", $funciones->antihack_mysqli(isset($_POST["subtitulo"]) ? $_POST["subtitulo"] : ''));
     $sliders->set("categoria", $funciones->antihack_mysqli(isset($_POST["categoria"]) ? $_POST["categoria"] : ''));
+    $sliders->set("link", $funciones->antihack_mysqli(isset($_POST["link"]) ? $_POST["link"] : ''));
     $sliders->set("fecha", $funciones->antihack_mysqli(isset($_POST["fecha"]) ? $_POST["fecha"] : date("Y-m-d")));
 
  
@@ -95,6 +95,10 @@ if (isset($_POST["agregar"])) {
                 }
                 ?>
             </select>
+        </label>
+        <label class="col-md-12">
+            Link:<br/>
+            <input type="text" value="<?=$slide["link"]?>" name="link">
         </label>
         <div class="col-md-12">
             <div class="row">

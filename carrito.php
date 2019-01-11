@@ -14,7 +14,7 @@ $imagenes   = new Clases\Imagenes();
 $categorias = new Clases\Categorias();
 $banners    = new Clases\Banner();
 $carrito    = new Clases\Carrito();
-//$envio    = new Clases\Envio();
+$envios    = new Clases\Envios();
 $carro = $carrito->return();
 $carroEnvio = $carrito->checkEnvio();
 
@@ -39,7 +39,7 @@ $carroEnvio = $carrito->checkEnvio();
                                         </a>
                                     </li>
                                     <li class="category3 last">
-                                        <span>Shopping cart</span>
+                                        <span>Tu carrito</span>
                                     </li>
                                 </ul>
                             </div>
@@ -56,42 +56,46 @@ $carroEnvio = $carrito->checkEnvio();
                 <div class="row">
                     <div class="shoppingcart">
                         <div class="sptitle col-md-12">
-                            <h3>SHOPPING CART</h3>
+                            <h3>Tu carrito</h3>
                         </div>
                         <div class="col-md-12">
                             <div class="envio">
                                 <?php
-                                if($carroEnvio == '') {
+                                $metodos_de_envios = $envios->list(array("peso >= ".$carrito->peso_final()." OR peso = 0"));
+                                if ($carroEnvio == '') {
                                     echo "<h3>Seleccioná el envió que más te convenga:</h3>";
                                     if (isset($_POST["envio"])) {
-                                        if($carroEnvio != '') {
-                                            $carrito->delete($carroEnvio);                                   
+                                        if ($carroEnvio != '') {
+                                            $carrito->delete($carroEnvio);
                                         }
-                                        $envioExplode = explode("-", $_POST["envio"]);
-                                        $carrito->set("id","Envio-Seleccion");
-                                        $carrito->set("cantidad",1);
-                                        $carrito->set("titulo",$envioExplode[1]);
-                                        $carrito->set("precio",$envioExplode[0]);
-                                        $carrito->add();         
-                                        $funciones->headerMove(CANONICAL."");             
-                                    } 
+                                        $envio_final =$_POST["envio"];
+                                        $envios->set("cod",$envio_final);
+                                        $envio_final_ = $envios->view();
+                                        $carrito->set("id", "Envio-Seleccion");
+                                        $carrito->set("cantidad", 1);
+                                        $carrito->set("titulo", $envio_final_["titulo"]);
+                                        $carrito->set("precio", $envio_final_["precio"]);
+                                        $carrito->add();
+                                        $funciones->headerMove(CANONICAL . "");
+                                    }
                                     ?>
-                                    <form method="post"  id="envio">
+                                    <form method="post" id="envio">
                                         <select name="envio" class="form-control" id="envio" onchange="this.form.submit()">
-                                            <option value="" selected disabled>Elegir envío</option>                                
-                                            <option value="0-Retiro en Sucursal Rosario" <?php if (isset($_POST["envio"])) { if ($_POST["envio"] == "0-Retiro en Sucursal Rosario") { echo "selected"; }} ?>>
-                                                Retiro en Sucursal Rosario
-                                            </option>
-                                            <option value="0-Retiro en Sucursal Buenos Aires" <?php if (isset($_POST["envio"])) { if ($_POST["envio"] == "0-Retiro en Sucursal Buenos Aires") { echo "selected"; }} ?>>
-                                                Retiro en Sucursal Buenos Aires
-                                            </option>
-                                            <option value="0-Retiro en San Francisco Córdoba" <?php if (isset($_POST["envio"])) { if ($_POST["envio"] == "0-Retiro en San Francisco Córdoba") { echo "selected"; }} ?>>
-                                                Retiro en Sucursal San Francisco Córdoba
-                                            </option>
+                                            <option value="" selected disabled>Elegir envío</option>
+                                            <?php
+                                            foreach ($metodos_de_envios as $metodos_de_envio_) {
+                                                if($metodos_de_envio_["precio"] == 0) {
+                                                    $metodos_de_envio_precio = "¡Gratis!";
+                                                } else {
+                                                    $metodos_de_envio_precio = "$".$metodos_de_envio_["precio"];
+                                                }
+                                                echo "<option value='".$metodos_de_envio_["cod"]."'>".$metodos_de_envio_["titulo"]." -> ".$metodos_de_envio_precio."</option>";
+                                            }
+                                            ?>
                                         </select>
                                     </form>
                                     <hr/>
-                                    <?php 
+                                    <?php
                                 }
                                 ?>
                             </div>
@@ -104,35 +108,41 @@ $carroEnvio = $carrito->checkEnvio();
                                 <th></th>
                             </thead>
                             <tbody>
-                             <?php
-                             if (isset($_POST["eliminarCarrito"])) {
+                            <?php
+                            if (isset($_POST["eliminarCarrito"])) {
                                 $carrito->delete($_POST["eliminarCarrito"]);
                             }
 
-                            $i      = 0;
+                            $i = 0;
                             $precio = 0;
-                            foreach ($carro as $carroItem) {
+                            foreach ($carro as $key => $carroItem) {
                                 $precio += ($carroItem["precio"] * $carroItem["cantidad"]);
-                                if($carroItem["id"] == "Envio-Seleccion") {
+                                $opciones = @implode(" - ", $carroItem["opciones"]);
+                                if ($carroItem["id"] == "Envio-Seleccion") {
                                     $clase = "text-bold";
-                                    $none = "hidden";                            
-                                }  else {
+                                    $none = "hidden";
+                                } else {
                                     $clase;
                                     $none;
                                 }
-                                ?> 
+                                ?>
                                 <tr class="<?= $clase ?>">
-                                    <td><?=  $carroItem["titulo"]; ?></td>                            
-                                    <td><span class="<?= $none ?>"><?="$" . $carroItem["precio"];?></span></td>
-                                    <td><span class="<?= $none ?>"><?=$carroItem["cantidad"];?></span></td>
-                                    <td><?="$" . ($carroItem["precio"] * $carroItem["cantidad"]);?></td>
+                                    <td><b><?= $carroItem["titulo"]; ?></b><br/><?= $opciones ?></td>
+                                    <td><span class="<?= $none ?>"><?= "$" . $carroItem["precio"]; ?></span></td>
+                                    <td><span class="<?= $none ?>"><?= $carroItem["cantidad"]; ?></span></td>
                                     <td>
-                                     <form method="post">
-                                        <input type="hidden" name="eliminarCarrito" value="<?=$i?>">
-                                        <button class="btn-remove" onclick="return confirm('Are you sure you would like to remove this item from the shopping cart?').;" type="submit"></button>
-                                    </form>
-                                </td>
-                            </tr>
+                                        <?php
+                                        if ($carroItem["precio"] != 0) {
+                                            echo "$" . ($carroItem["precio"] * $carroItem["cantidad"]);
+                                        } else {
+                                            echo "¡Gratis!";
+                                        }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <a href="<?= URL ?>/carrito.php?remover=<?= $key ?>"><i class="fa fa-remove"></i></a>
+                                    </td>
+                                </tr>
                             <?php                
                             $i++;
                         }
@@ -150,17 +160,13 @@ $carroEnvio = $carrito->checkEnvio();
             </form>
             <form class="form-right pull-right col-md-6" method="post" action="<?= URL ?>/pagar">
                 <div class="form-bd">
-                    <p class="subtotal">
-                        <span class="text1">SUBTOTAL:</span>
-                        <span class="text2">$<?= $precio ?></span>
-                    </p>
                     <h3 class="mb-0">
-                        <span class="text3">GRAND TOTAL:</span>
-                        <span class="text4">$<?= $precio ?></span>
+                        <span class="text3">TOTAL:</span>
+                        <span class="text4">$<?= number_format($carrito->precio_total(), "2", ",", "."); ?></span>
                     </h3>
                     <?php if($carroEnvio == '') { ?>                
                         <span class="style-bd" onclick="$('#envio').addClass('alert alert-danger');">¿CÓMO PEREFERÍS EL ENVÍO DEL PEDIDO?</span>
-                        <p class="checkout text-bold">¡Necesitamos que nos digas como querés realizar tu envío para que lo tengas listo cuanto antes!</p>
+                        <p class="checkout text-bold">¡Necesitamos que nos digas como querés realizar <br/>tu envío para que lo tengas listo cuanto antes!</p>
                     <?php } else { ?>
                         <div class="radioButtonPay mb-10">
                             <input type="radio" id="0" name="metodos-pago" value="0">

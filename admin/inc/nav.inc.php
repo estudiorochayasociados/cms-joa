@@ -1,5 +1,5 @@
 <?php
-$pages = ["contenidos", "novedades", "multimedia", "usuarios", "banners", "productos", "portfolio", "servicios", "configuracion", "categorias"];
+$pages = ["ecommerce","contenidos", "novedades", "multimedia", "usuarios", "banners", "productos", "portfolio", "servicios", "configuracion", "categorias"];
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-30">
     <div class="col-md-12">
@@ -89,6 +89,22 @@ $pages = ["contenidos", "novedades", "multimedia", "usuarios", "banners", "produ
                         </a>
                         <a class="dropdown-item" href="<?=URL?>/index.php?op=servicios&accion=agregar">
                             Agregar Servicios
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown <?php if (!in_array('ecommerce', $pages)) {echo 'd-none';}?>">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        Ecommerce
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="<?=URL?>/index.php?op=pedidos&accion=ver">
+                            Pedidos
+                        </a>
+                        <a class="dropdown-item" href="<?=URL?>/index.php?op=envios&accion=ver">
+                            Métodos de Envios
+                        </a>
+                        <a class="dropdown-item" href="<?=URL?>/index.php?op=pagos&accion=ver">
+                            Métodos de Pagos
                         </a>
                     </div>
                 </li>

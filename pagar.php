@@ -12,7 +12,10 @@ $carrito    = new Clases\Carrito();
 $usuarios    = new Clases\Usuarios();
 $usuarioSesion = $usuarios->view_sesion();
 $cod_pedido   = $_SESSION["cod_pedido"];
-$tipo_pedido = $_POST["metodos-pago"];
+$tipo_pedido = isset($_POST["metodos-pago"]) ? $_POST["metodos-pago"] : '';
+if($tipo_pedido == '') {
+    $funciones->headerMove(URL . "/carrito");
+}
 ?>
 <body id="bd" class="cms-index-index2 header-style2 prd-detail sns-products-detail1 cms-simen-home-page-v2 default cmspage">
     <div id="sns_wrapper">
@@ -78,6 +81,7 @@ $tipo_pedido = $_POST["metodos-pago"];
             <div class="col-md-12">
                 <form method="post" class="row" >
                   <div class="row">
+                      <input type="hidden" value="<?= $tipo_pedido ?>" name="metodos-pago"  />
                     <div class="col-md-6">Nombre:<br/>
                         <input class="form-control  mb-10" type="text" value="<?php echo isset($_POST["nombre"]) ? $_POST["nombre"] : '' ?>" placeholder="Escribir nombre" name="nombre" required />
                     </div>

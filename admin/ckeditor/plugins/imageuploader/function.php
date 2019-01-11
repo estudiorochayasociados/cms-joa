@@ -34,10 +34,10 @@ function loadImages() {
             $image_height = $size[0];
             $file_size_byte = filesize($image);
             $file_size_kilobyte = ($file_size_byte/1024);
-            $file_size_kilobyte_rounded = round($file_size_kilobyte,1);
+            $file_size_kilobyte_rounded = @round($file_size_kilobyte,1);
             $filesizetemp = $file_size_kilobyte_rounded;
-            $filesizefinal = round($filesizefinal + $filesizetemp) . " KB";
-            $calcsize = round($filesizefinal + $filesizetemp);
+            $filesizefinal = @round($filesizefinal + $filesizetemp) . " KB";
+            $calcsize = @round($filesizefinal + $filesizetemp);
             $count = ++$count;
             
             if($file_style == "block") { ?>
@@ -77,7 +77,7 @@ function loadImages() {
             $filesizefinal = "0 KB";
         }
         if($calcsize >= 1024){
-            $filesizefinal = round($filesizefinal/1024,1) . " MB";
+            $filesizefinal = @round($filesizefinal/1024,1) . " MB";
         }
         
         echo "

@@ -4,3 +4,82 @@
 1-Coordinar con vendedor
 2-Tarjeta de crédito o débito
 -----------------------------------------
+
+2) Filtro por Línea y Rubro
+-----------------------------------------
+- Nueva clase Rubros.
+- En nav.inc.php:
+    - Se hace un list de Rubros "$rubrosArrayCategorias" para traer todas las categorias agrupadas.
+    - Dentro del foreach de "$rubrosArrayCategorias" se hace otro list de Rubros "$rubrosArraySubcategorias" para traer todas las subcategorias dentro de cada categoria.
+    - Cada categoria y subcategoria se envian por GET como "linea" y "rubro" a productos.php.
+- En productos.php:
+    - Se obtiene el GET de linea y rubro.
+    - Si linea (categoria) no esta vacia, se obtiene todos los codigos que coincidan con el nombre de la categoria.
+    - Si linea (categoria) y rubro (subcategoria) no estan vacias, se obtienen todos los codigos que coincidan con el nombre de la categoria y subcategoria.
+    - Se añade los codigos al filtro de productos.
+
+3) Login y Registro
+------------------------------------------
+- Nuevo archivo logout.php.
+- En nav.inc.php:
+    - Links apuntan a modals con formularios.
+    - Modal de login y modal de registro.
+    - Se crearon nuevos botones:
+        - Iniciar sesion
+        - Registrarse
+        - Cuenta
+        - Salir (link a logout.php).
+- En Clase Usuarios.php:
+    - Metodo add() retorna 0 ó 1 para saber si falló o no.
+
+4) Panel de usuario
+------------------------------------------
+- Nuevos archivos:
+    - panel.php
+    - cuenta.php
+    - pedidos.php
+- En panel.php:
+    - Se creo un menu a la izquierda para navegar entre "cuenta", "pedidos" y "salir".
+    - Las secciones se muestran con switch "$op":
+        - En caso de "panel/cuenta" muestra cuenta.php
+        - En caso de "panel/pedidos" muestra pedidos.php
+        - Por default muestra cuenta.php
+    - Se modifico el .htaccess para agregar "RewriteRule ^panel/(.*)/(.*)$ ./panel.php?op=$2" y asi usar el switch.
+- En cuenta.php:
+    - Se creo un formulario para modificar el perfil de usuario.
+- En pedidos.php:
+    - Se listo a los pedidos del usuario agrupados por cod (cod de pedido) "$pedidosArrayAgrupados".
+    - Se listo a los pedidos del usuario sin agrupar "$pedidosArraySinAgrupar".
+    - Se recorre con un foreach "$pedidosArrayAgrupados" (el objetivo es obtener el cod).
+    - Dentro del anterior foreach se hace otro foreach de "$pedidosArraySinAgrupar".
+    - Este segundo foreach sirve para poder mostrar todos los productos que tienen el mismo cod.
+
+5) Admin Pedidos
+-------------------------------------------
+- Listado de pedidos:
+    - Se listan los pedidos agrupados por cod (cod de pedido) "$pedidosArrayAgrupados".
+    - Se listan los pedidos sin agrupar "$pedidosArraySinAgrupar".
+    - Se recorre con un foreach "$pedidosArrayAgrupados" (el objetivo es obtener el cod).
+    - Dentro del anterior foreach se hace otro foreach de "$pedidosArraySinAgrupar".
+    - Este segundo foreach sirve para poder mostrar todos los productos que tienen el mismo cod.
+    - Existe un select que envia un get con un fitro "estadoFiltro".
+    - Se comprueba siempre si existe ese get, entonces se añade al filtro de los pedidos para filtrar por estado.
+- Cambiar estado:
+    - Dentro de cada pedido hay 4 botones para cambiar el estado.
+    - Cada boton envia un get con los siguientes parametros:
+        - $cod
+        - $estado (nuevo estado al que se va a cambiar)
+        - $tipo
+        - $usuario
+    - Se comprueba si existen los parametros con un if y se llama al metodo "cambiarEstado()" dentro de la clase "Pedidos".
+    - Se agrego "CANONICAL" en Autoload.php en el metodo "runAdmin".
+
+6) Compra Finalizada
+--------------------------------------------
+- En la clase Pedidos se agrego el metodo "info()".
+- Se creo el archivo "compra-finalizada.php".
+- En compra-finalizada.php:
+    - Con el metodo "info()" se trae la informacion del pedido para mostrar estado y tipo con un switch.
+    - Se trae el carro con el metodo "return()" de la clase "Carrito".
+    - Se hace un foreach del carro para mostrarlo.
+    - Se destruye el carro y el codigo de pedido al final del archivo.

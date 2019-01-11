@@ -28,6 +28,7 @@ if (isset($_POST["agregar"])) {
     $productos->set("titulo", $funciones->antihack_mysqli(isset($_POST["titulo"]) ? $_POST["titulo"] : ''));
     $productos->set("cod_producto", $funciones->antihack_mysqli(isset($_POST["cod_producto"]) ? $_POST["cod_producto"] : ''));
     $productos->set("precio", $funciones->antihack_mysqli(isset($_POST["precio"]) ? $_POST["precio"] : ''));
+    $productos->set("peso", $funciones->antihack_mysqli(isset($_POST["peso"]) ? $_POST["peso"] : 0));
     $productos->set("precioDescuento", $funciones->antihack_mysqli(isset($_POST["precioDescuento"]) ? $_POST["precioDescuento"] : ''));
     $productos->set("stock", $funciones->antihack_mysqli(isset($_POST["stock"]) ? $_POST["stock"] : ''));
     $productos->set("desarrollo", $funciones->antihack_mysqli(isset($_POST["desarrollo"]) ? $_POST["desarrollo"] : ''));
@@ -105,6 +106,9 @@ if (isset($_POST["agregar"])) {
         </label>
         <label class="col-md-3">Precio:<br/>
             <input type="text" name="precio" value="<?=$producto["precio"]?>">
+        </label>
+        <label class="col-md-3">Peso:<br/>
+            <input type="text" name="peso" value="<?=$producto["peso"]?>">
         </label>
         <label class="col-md-3">Precio Descuento:<br/>
             <input type="text" name="precioDescuento" value="<?=$producto["precioDescuento"]?>">

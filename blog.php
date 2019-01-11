@@ -16,9 +16,10 @@ $imagenes->set("cod",$novedadData['cod']);
 $imagenData = $imagenes->view();
 $novedadesData = $novedades->list('');
 $fecha = explode("-", $novedadData['fecha']);
-$template->set("title", "Pinturería Ariel | ".ucfirst($novedadData['titulo']));
+$template->set("title", ucfirst($novedadData['titulo']));
 $template->set("description", $novedadData['description']);
 $template->set("keywords", $novedadData['keywords']);
+$template->set("imagen", URL."/".$imagenData['ruta']);
 $template->set("favicon", LOGO);
 $template->themeInit();
 //
@@ -65,7 +66,7 @@ $template->themeInit();
                                 <div class="blogs-page">
                                     <div class="postWrapper v1">
                                         <div class="post-title">
-                                            <a><?= ucfirst($novedadData['titulo']); ?></a>
+                                            <a><?= ucfirst($novedadData['titulo']); ?></a><hr/>
                                         </div>
                                         <a class="post-img">
                                             <img src="<?= URL. '/' . $imagenData['ruta']; ?>" alt="<?= $novedadData['titulo']; ?>">

@@ -50,7 +50,7 @@ if (isset($_POST["agregar"])) {
         </label>
         <label class="col-md-4">
             Password:<br/>
-            <input type="text" name="password" value="<?=$usuario['password'];?>" />
+            <input type="password" class="form-control" name="password" value="<?=$usuario['password'];?>" />
         </label>
         <label class="col-md-4">
             Postal:<br/>
@@ -77,12 +77,12 @@ if (isset($_POST["agregar"])) {
             <input type="text" name="celular" value="<?=$usuario['celular'];?>" />
         </label>
         <label class="col-md-2">
-            Invitado:<br/>
-            <input type="text" name="invitado" value="<?=$usuario['invitado'];?>" />
+            Invitado (1 Si, 0 No):<br/>
+            <input type="number" min="0" max="1" name="invitado" value="<?=$usuario['invitado'];?>" />
         </label>
         <label class="col-md-2">
-            Descuento:<br/>
-            <input type="text" name="descuento" value="<?=$usuario['descuento'];?>" />
+            Tipo (1 Mayorista, 0 Minorista):<br/>
+            <input type="number" min="0" max="1" name="descuento" value="<?=$usuario['descuento'];?>" />
         </label>
         <div class="clearfix"></div><br/>
         <div class="col-md-12">

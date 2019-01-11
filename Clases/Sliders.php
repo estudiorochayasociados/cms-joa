@@ -11,6 +11,7 @@ class Sliders
     public $titulo;
     public $subtitulo;
     public $categoria;
+    public $link;
     public $fecha;
     private $con;
 
@@ -32,14 +33,14 @@ class Sliders
 
     public function add()
     {
-        $sql   = "INSERT INTO `sliders`(`cod`, `titulo`, `subtitulo`,  `categoria`, `fecha`) VALUES ('{$this->cod}', '{$this->titulo}', '{$this->subtitulo}', '{$this->categoria}' ,'{$this->fecha}')";
+        $sql   = "INSERT INTO `sliders`(`cod`, `titulo`, `subtitulo`,  `categoria`,  `link`, `fecha`) VALUES ('{$this->cod}', '{$this->titulo}', '{$this->subtitulo}', '{$this->categoria}' , '{$this->link}','{$this->fecha}')";
         $query = $this->con->sql($sql);
         return $query;
     }
 
     public function edit()
     {
-        $sql   = "UPDATE `sliders` SET cod = '{$this->cod}', titulo = '{$this->titulo}', subtitulo = '{$this->subtitulo}', categoria = '{$this->categoria}', fecha = '{$this->fecha}' WHERE `cod`='{$this->cod}'";
+        $sql   = "UPDATE `sliders` SET cod = '{$this->cod}', titulo = '{$this->titulo}', subtitulo = '{$this->subtitulo}', categoria = '{$this->categoria}', link = '{$this->link}', fecha = '{$this->fecha}' WHERE `cod`='{$this->cod}'";
         $query = $this->con->sql($sql);
         return $query;
     }

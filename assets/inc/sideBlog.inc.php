@@ -9,7 +9,7 @@ $imagenesSide= new Clases\Imagenes();
     <div class="wrap-in">
         <div class="block block-latestblog-v3" id="sns_latestblog_19454288391442904929">
             <div class="block-title">
-                <strong>Últimos blogs</strong>
+                <strong>Últimas novedades</strong>
             </div>
             <div class="block-content">
                 <div class="list-blog">

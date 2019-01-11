@@ -4,6 +4,11 @@
 .pull-left {
     float: left !important;
 }
+
+.color_a{
+    color: #fff !important;
+    text-decoration: none !important;
+}
 /*margin top*/
 
 .mt-0 {

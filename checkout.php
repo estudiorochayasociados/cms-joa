@@ -20,6 +20,9 @@ $usuarioSesion = $usuarios->view_sesion();
 $carro = $carrito->return();
 $precio = $carrito->precioFinal();
 $pedidos = new Clases\Pedidos();
+
+$timezone  = -3;
+$fecha = gmdate("Y-m-j H:i:s", time() + 3600*($timezone+date("I")));
 ?>
     <body id="bd" class="cms-index-index2 header-style2 prd-detail sns-products-detail1 cms-simen-home-page-v2 default cmspage">
     <div id="sns_wrapper">
@@ -38,7 +41,7 @@ $pedidos = new Clases\Pedidos();
             $pedidos->set("tipo", $tipo_pedido);
             $pedidos->set("usuario", $usuarioSesion["cod"]);
             $pedidos->set("detalle", "");
-            $pedidos->set("fecha", date('Y-d-m'));
+            $pedidos->set("fecha", $fecha);
             $pedidos->add();
         }
     } else {
@@ -51,7 +54,7 @@ $pedidos = new Clases\Pedidos();
             $pedidos->set("tipo", $tipo_pedido);
             $pedidos->set("usuario", $usuarioSesion["cod"]);
             $pedidos->set("detalle", "");
-            $pedidos->set("fecha", date('Y-d-m'));
+            $pedidos->set("fecha", $fecha);
             $pedidos->add();
         }
     }
@@ -61,19 +64,19 @@ $pedidos = new Clases\Pedidos();
             //Transferencia o depósito bancario
             $pedidos->set("cod", $cod_pedido);
             $pedidos->set("estado", 1);
-            $pedidos->cambiar_estado();
+             $pedidos->cambiar_estado();
             $funciones->headerMove(URL . "/compra-finalizada.php");
             break;
         case 1:
             //Coordinar con el vendedor
             $pedidos->set("cod", $cod_pedido);
             $pedidos->set("estado", 1);
-            $pedidos->cambiar_estado();
+             $pedidos->cambiar_estado();
             $funciones->headerMove(URL . "/compra-finalizada.php");
             break;
         case 2:
             include("vendor/mercadopago/sdk/lib/mercadopago.php");
-            $mp = new MP ("3087431389449841", "8V6jXmINfMLcpoEqV1cnVGQbEMnVwyjK");
+            $mp = new MP ("7077260206047943", "ocqTWXCjVekoxQRf2cVkrZWX1m5QCHj9");
             $preference_data = array(
                 "items" => array(
                     array(
@@ -90,9 +93,9 @@ $pedidos = new Clases\Pedidos();
                     "email" => $usuarioSesion["email"]
                 ),
                 "back_urls" => array(
-                    "success" => "/compra-finalizada.php",
-                    "pending" => "/compra-finalizada.php",
-                    "failure" => "/compra-finalizada.php"
+                    "success" => URL."/compra-finalizada.php?estado=2",
+                    "pending" => URL."/compra-finalizada.php?estado=1",
+                    "failure" => URL."/compra-finalizada.php?estado=0"
                 ),
                 "external_reference" => $cod_pedido,
                 "auto_return" => "all",
@@ -107,7 +110,7 @@ $pedidos = new Clases\Pedidos();
             );
             $preference = $mp->create_preference($preference_data);
             //$funciones->headerMove($preference["response"]["sandbox_init_point"]);
-            echo "<iframe src='" . $preference["response"]["sandbox_init_point"] . "' width='100%' height='700px'></iframe>";
+            echo "<iframe src='" . $preference["response"]["sandbox_init_point"] . "' width='100%' height='700px' style='border:0;margin:0'></iframe>";
             break;
     }
     ?>

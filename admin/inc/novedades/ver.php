@@ -34,7 +34,7 @@ $data      = $novedades->list("");
                         echo '<a class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Modificar" href="' . URL . '/index.php?op=novedades&accion=modificar&cod=' . $data[$i]["cod"] . '">
                         <i class="fa fa-cog"></i></a>';
 
-                        echo '<a class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" href="' . URL . '/index.php?op=novedades&accion=modificar&borrar=' . $data[$i]["cod"] . '">
+                        echo '<a class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" href="' . URL . '/index.php?op=novedades&accion=ver&borrar=' . $data[$i]["cod"] . '">
                         <i class="fa fa-trash"></i></a>';
                         echo "</td>";
                         echo "</tr>";
@@ -48,9 +48,9 @@ $data      = $novedades->list("");
 <?php
 if (isset($_GET["borrar"])) {
     $cod = $funciones->antihack_mysqli(isset($_GET["borrar"]) ? $_GET["borrar"] : '');
-    $servicios->set("cod", $cod);
+    $novedades->set("cod", $cod);
     $imagenes->set("cod", $cod);
-    $servicios->delete();
+    $novedades->delete();
     $imagenes->deleteAll();
     $funciones->headerMove(URL . "/index.php?op=novedades");
 }

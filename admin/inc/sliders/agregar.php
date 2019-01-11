@@ -13,6 +13,7 @@ if (isset($_POST["agregar"])) {
     $sliders->set("titulo", $funciones->antihack_mysqli(isset($_POST["titulo"]) ? $_POST["titulo"] : ''));
     $sliders->set("subtitulo", $funciones->antihack_mysqli(isset($_POST["subtitulo"]) ? $_POST["subtitulo"] : ''));
     $sliders->set("categoria", $funciones->antihack_mysqli(isset($_POST["categoria"]) ? $_POST["categoria"] : ''));
+    $sliders->set("link", $funciones->antihack_mysqli(isset($_POST["link"]) ? $_POST["link"] : ''));
     $sliders->set("fecha", $funciones->antihack_mysqli(isset($_POST["fecha"]) ? $_POST["fecha"] : date("Y-m-d")));
 
     foreach ($_FILES['files']['name'] as $f => $name) {
@@ -68,7 +69,10 @@ if (isset($_POST["agregar"])) {
                 }
                 ?>
             </select>
-        </label>                
+        </label>
+        <label class="col-md-12">Link:<br/>
+            <input type="text" name="link">
+        </label>
         <label class="col-md-7">Imágen:<br/>
             <input type="file" id="file" name="files[]" accept="image/*" />
         </label>

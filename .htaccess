@@ -13,6 +13,8 @@ RewriteRule ^contacto ./contact.php
 RewriteRule ^checkout(.*)/(.*)/(.*)$ ./checkout.php?cod_pedido=$2&tipo_pedido=$3
 RewriteRule ^inicio ./index.php
 RewriteRule ^blog/(.*)/(.*)$ ./blog.php?id=$2
+RewriteRule ^c/(.*)/(.*)$ ./contenidos.php?id=$2
+RewriteRule ^assets/inc/sesion/panel/(.*)/(.*)$ ./panel.php?op=$2
 
 
 #ErrorDocument 404 https://www.cordobapymes.com.ar/404

@@ -10,6 +10,7 @@ class Productos
     public $cod;
     public $titulo;
     public $precio;
+    public $peso;
     public $precioDescuento;
     public $stock;
     public $desarrollo;
@@ -40,7 +41,7 @@ class Productos
 
     public function add()
     {
-        $sql   = "INSERT INTO `productos`(`cod`, `titulo`,`cod_producto`, `precio`, `precioDescuento`, `stock`, `desarrollo`, `categoria`, `subcategoria`, `keywords`, `description`, `fecha`, `meli`, `url`) VALUES ('{$this->cod}', '{$this->titulo}','{$this->cod_producto}', '{$this->precio}', '{$this->precioDescuento}', '{$this->stock}', '{$this->desarrollo}', '{$this->categoria}', '{$this->subcategoria}', '{$this->keywords}', '{$this->description}', '{$this->fecha}', '{$this->meli}', '{$this->url}')";
+        $sql   = "INSERT INTO `productos`(`cod`, `titulo`,`cod_producto`, `precio`, `peso`, `precioDescuento`, `stock`, `desarrollo`, `categoria`, `subcategoria`, `keywords`, `description`, `fecha`, `meli`, `url`) VALUES ('{$this->cod}', '{$this->titulo}','{$this->cod_producto}', '{$this->precio}', '{$this->peso}', '{$this->precioDescuento}', '{$this->stock}', '{$this->desarrollo}', '{$this->categoria}', '{$this->subcategoria}', '{$this->keywords}', '{$this->description}', '{$this->fecha}', '{$this->meli}', '{$this->url}')";
         $query = $this->con->sql($sql);
         return $query;
     }
@@ -51,6 +52,7 @@ class Productos
         `cod` = '{$this->cod}',
         `titulo` = '{$this->titulo}',
         `precio` = '{$this->precio}',
+        `peso` = '{$this->peso}',
         `cod_producto` = '{$this->cod_producto}',
         `precioDescuento` = '{$this->precioDescuento}',
         `stock` = '{$this->stock}',
@@ -124,14 +126,15 @@ class Productos
         }
 
         $sql = "SELECT * FROM `productos` $filterSql  ORDER BY $orderSql $limitSql";
+
         $notas = $this->con->sqlReturn($sql); 
         if ($notas) {
             while ($row = mysqli_fetch_assoc($notas)) {
                 $array[] = $row;
             }
             return $array ;
-        } 
-    }
+        }
+     }
 
     function paginador($filter,$cantidad) {
         $array = array();
@@ -145,6 +148,6 @@ class Productos
         $contar = $this->con->sqlReturn($sql);
         $total = mysqli_num_rows($contar);
         $totalPaginas = $total / $cantidad;
-        return floor($totalPaginas);       
+        return ceil($totalPaginas);
     }
 }

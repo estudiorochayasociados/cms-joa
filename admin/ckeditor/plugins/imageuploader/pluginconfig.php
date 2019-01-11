@@ -211,3 +211,28 @@ $foldershistory[] = "giletta deportes/sitio/archivos/image";
         $useruploadpath = $usersiteroot."$useruploadfolder/";
         $foldershistory[] = "../archivos";
         
+
+        $useruploadfolder = "../pintureria%20ariel/assets/archivos";
+        $useruploadpath = $usersiteroot."$useruploadfolder/";
+        $foldershistory[] = "../pintureria%20ariel/assets/archivos";
+        
+
+        $useruploadfolder = "pintureria%20ariel/assets/archivos";
+        $useruploadpath = $usersiteroot."$useruploadfolder/";
+        $foldershistory[] = "pintureria%20ariel/assets/archivos";
+        
+
+        $useruploadfolder = "http://192.168.0.212/pintureria%20ariel/assets/archivos";
+        $useruploadpath = $usersiteroot."$useruploadfolder/";
+        $foldershistory[] = "http://192.168.0.212/pintureria%20ariel/assets/archivos";
+        
+
+        $useruploadfolder = "pintureria%20ariel/assets/archivos";
+        $useruploadpath = $usersiteroot."$useruploadfolder/";
+        $foldershistory[] = "pintureria%20ariel/assets/archivos";
+        
+
+        $useruploadfolder = "pintureria ariel/assets/archivos";
+        $useruploadpath = $usersiteroot."$useruploadfolder/";
+        $foldershistory[] = "pintureria ariel/assets/archivos";
+        
