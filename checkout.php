@@ -3,26 +3,33 @@ require_once "Config/Autoload.php";
 Config\Autoload::runSitio();
 $template = new Clases\TemplateSite();
 $funciones = new Clases\PublicFunction();
-$template->set("title", "Admin");
-$template->set("description", "Admin");
-$template->set("keywords", "Inicio");
+$template->set("title", "Cierre de compra");
+$template->set("description", "Cierre de compra");
+$template->set("keywords", "Cierre de compra");
 $template->set("favicon", LOGO);
 $template->themeInit();
 
 $cod_pedido = isset($_GET["cod_pedido"]) ? $_GET["cod_pedido"] : '';
 $tipo_pedido = isset($_GET["tipo_pedido"]) ? $_GET["tipo_pedido"] : '';
+
 $carrito = new Clases\Carrito();
 $pedidos = new Clases\Pedidos();
+$usuarios = new Clases\Usuarios();
+$pagos = new Clases\Pagos();
+
 $pedidos->set("cod", $cod_pedido);
 $pedido = $pedidos->view();
-$usuarios = new Clases\Usuarios();
+
+$pagos->set("cod", $tipo_pedido);
+$pago = $pagos->view();
+
 $usuarioSesion = $usuarios->view_sesion();
+
 $carro = $carrito->return();
 $precio = $carrito->precioFinal();
-$pedidos = new Clases\Pedidos();
 
-$timezone  = -3;
-$fecha = gmdate("Y-m-j H:i:s", time() + 3600*($timezone+date("I")));
+$timezone = -3;
+$fecha = gmdate("Y-m-j H:i:s", time() + 3600 * ($timezone + date("I")));
 ?>
     <body id="bd" class="cms-index-index2 header-style2 prd-detail sns-products-detail1 cms-simen-home-page-v2 default cmspage">
     <div id="sns_wrapper">
@@ -38,7 +45,7 @@ $fecha = gmdate("Y-m-j H:i:s", time() + 3600*($timezone+date("I")));
             $pedidos->set("cantidad", $carroItem["cantidad"]);
             $pedidos->set("precio", $carroItem["precio"]);
             $pedidos->set("estado", 0);
-            $pedidos->set("tipo", $tipo_pedido);
+            $pedidos->set("tipo", $pago["titulo"]);
             $pedidos->set("usuario", $usuarioSesion["cod"]);
             $pedidos->set("detalle", "");
             $pedidos->set("fecha", $fecha);
@@ -51,7 +58,7 @@ $fecha = gmdate("Y-m-j H:i:s", time() + 3600*($timezone+date("I")));
             $pedidos->set("cantidad", $carroItem["cantidad"]);
             $pedidos->set("precio", $carroItem["precio"]);
             $pedidos->set("estado", 0);
-            $pedidos->set("tipo", $tipo_pedido);
+            $pedidos->set("tipo", $pago["titulo"]);
             $pedidos->set("usuario", $usuarioSesion["cod"]);
             $pedidos->set("detalle", "");
             $pedidos->set("fecha", $fecha);
@@ -59,22 +66,14 @@ $fecha = gmdate("Y-m-j H:i:s", time() + 3600*($timezone+date("I")));
         }
     }
 
-    switch ($tipo_pedido) {
+    switch ($pago["tipo"]) {
         case 0:
-            //Transferencia o depósito bancario
             $pedidos->set("cod", $cod_pedido);
-            $pedidos->set("estado", 1);
-             $pedidos->cambiar_estado();
+            $pedidos->set("estado", $pago["defecto"]);
+            $pedidos->cambiar_estado();
             $funciones->headerMove(URL . "/compra-finalizada.php");
             break;
         case 1:
-            //Coordinar con el vendedor
-            $pedidos->set("cod", $cod_pedido);
-            $pedidos->set("estado", 1);
-             $pedidos->cambiar_estado();
-            $funciones->headerMove(URL . "/compra-finalizada.php");
-            break;
-        case 2:
             include("vendor/mercadopago/sdk/lib/mercadopago.php");
             $mp = new MP ("7077260206047943", "ocqTWXCjVekoxQRf2cVkrZWX1m5QCHj9");
             $preference_data = array(
@@ -93,9 +92,9 @@ $fecha = gmdate("Y-m-j H:i:s", time() + 3600*($timezone+date("I")));
                     "email" => $usuarioSesion["email"]
                 ),
                 "back_urls" => array(
-                    "success" => URL."/compra-finalizada.php?estado=2",
-                    "pending" => URL."/compra-finalizada.php?estado=1",
-                    "failure" => URL."/compra-finalizada.php?estado=0"
+                    "success" => URL . "/compra-finalizada.php?estado=2",
+                    "pending" => URL . "/compra-finalizada.php?estado=1",
+                    "failure" => URL . "/compra-finalizada.php?estado=0"
                 ),
                 "external_reference" => $cod_pedido,
                 "auto_return" => "all",

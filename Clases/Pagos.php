@@ -6,13 +6,15 @@ class Pagos
 {
 
     //Atributos
+    private $con;
     public $id;
-    public $cod;
     public $titulo;
     public $leyenda;
+    public $cod;
     public $estado;
-    private $con;
-
+    public $aumento;
+    public $disminuir;
+    public $defecto;
 
     //Metodos
     public function __construct()
@@ -32,14 +34,14 @@ class Pagos
 
     public function add()
     {
-        $sql = "INSERT INTO `pagos`(`cod`, `titulo`, `leyenda`, `estado`) VALUES ('{$this->cod}', '{$this->titulo}','{$this->leyenda}','{$this->estado}')";
+        $sql = "INSERT INTO `pagos`(`titulo`, `leyenda`, `cod`, `estado`, `aumento`, `disminuir`, `defecto`) VALUES ('{$this->titulo}','{$this->leyenda}','{$this->cod}','{$this->estado}','{$this->aumento}','{$this->disminuir}','{$this->defecto}')";
         $query = $this->con->sql($sql);
         return $query;
     }
 
     public function edit()
     {
-        $sql = "UPDATE `pagos` SET  `titulo`='{$this->titulo}',`leyenda`='{$this->leyenda}',`estado`='{$this->estado}' WHERE `cod`='{$this->cod}'";
+        $sql = "UPDATE `pagos` SET  `titulo` = '{$this->titulo}',`leyenda` = '{$this->leyenda}',`estado` = '{$this->estado}',`aumento` = '{$this->aumento}',`disminuir` = '{$this->disminuir}',`defecto` = '{$this->defecto}' WHERE `cod`='{$this->cod}'";
         $query = $this->con->sql($sql);
         return $query;
     }
@@ -78,7 +80,7 @@ class Pagos
 
         $sql = "SELECT * FROM `pagos` $filterSql  ORDER BY titulo ASC";
         $pagos = $this->con->sqlReturn($sql);
-         if ($pagos) {
+        if ($pagos) {
             while ($row = mysqli_fetch_assoc($pagos)) {
                 $array[] = $row;
             }
