@@ -35,6 +35,7 @@ if ($estadoFiltro != '' && $estadoFiltro != 5) {
 
 $pedidosArrayAgrupados = $pedidos->list($filterPedidosAgrupados);
 $pedidosArraySinAgrupar = $pedidos->list($filterPedidosSinAgrupar);
+asort($pedidosArraySinAgrupar);
 ?>
 <div class="mt-20">
     <div class="col-lg-12 col-md-12">
@@ -167,47 +168,42 @@ $pedidosArraySinAgrupar = $pedidos->list($filterPedidosSinAgrupar);
                                     </tr>
                                     <tr>
                                         <td>Nombre</td>
-                                        <td width="100%"><?=$usuarioData['nombre'].' '.$usuarioData['apellido']?></td>
+                                        <td width="100%"><?= $usuarioData['nombre'] . ' ' . $usuarioData['apellido'] ?></td>
                                     </tr>
                                     <tr>
                                         <td>Dirección</td>
-                                        <td width="100%"><?=$usuarioData['direccion'].' - '.$usuarioData['localidad'].' - '.$usuarioData['provincia']?></td>
+                                        <td width="100%"><?= $usuarioData['direccion'] . ' - ' . $usuarioData['localidad'] . ' - ' . $usuarioData['provincia'] ?></td>
                                     </tr>
                                     <tr>
                                         <td>Teléfono</td>
-                                        <td width="100%"><?=$usuarioData['telefono']?></td>
+                                        <td width="100%"><?= $usuarioData['telefono'] ?></td>
                                     </tr>
                                     <tr>
                                         <td>Email</td>
-                                        <td width="100%"><?=$usuarioData['email']?></td>
+                                        <td width="100%"><?= $usuarioData['email'] ?></td>
                                     </tr>
                                     </thead>
                                 </table>
                             </div>
                         </div>
                         <hr>
-                        <span style="font-size:16px">
-                    <b>FORMA DE PAGO</b>
-                    <span class="alert-info" style="border-radius: 10px; padding: 10px;">
-                        <?php if ($value["tipo"] == 0): ?>
-                            Transferencia bancaria
-                        <?php elseif ($value["tipo"] == 1): ?>
-                            Coordinar con vendedor
-                        <?php elseif ($value["tipo"] == 2): ?>
-                            Tarjeta de crédito o débito
-                        <?php endif; ?>
-                    </span>
-                </span>
+                        <h6><b>FORMA DE PAGO</b></h6>
+                        <hr/>
+                        <div class="alert alert-info" style="border-radius: 10px; padding: 10px;">
+                            <?= $value["tipo"] ?>
+                        </div>
+                        <div class="clearfix"></div>
+                        <h6><b>OBSERVACIONES</b></h6>
+                        <hr/>
+                        <div class="alert alert-info" style="border-radius: 10px; padding: 10px;">
+                            <?= isset($value["detalle"]) ? $value["detalle"] : 'No hay observaciones del pedido'; ?>
+                        </div>
                         <hr/>
                         <b>CAMBIAR ESTADO: </b>
-                        <a href="<?= CANONICAL ?>&estado=1&cod=<?= $value['cod'] ?>&tipo=<?= $value['tipo'] ?>&usuario=<?= $value['usuario'] ?>"
-                           class="btn btn-warning">Pendiente</a>
-                        <a href="<?= CANONICAL ?>&estado=2&cod=<?= $value['cod'] ?>&tipo=<?= $value['tipo'] ?>&usuario=<?= $value['usuario'] ?>"
-                           class="btn btn-success">Aprobado</a>
-                        <a href="<?= CANONICAL ?>&estado=3&cod=<?= $value['cod'] ?>&tipo=<?= $value['tipo'] ?>&usuario=<?= $value['usuario'] ?>"
-                           class="btn btn-info">Enviado</a>
-                        <a href="<?= CANONICAL ?>&estado=4&cod=<?= $value['cod'] ?>&tipo=<?= $value['tipo'] ?>&usuario=<?= $value['usuario'] ?>"
-                           class="btn btn-primary">Rechazado</a>
+                        <a href="<?= CANONICAL ?>&estado=1&cod=<?= $value['cod'] ?>" class="btn btn-warning">Pendiente</a>
+                        <a href="<?= CANONICAL ?>&estado=2&cod=<?= $value['cod'] ?>" class="btn btn-success">Aprobado</a>
+                        <a href="<?= CANONICAL ?>&estado=3&cod=<?= $value['cod'] ?>" class="btn btn-info">Enviado</a>
+                        <a href="<?= CANONICAL ?>&estado=4&cod=<?= $value['cod'] ?>" class="btn btn-primary">Rechazado</a>
                     </div>
                 </div>
             </div>

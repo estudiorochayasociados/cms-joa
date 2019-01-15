@@ -2,7 +2,7 @@
 
 namespace Clases;
 
-class Portfolio
+class Landing
 {
 
     //Atributos
@@ -34,30 +34,30 @@ class Portfolio
 
     public function add()
     {
-        $sql   = "INSERT INTO `portfolio`(`cod`, `titulo`, `desarrollo`, `categoria`, `keywords`, `description`, `fecha`) VALUES ('{$this->cod}', '{$this->titulo}', '{$this->desarrollo}', '{$this->categoria}', '{$this->keywords}', '{$this->description}', '{$this->fecha}')";
+        $sql   = "INSERT INTO `landing`(`cod`, `titulo`, `desarrollo`, `categoria`, `keywords`, `description`, `fecha`) VALUES ('{$this->cod}', '{$this->titulo}', '{$this->desarrollo}', '{$this->categoria}', '{$this->keywords}', '{$this->description}', '{$this->fecha}')";
         $query = $this->con->sql($sql);
         return $query;
     }
 
     public function edit()
     {
-        $sql   = "UPDATE `portfolio` SET cod = '{$this->cod}', titulo = '{$this->titulo}', desarrollo = '{$this->desarrollo}', categoria = '{$this->categoria}', keywords = '{$this->keywords}', description = '{$this->description}', fecha = '{$this->fecha}' WHERE `id`='{$this->id}'";
+        $sql   = "UPDATE `landing` SET cod = '{$this->cod}', titulo = '{$this->titulo}', desarrollo = '{$this->desarrollo}', categoria = '{$this->categoria}', keywords = '{$this->keywords}', description = '{$this->description}', fecha = '{$this->fecha}' WHERE `cod`='{$this->cod}'";
         $query = $this->con->sql($sql);
         return $query;
     }
 
     public function delete()
     {
-        $sql   = "DELETE FROM `portfolio` WHERE `cod`  = '{$this->cod}'";
+        $sql   = "DELETE FROM `landing` WHERE `cod`  = '{$this->cod}'";
         $query = $this->con->sql($sql);
         return $query;
     }
 
     public function view()
     {
-        $sql   = "SELECT * FROM `portfolio` WHERE cod = '{$this->cod}' ORDER BY id DESC";
-        $portfolio = $this->con->sqlReturn($sql);
-        $row   = mysqli_fetch_assoc($portfolio);
+        $sql   = "SELECT * FROM `landing` WHERE cod = '{$this->cod}' ORDER BY id DESC";
+        $landing = $this->con->sqlReturn($sql);
+        $row   = mysqli_fetch_assoc($landing);
         return $row;
     }
 
@@ -70,11 +70,11 @@ class Portfolio
             $filterSql = '';
         }
 
-        $sql   = "SELECT * FROM `portfolio` $filterSql  ORDER BY id DESC";
-        $portfolio = $this->con->sqlReturn($sql);
+        $sql   = "SELECT * FROM `landing` $filterSql  ORDER BY id DESC";
+        $landing = $this->con->sqlReturn($sql);
 
-        if ($portfolio) {
-            while ($row = mysqli_fetch_assoc($portfolio)) {
+        if ($landing) {
+            while ($row = mysqli_fetch_assoc($landing)) {
                 $array[] = $row;
             }
             return $array;

@@ -11,6 +11,7 @@ $pedidosArrayAgrupados = $pedidos->list($filterPedidosAgrupados);
 
 $filterPedidosSinAgrupar = array("usuario = '" . $usuarioData['cod'] . "'");
 $pedidosArraySinAgrupar = $pedidos->list($filterPedidosSinAgrupar);
+asort($pedidosArraySinAgrupar);
 ?>
 <div class="col-md-9">
     <?php if (empty($pedidosArrayAgrupados)): ?>
@@ -102,13 +103,7 @@ $pedidosArraySinAgrupar = $pedidos->list($filterPedidosSinAgrupar);
                         <span style="font-size:16px">
                     <b>FORMA DE PAGO</b>
                     <span class="alert-info" style="border-radius: 10px; padding: 10px;">
-                        <?php if ($value["tipo"] == 0): ?>
-                            Transferencia bancaria
-                        <?php elseif ($value["tipo"] == 1): ?>
-                            Coordinar con vendedor
-                        <?php elseif ($value["tipo"] == 2): ?>
-                            Tarjeta de crédito o débito
-                        <?php endif; ?>
+                        <?= $value["tipo"] ?>
                     </span>
                 </span>
                     </div>

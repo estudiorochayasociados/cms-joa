@@ -9,9 +9,13 @@ $template->set("description", "Contacto Pinturería Ariel");
 $template->set("keywords", "Contacto Pinturería Ariel");
 $template->set("favicon", LOGO);
 $template->themeInit();
+$usuarios = new Clases\Usuarios();
+$usuarioSesion = $usuarios->view_sesion();
+if (count($usuarioSesion) == 0) {
+    $funciones->headerMove(URL . "/index");
+}
 ?>
-<body id="bd"
-      class="cms-index-index2 header-style2 prd-detail sns-contact-us cms-simen-home-page-v2 default cmspage">
+<body id="bd" class="cms-index-index2 header-style2 prd-detail sns-contact-us cms-simen-home-page-v2 default cmspage">
 <div id="sns_wrapper">
     <?php $template->themeNav(); ?>
     <!-- BREADCRUMBS -->
@@ -54,22 +58,21 @@ $template->themeInit();
                                     </div>
                                     <ul>
                                         <li>
-                                            <a href="<?= URL ?>/assets/inc/sesion/panel/cuenta">
+                                            <a href="<?= URL ?>/sesion/cuenta">
                                                 <span class="no_line_h"><i class="fa fa-user"
                                                                            aria-hidden="true"></i></span> Mi cuenta
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="<?= URL ?>/assets/inc/sesion/panel/pedidos">
+                                            <a href="<?= URL ?>/sesion/pedidos">
                                                 <span class="no_line_h"><i class="fa fa-bookmark"
                                                                            aria-hidden="true"></i></span> Mis
                                                 pedidos
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="<?= URL ?>/logout">
-                                                <span class="no_line_h"><i class="fa fa-sign-out"
-                                                                           aria-hidden="true"></i></span>Salir
+                                            <a href="<?= URL ?>/sesion/logout">
+                                                <span class="no_line_h"><i class="fa fa-sign-out" aria-hidden="true"></i></span>Salir
                                             </a>
                                         </li>
                                     </ul>
@@ -80,19 +83,10 @@ $template->themeInit();
                 </div>
 
                 <?php
-                $op = isset($_GET["op"]) ? $_GET["op"] : '';
-
-                switch ($op):
-                    case "cuenta":
-                        include("assets/inc/sesion/cuenta.php");
-                        break;
-                    case "pedidos":
-                        include("assets/inc/sesion/pedidos.php");
-                        break;
-                    default:
-                        include("assets/inc/sesion/pedidos.php");
-                        break;
-                endswitch;
+                $op = isset($_GET["op"]) ? $_GET["op"] : 'pedidos';
+                if ($op != '') {
+                    include("assets/inc/sesion/" . $op . ".php");
+                }
                 ?>
 
             </div>

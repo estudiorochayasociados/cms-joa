@@ -9,20 +9,21 @@ $carrito = new Clases\Carrito();
 $rubros = new Clases\Rubros();
 //Banners
 $categoriasDataNav = $categoriasNav->list('');
-foreach ($categoriasDataNav as $valNav) {
-    if ($valNav['titulo'] == 'Botonera' && $valNav['area'] == 'banners') {
-        $bannersNav->set("categoria", $valNav['cod']);
-        $banDataBotonera = $bannersNav->listForCategory();
-    }
-}
 $carro = $carrito->return();
 
 $filterRubrosCategorias = array("categoria != '' GROUP BY categoria");
 $rubrosArrayCategorias = $rubros->list($filterRubrosCategorias, "categoria ASC", "");
 
 $buscar = isset($_GET["buscar"]) ? $_GET["buscar"] : '';
+foreach ($categoriasDataNav as $valNav) {
+    if ($valNav['titulo'] == 'Botonera' && $valNav['area'] == 'banners') {
+        $bannersNav->set("categoria", $valNav['cod']);
+        $banDataBotonera = $bannersNav->listForCategory();
+    }
+}
 ?>
-
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?= GOOGLE_TAG ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="loading pt-150" id="loader"><h4 class="pt-150 mt-120"><img src="<?= LOGO ?>" class="mb-20" width="150" /><br/><b>¡CARGANDO!</b></h4></div>
 <div id="sns_wrapper">
     <!-- HEADER -->
     <div id="sns_header" class="wrap">
@@ -50,11 +51,11 @@ $buscar = isset($_GET["buscar"]) ? $_GET["buscar"] : '';
                                 <ul class="links">
                                     <?php if (isset($_SESSION["usuarios"])): ?>
                                         <li>
-                                            <a class="top-link-myaccount" title="cuenta" href="<?= URL ?>/panel">Mi
+                                            <a class="top-link-myaccount" title="cuenta" href="<?= URL ?>/sesion">Mi
                                                 cuenta</a>
                                         </li>
                                         <li>
-                                            <a class="top-link-login" title="salir" href="<?= URL ?>/logout">Salir</a>
+                                            <a class="top-link-login" title="salir" href="<?= URL ?>/sesion/logout">Salir</a>
                                         </li>
                                     <?php else: ?>
                                         <li class=" last">

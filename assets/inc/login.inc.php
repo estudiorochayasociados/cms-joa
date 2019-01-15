@@ -1,6 +1,12 @@
-
-<!-- Login modal -->
 <?php
+$funcionesNav = new Clases\PublicFunction();
+//Clases
+$imagenesNav = new Clases\Imagenes();
+$usuario = new Clases\Usuarios();
+$categoriasNav = new Clases\Categorias();
+$bannersNav = new Clases\Banner();
+$carrito = new Clases\Carrito();
+$rubros = new Clases\Rubros();
 if (isset($_POST["login"])):
     $email = $funcionesNav->antihack_mysqli(isset($_POST["email"]) ? $_POST["email"] : '');
     $password = $funcionesNav->antihack_mysqli(isset($_POST["password"]) ? $_POST["password"] : '');
@@ -18,7 +24,7 @@ if (isset($_POST["login"])):
         </script>
     <?php
     else:
-        $funcionesNav->headerMove(URL);
+        $funcionesNav->headerMove(CANONICAL);
     endif;
 endif;
 ?>
@@ -83,7 +89,7 @@ if (isset($_POST["registrar"])):
         <?php
         else:
             $usuario->login();
-            $funcionesNav->headerMove(URL);
+            $funcionesNav->headerMove(CANONICAL);
         endif;
     else:
         ?>

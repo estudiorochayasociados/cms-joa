@@ -12,9 +12,12 @@ $carrito    = new Clases\Carrito();
 $usuarios    = new Clases\Usuarios();
 $usuarioSesion = $usuarios->view_sesion();
 $cod_pedido   = $_SESSION["cod_pedido"];
-$tipo_pedido = isset($_POST["metodos-pago"]) ? $_POST["metodos-pago"] : '';
+$tipo_pedido = isset($_GET["metodos-pago"]) ? $_GET["metodos-pago"] : '';
 if($tipo_pedido == '') {
     $funciones->headerMove(URL . "/carrito");
+}
+if(count($usuarioSesion) != 0) {
+    $funciones->headerMove(URL."/checkout/".$cod_pedido."/".$tipo_pedido);
 }
 ?>
 <body id="bd" class="cms-index-index2 header-style2 prd-detail sns-products-detail1 cms-simen-home-page-v2 default cmspage">
@@ -23,9 +26,7 @@ if($tipo_pedido == '') {
         <div class="container mt-30">
             <h3><b>Compra N°: <?= $cod_pedido ?></b><br/>Llená el siguiente formulario para poder finalizar tu compra <span class="em em---1"></span></h3>
             <?php
-            if(count($usuarioSesion) != 0) {
-                $funciones->headerMove(URL."/checkout/".$cod_pedido."/".$tipo_pedido);
-            }
+
             if (isset($_POST["registrarmeBtn"])) {
                 $error = 0;
                 $cod = substr(md5(uniqid(rand())), 0, 10);

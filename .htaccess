@@ -7,29 +7,30 @@ RewriteRule ^(.*)$ $1.php
 
 RewriteRule ^producto/(.*)/(.*)$ ./producto.php?id=$2
 RewriteRule ^productos/(.*)/(.*)/(.*)/(.*)$ ./productos.php?$1=$2&$3=$4&$5=$6
-#RewriteRule ^productos/(.*)/(.*)/(.*)$ ./productos.php?pagina=$3&categoria=$3
-#RewriteRule ^productos/(.*)/(.*)$ ./productos.php?pagina=$2
 RewriteRule ^contacto ./contact.php
 RewriteRule ^checkout(.*)/(.*)/(.*)$ ./checkout.php?cod_pedido=$2&tipo_pedido=$3
 RewriteRule ^inicio ./index.php
 RewriteRule ^blog/(.*)/(.*)$ ./blog.php?id=$2
+RewriteRule ^pagar/(.*)/(.*)$ ./pagar.php?metodos-pago=$2
+RewriteRule ^carrito/(.*)/(.*)$ ./carrito.php?metodos-pago=$2
 RewriteRule ^c/(.*)/(.*)$ ./contenidos.php?id=$2
-RewriteRule ^assets/inc/sesion/panel/(.*)/(.*)$ ./panel.php?op=$2
+RewriteRule ^sesion/(.*)/(.*)$ ./sesion.php?op=$2
+RewriteRule ^landing/(.*)/(.*)$ ./landing.php?cod=$2
 
 
-#ErrorDocument 404 https://www.cordobapymes.com.ar/404
-#ErrorDocument 400 https://www.cordobapymes.com.ar/404
-#ErrorDocument 401 https://www.cordobapymes.com.ar/404
-#ErrorDocument 403 https://www.cordobapymes.com.ar/404
-#ErrorDocument 500 https://www.cordobapymes.com.ar/404
+ErrorDocument 404 https://www.pintureriasariel.com.ar/404
+ErrorDocument 400 https://www.pintureriasariel.com.ar/404
+ErrorDocument 401 https://www.pintureriasariel.com.ar/404
+ErrorDocument 403 https://www.pintureriasariel.com.ar/404
+ErrorDocument 500 https://www.pintureriasariel.com.ar/404
 
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 #RewriteRule . / [L,R=301]
 
 RewriteEngine on
-RewriteCond %{HTTPS} ^cordobapymes.com.ar [NC]
-RewriteRule ^(.*)$ https://www.cordobapymes.com.ar/$1 [L,R=301,NC]
+RewriteCond %{HTTPS} ^pintureriasariel.com.ar [NC]
+RewriteRule ^(.*)$ https://www.pintureriasariel.com.ar/$1 [L,R=301,NC]
 
 Header add Access-Control-Allow-Origin "*"
 
@@ -162,7 +163,6 @@ BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
 </IfModule>
 
 ###########
-
 SetOutputFilter DEFLATE
 Header unset ETag
 FileETag None

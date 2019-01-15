@@ -56,6 +56,13 @@ class Pedidos
         return $query;
     }
 
+    public function cambiar_valor($key)
+    {
+        $sql   = "UPDATE `pedidos` SET `$key`='{$this->$key}' WHERE `cod`='{$this->cod}'";
+        $query = $this->con->sql($sql);
+        return $query;
+    }
+
     public function delete()
     {
         $sql   = "DELETE FROM `pedidos` WHERE `cod`  = '{$this->cod}'";

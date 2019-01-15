@@ -26,11 +26,13 @@ class Email
     public function emailEnviar()
     {
         $mail = new PHPMailer(true);
-        $mensaje = '<body style="background: #0f74a8;margin:0;padding:0"><div style="background: #fff;width:700px;margin:auto"><div><br/><img src="'.LOGO.'" width="200"/><br/><hr/></div>'.$this->mensaje.'<br/></div></body>';
+        $mensaje = '<body style="background: #0f74a8;margin:0;padding:0"><div style="background: #fff;width:700px;margin:auto;padding:20px"><div><br/><img src="'.LOGO.'" width="200"/><br/><hr/></div>'.$this->mensaje.'<br/></div></body>';
         try {
             //Server settings
             $mail->SMTPDebug = 0;                                 // Enable verbose debug output
-            $mail->isSMTP();                                      // Set mailer to use SMTP
+            $mail->isSMTP();
+            $mail->CharSet = 'UTF-8';
+            // Set mailer to use SMTP
             $mail->Host = SMTP_EMAIL;  // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;                               // Enable SMTP authentication
             $mail->Username = EMAIL;                 // SMTP username

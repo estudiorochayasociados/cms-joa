@@ -48,7 +48,7 @@ $productDataRel = $productos->listWithOps('', ' RAND() ', '');
 ?>
 
     <body id="bd" class=" cms-index-index2 header-style2 cms-simen-home-page-v2 default cmspage">
-    <div id="sns_wrapper">
+     <div id="sns_wrapper">
         <?php $template->themeNav(); ?>
         <!-- CONTENT -->
         <div id="sns_content" class="wrap layout-m">
@@ -164,17 +164,18 @@ $productDataRel = $productos->listWithOps('', ' RAND() ', '');
                                             <h3>Productos más recientes</h3>
                                         </div>
                                         <div class="products-grid">
-                                            <div id="related_upsell" class="item-row owl-carousel owl-theme"
-                                                 style="display: inline-block">
-                                                <?php foreach ($productDataCenter1 as $productosCenter1) { ?>
-                                                    <?php $cod_productoExp = explode("/", $productosCenter1['cod_producto']); ?>
-                                                    <?php $cod_productoRemp = str_replace("/", "-", $productosCenter1['cod_producto']); ?>
-                                                    <?php $urlImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg'; ?>
-                                                    <?php if ($funciones->fileExists($urlImg) === true) { ?>
-                                                        <?php $rutaImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg'; ?>
-                                                    <?php } else { ?>
-                                                        <?php $rutaImg = URL . '/assets/archivos/sin_imagen.jpg'; ?>
-                                                    <?php } ?>
+                                            <div id="related_upsell" class="item-row owl-carousel owl-theme" style="display: inline-block">
+                                                <?php
+                                                foreach ($productDataCenter1 as $productosCenter1) {
+                                                    $cod_productoExp = explode("/", $productosCenter1['cod_producto']);
+                                                    $cod_productoRemp = str_replace("/", "-", $productosCenter1['cod_producto']);
+                                                    $urlImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg';
+                                                    if ($funciones->fileExists($urlImg) === true) {
+                                                        $rutaImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg';
+                                                    } else {
+                                                        $rutaImg = URL . '/assets/archivos/sin_imagen.jpg';
+                                                    }
+                                                    ?>
                                                     <div class="item">
                                                         <div class="item-inner">
                                                             <div class="prd">
@@ -235,9 +236,9 @@ $productDataRel = $productos->listWithOps('', ' RAND() ', '');
                                     </div>
                                 </div>
                             </div>
-                            <!-- Banner 870x110 -->
-                            <?php
 
+                            <?php
+                            //Banner 870x110
                             if (count($banDataPie) != '') {
                                 $banRandPie = $banDataPie[array_rand($banDataPie)];
                                 $imagenes->set("cod", $banRandPie['cod']);
@@ -264,7 +265,6 @@ $productDataRel = $productos->listWithOps('', ' RAND() ', '');
 
                                 <h3 class="precar">ÚLTIMOS PRODUCTOS</h3>
 
-                                <!-- Tab panes -->
                                 <div class="tab-content visible-lg ">
                                     <div class="content-loading"></div>
                                     <div role="tabpanel" class="tab-pane active" id="chair">
@@ -351,15 +351,15 @@ $productDataRel = $productos->listWithOps('', ' RAND() ', '');
                                                 $cont = 0;
                                                 foreach ($productDataCenter2 as $productosCenter2) {
                                                     if ($cont < 4) {
+                                                        $cod_productoExp = explode("/", $productosCenter2['cod_producto']);
+                                                        $cod_productoRemp = str_replace("/", "-", $productosCenter2['cod_producto']);
+                                                        $urlImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg';
+                                                        if ($funciones->fileExists($urlImg) === true) {
+                                                            $rutaImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg';
+                                                        } else {
+                                                            $rutaImg = URL . '/assets/archivos/sin_imagen.jpg';
+                                                        }
                                                         ?>
-                                                        <?php $cod_productoExp = explode("/", $productosCenter2['cod_producto']); ?>
-                                                        <?php $cod_productoRemp = str_replace("/", "-", $productosCenter2['cod_producto']); ?>
-                                                        <?php $urlImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg'; ?>
-                                                        <?php if ($funciones->fileExists($urlImg) === true) { ?>
-                                                            <?php $rutaImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg'; ?>
-                                                        <?php } else { ?>
-                                                            <?php $rutaImg = URL . '/assets/archivos/sin_imagen.jpg'; ?>
-                                                        <?php } ?>
                                                         <div class="item col-lg-3 col-md-4 col-sm-4 col-xs-6 col-phone-12">
                                                             <div class="item-inner">
                                                                 <div class="prd">
@@ -374,41 +374,39 @@ $productDataRel = $productos->listWithOps('', ' RAND() ', '');
                                                                             }
                                                                             ?>
                                                                         </div>
-                                                                        <a class="product-image have-additional"
-
-                                                                           href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter2['titulo']) . "/" . $productosCenter2['id'] ?>">
-                                <span class="img-main"
-                                      style="height:200px;background:url(<?= $rutaImg; ?>)no-repeat center center/contain;">
-                                </span>
+                                                                        <a class="product-image have-additional" href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter2['titulo']) . "/" . $productosCenter2['id'] ?>">
+                                                                                <span class="img-main"
+                                                                                      style="height:200px;background:url(<?= $rutaImg; ?>)no-repeat center center/contain;">
+                                                                                </span>
                                                                         </a>
                                                                     </div>
                                                                     <div class="item-info">
                                                                         <div class="info-inner">
                                                                             <div class="item-title">
-                                                                                <a
-                                                                                        href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter2['titulo']) . "/" . $productosCenter2['id'] ?>">
-                                                                                    <?= ucfirst($productosCenter2['titulo']) ?> </a>
+                                                                                <a href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter2['titulo']) . "/" . $productosCenter2['id'] ?>">
+                                                                                    <?= ucfirst($productosCenter2['titulo']) ?>
+                                                                                </a>
                                                                             </div>
                                                                             <div class="item-price">
                                                                                 <div class="price-box">
-                                    <span class="regular-price">
-                                        <span class="price">
-                                            <?php
-                                            if ($productosCenter2['precioDescuento'] > 0) {
-                                                ?>
-                                                <span class="precio1">$ <?= $productosCenter2['precioDescuento']; ?></span>
-                                                <span class="precio2">$ <?= $productosCenter2['precio']; ?></span>
-                                                <?php
+                                                                                    <span class="regular-price">
+                                                                                        <span class="price">
+                                                                                            <?php
+                                                                                            if ($productosCenter2['precioDescuento'] > 0) {
+                                                                                                ?>
+                                                                                                <span class="precio1">$ <?= $productosCenter2['precioDescuento']; ?></span>
+                                                                                                <span class="precio2">$ <?= $productosCenter2['precio']; ?></span>
+                                                                                                <?php
 
-                                            } else {
-                                                ?>
-                                                <span class="precio1">$ <?= $productosCenter2['precio']; ?></span>
-                                                <?php
+                                                                                            } else {
+                                                                                                ?>
+                                                                                                <span class="precio1">$ <?= $productosCenter2['precio']; ?></span>
+                                                                                                <?php
 
-                                            }
-                                            ?>
-                                        </span>
-                                    </span>
+                                                                                            }
+                                                                                            ?>
+                                                                                        </span>
+                                                                                    </span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -435,15 +433,15 @@ $productDataRel = $productos->listWithOps('', ' RAND() ', '');
                                                 $cont = 0;
                                                 foreach ($productDataCenter2 as $productosCenter2) {
                                                     if ($cont < 3) {
+                                                        $cod_productoExp = explode("/", $productosCenter2['cod_producto']);
+                                                        $cod_productoRemp = str_replace("/", "-", $productosCenter2['cod_producto']);
+                                                        $urlImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg';
+                                                        if ($funciones->fileExists($urlImg) === true) {
+                                                            $rutaImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg';
+                                                        } else {
+                                                            $rutaImg = URL . '/assets/archivos/sin_imagen.jpg';
+                                                        }
                                                         ?>
-                                                        <?php $cod_productoExp = explode("/", $productosCenter2['cod_producto']); ?>
-                                                        <?php $cod_productoRemp = str_replace("/", "-", $productosCenter2['cod_producto']); ?>
-                                                        <?php $urlImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg'; ?>
-                                                        <?php if ($funciones->fileExists($urlImg) === true) { ?>
-                                                            <?php $rutaImg = URL . '/assets/archivos/img_productos/' . $cod_productoExp[0] . '/' . $cod_productoRemp . '.jpg'; ?>
-                                                        <?php } else { ?>
-                                                            <?php $rutaImg = URL . '/assets/archivos/sin_imagen.jpg'; ?>
-                                                        <?php } ?>
                                                         <div class="item col-lg-3 col-md-4 col-sm-4 col-xs-6 col-phone-12">
                                                             <div class="item-inner">
                                                                 <div class="prd">
@@ -454,15 +452,13 @@ $productDataRel = $productos->listWithOps('', ' RAND() ', '');
                                                                                 ?>
                                                                                 <span class="ico-product ico-sale">Promo</span>
                                                                                 <?php
-
                                                                             }
                                                                             ?>
                                                                         </div>
-                                                                        <a class="product-image have-additional"
-                                                                           href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter2['titulo']) . "/" . $productosCenter2['id'] ?>">
-                                                        <span class="img-main"
-                                                              style="height:200px;background:url(<?= URL . '/' . $imgProCenter2['ruta'] ?>)no-repeat center center/70%;">
-                                                        </span>
+                                                                        <a class="product-image have-additional" href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter2['titulo']) . "/" . $productosCenter2['id'] ?>">
+                                                                            <span class="img-main"
+                                                                                  style="height:200px;background:url(<?= URL . '/' . $imgProCenter2['ruta'] ?>)no-repeat center center/70%;">
+                                                                            </span>
                                                                         </a>
                                                                     </div>
                                                                     <div class="item-info">
@@ -474,24 +470,23 @@ $productDataRel = $productos->listWithOps('', ' RAND() ', '');
                                                                             </div>
                                                                             <div class="item-price">
                                                                                 <div class="price-box">
-                                                            <span class="regular-price">
-                                                                <span class="price">
-                                                                    <?php
-                                                                    if ($productosCenter2['precioDescuento'] > 0) {
-                                                                        ?>
-                                                                        <span class="precio1">$ <?= $productosCenter2['precioDescuento']; ?></span>
-                                                                        <span class="precio2">$ <?= $productosCenter2['precio']; ?></span>
-                                                                        <?php
+                                                                                    <span class="regular-price">
+                                                                                        <span class="price">
+                                                                                            <?php
+                                                                                            if ($productosCenter2['precioDescuento'] > 0) {
+                                                                                                ?>
+                                                                                                <span class="precio1">$ <?= $productosCenter2['precioDescuento']; ?></span>
+                                                                                                <span class="precio2">$ <?= $productosCenter2['precio']; ?></span>
+                                                                                                <?php
 
-                                                                    } else {
-                                                                        ?>
-                                                                        <span class="precio1">$ <?= $productosCenter2['precio']; ?></span>
-                                                                        <?php
-
-                                                                    }
-                                                                    ?>
-                                                                </span>
-                                                            </span>
+                                                                                            } else {
+                                                                                                ?>
+                                                                                                <span class="precio1">$ <?= $productosCenter2['precio']; ?></span>
+                                                                                                <?php
+                                                                                            }
+                                                                                            ?>
+                                                                                        </span>
+                                                                                    </span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -536,12 +531,10 @@ $productDataRel = $productos->listWithOps('', ' RAND() ', '');
                                                                             }
                                                                             ?>
                                                                         </div>
-                                                                        <a class="product-image have-additional"
-
-                                                                           href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter2['titulo']) . "/" . $productosCenter2['id'] ?>">
-                                <span class="img-main"
-                                      style="height:200px;background:url(<?= $rutaImg; ?>)no-repeat center center/contain;">
-                                </span>
+                                                                        <a class="product-image have-additional"  href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter2['titulo']) . "/" . $productosCenter2['id'] ?>">
+                                                                            <span class="img-main"
+                                                                                  style="height:200px;background:url(<?= $rutaImg; ?>)no-repeat center center/contain;">
+                                                                            </span>
                                                                         </a>
                                                                     </div>
                                                                     <div class="item-info">
@@ -553,24 +546,24 @@ $productDataRel = $productos->listWithOps('', ' RAND() ', '');
                                                                             </div>
                                                                             <div class="item-price">
                                                                                 <div class="price-box">
-                                    <span class="regular-price">
-                                        <span class="price">
-                                            <?php
-                                            if ($productosCenter2['precioDescuento'] > 0) {
-                                                ?>
-                                                <span class="precio1">$ <?= $productosCenter2['precioDescuento']; ?></span>
-                                                <span class="precio2">$ <?= $productosCenter2['precio']; ?></span>
-                                                <?php
+                                                                                    <span class="regular-price">
+                                                                                        <span class="price">
+                                                                                            <?php
+                                                                                            if ($productosCenter2['precioDescuento'] > 0) {
+                                                                                                ?>
+                                                                                                <span class="precio1">$ <?= $productosCenter2['precioDescuento']; ?></span>
+                                                                                                <span class="precio2">$ <?= $productosCenter2['precio']; ?></span>
+                                                                                                <?php
 
-                                            } else {
-                                                ?>
-                                                <span class="precio1">$ <?= $productosCenter2['precio']; ?></span>
-                                                <?php
+                                                                                            } else {
+                                                                                                ?>
+                                                                                                <span class="precio1">$ <?= $productosCenter2['precio']; ?></span>
+                                                                                                <?php
 
-                                            }
-                                            ?>
-                                        </span>
-                                    </span>
+                                                                                            }
+                                                                                            ?>
+                                                                                        </span>
+                                                                                    </span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>

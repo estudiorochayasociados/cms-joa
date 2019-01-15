@@ -3,6 +3,8 @@ require_once "Config/Autoload.php";
 Config\Autoload::runSitio();
 $template = new Clases\TemplateSite();
 $funciones = new Clases\PublicFunction();
+
+
 $template->set("title", "Compra finalizada");
 $template->set("description", "Compra finalizada");
 $template->set("keywords", "Compra finalizada");
@@ -15,68 +17,70 @@ $contenido = new Clases\Contenidos();
 $correo = new Clases\Email();
 $cod_pedido = $_SESSION["cod_pedido"];
 $pedidos->set("cod", $cod_pedido);
+$pedido_info = $pedidos->info();
+
+if (count($_SESSION["carrito"]) == 0) {
+    $funciones->headerMove(URL . "/index");
+}
+
 
 if ($estado_get != '') {
     $pedidos->set("estado", $estado_get);
-     $pedidos->cambiar_estado();
+    $pedidos->cambiar_estado();
 }
-
-$pedido_info = $pedidos->info();
 
 switch ($pedido_info["estado"]) {
-    case 1:
-        $estado = "Pendiente";
-        break;
-    case 2:
-        $estado = "Aprobado";
-        break;
-}
-
-switch ($pedido_info["tipo"]) {
     case 0:
-        $tipo = "Transferencia/Depósito Bancario";
+        $estado = "CARRITO NO CERRADO";
         break;
     case 1:
-        $tipo = "Coordinar con vendedor";
+        $estado = "PENDIENTE";
         break;
     case 2:
-        $tipo = "Tarjeta de crédito/tarjeta de deébito";
+        $estado = "APROBADO";
         break;
+    case 3:
+        $estado = "RECHAZADO";
+        break;
+
 }
 
 $carro = $carritos->return();
 $carroTotal = 0;
 
+//MENSAJE = ARMADO CARRITO
+$mensaje_carro = '<table border="1" style="text-align:left;width:100%;font-size:13px !important"><thead><th>Nombre producto</th><th>Cantidad</th><th>Precio</th><th>Total</th></thead>';
+foreach ($carro as $carroItemEmail) {
+    $carroTotal += $carroItemEmail["cantidad"] * $carroItemEmail["precio"];
+    $mensaje_carro .= '<tr><td>' . $carroItemEmail["titulo"] . '</td><td>' . $carroItemEmail["cantidad"] . '</td><td>' . $carroItemEmail["precio"] . '</td><td>' . $carroItemEmail["cantidad"] * $carroItemEmail["precio"] . '</td></tr>';
+}
+$mensaje_carro .= '<tr><td></td><td></td><td></td><td>' . $carroTotal . '</td></tr>';
+$mensaje_carro .= '</table>';
+
+//MENSAJE = DATOS USUARIO COMPRADOR
+$datos_usuario = "<b>Nombre y apellido:</b> " . $_SESSION["usuarios"]["nombre"] . "<br/>";
+$datos_usuario .= "<b>Email:</b> " . $_SESSION["usuarios"]["email"] . "<br/>";
+$datos_usuario .= "<b>Provincia:</b> " . $_SESSION["usuarios"]["provincia"] . "<br/>";
+$datos_usuario .= "<b>Localidad:</b> " . $_SESSION["usuarios"]["localidad"] . "<br/>";
+$datos_usuario .= "<b>Dirección:</b> " . $_SESSION["usuarios"]["direccion"] . "<br/>";
+$datos_usuario .= "<b>Teléfono:</b> " . $_SESSION["usuarios"]["telefono"] . "<br/>";
+if($_SESSION["usuarios"]["doc"] != '') {
+    $datos_usuario .= "<b>SOLICITÓ FACTURA A CON EL CUIT:</b> " . $_SESSION["usuarios"]["doc"] . "<br/>";
+    $pedidos->set("detalle","<b>SOLICITÓ FACTURA A CON EL CUIT:</b> " . $_SESSION["usuarios"]["doc"]);
+    $pedidos->cambiar_valor("detalle");
+}
+
+
 //USUARIO EMAIL
 $mensajeCompraUsuario = '¡Muchas gracias por tu nueva compra!<br/>En el transcurso de las 24 hs un operador se estará contactando con usted para pactar la entrega y/o pago del pedido. A continuación te dejamos el pedido que nos realizaste.<hr/> <h3>Pedido realizado:</h3>';
-$mensajeCompraUsuario .= '<table border="1" style="text-align:left;width:100%;font-size:13px !important"><thead><th>Nombre producto</th><th>Cantidad</th><th>Precio</th><th>Total</th></thead>';
-foreach ($carro as $carroItemEmail):
-    $carroTotal += $carroItemEmail["cantidad"] * $carroItemEmail["precio"];
-    $mensajeCompraUsuario .= '<tr><td>' . $carroItemEmail["titulo"] . '</td><td>' . $carroItemEmail["cantidad"] . '</td><td>' . $carroItemEmail["precio"] . '</td><td>' . $carroItemEmail["cantidad"] * $carroItemEmail["precio"] . '</td></tr>';
-endforeach;
-$mensajeCompraUsuario .= '<tr><td></td><td></td><td></td><td>' . $carroTotal . '</td></tr>';
-$mensajeCompraUsuario .= '</table>';
-if ($pedido_info["tipo"] == 0):
-    $mensajeCompraUsuario .= '<br/><hr/>';
-    $mensajeCompraUsuario .= '<h3>Datos de cuenta bancaria:</h3>';
-    $contenido->set("id", 9);
-    $contenidoData = $contenido->view();
-    $mensajeCompraUsuario .= $contenidoData['contenido'];
-endif;
+$mensajeCompraUsuario .= $mensaje_carro;
 $mensajeCompraUsuario .= '<br/><hr/>';
-$mensajeCompraUsuario .= '<h3>Tipo de pago:</h3>';
-$mensajeCompraUsuario .= '<b>' . $tipo . '</b>';
+$mensajeCompraUsuario .= '<h3>MÉTODO DE PAGO ELEGIDO: ' . mb_strtoupper($pedido_info["tipo"]) . '</h3>';
 $mensajeCompraUsuario .= '<br/><hr/>';
 $mensajeCompraUsuario .= '<h3>Tus datos:</h3>';
-$mensajeCompraUsuario .= "<b>Nombre y apellido</b>: " . $_SESSION["usuarios"]["nombre"] . "<br/>";
-$mensajeCompraUsuario .= "<b>Email</b>: " . $_SESSION["usuarios"]["email"] . "<br/>";
-$mensajeCompraUsuario .= "<b>País</b>: " . $_SESSION["usuarios"]["pais"] . "<br/>";
-$mensajeCompraUsuario .= "<b>Provincia</b>: " . $_SESSION["usuarios"]["provincia"] . "<br/>";
-$mensajeCompraUsuario .= "<b>Localidad</b>: " . $_SESSION["usuarios"]["localidad"] . "<br/>";
-$mensajeCompraUsuario .= "<b>Dirección</b>: " . $_SESSION["usuarios"]["direccion"] . "<br/>";
-$mensajeCompraUsuario .= "<b>Teléfono</b>: " . $_SESSION["usuarios"]["telefono"] . "<br/>";
+$mensajeCompraUsuario .= $datos_usuario;
 
-$correo->set("asunto", "MUCHAS GRACIAS POR TU COMPRA");
+$correo->set("asunto", "Muchas gracias por tu nueva compra");
 $correo->set("receptor", $_SESSION["usuarios"]["email"]);
 $correo->set("emisor", EMAIL);
 $correo->set("mensaje", $mensajeCompraUsuario);
@@ -84,27 +88,14 @@ $correo->emailEnviar();
 
 //ADMIN EMAIL
 $mensajeCompra = '¡Nueva compra desde la web!<br/>A continuación te dejamos el detalle del pedido.<hr/> <h3>Pedido realizado:</h3>';
-$mensajeCompra .= '<table border="1" style="text-align:left;width:100%;font-size:13px !important"><thead><th>Nombre producto</th><th>Cantidad</th><th>Precio</th><th>Total</th></thead>';
-foreach ($carro as $carroItemEmail):
-    $carroTotal += $carroItemEmail["cantidad"] * $carroItemEmail["precio"];
-    $mensajeCompra .= '<tr><td>' . $carroItemEmail["titulo"] . '</td><td>' . $carroItemEmail["cantidad"] . '</td><td>' . $carroItemEmail["precio"] . '</td><td>' . $carroItemEmail["cantidad"] * $carroItemEmail["precio"] . '</td></tr>';
-endforeach;
-$mensajeCompra .= '<tr><td></td><td></td><td></td><td>' . $carroTotal . '</td></tr>';
-$mensajeCompra .= '</table>';
+$mensajeCompra .= $mensaje_carro;
 $mensajeCompra .= '<br/><hr/>';
-$mensajeCompra .= '<h3>Tipo de pago:</h3>';
-$mensajeCompra .= '<b>' . $tipo . '</b>';
+$mensajeCompra .= '<h3>MÉTODO DE PAGO ELEGIDO: ' . mb_strtoupper($pedido_info["tipo"]) . '</h3>';
 $mensajeCompra .= '<br/><hr/>';
 $mensajeCompra .= '<h3>Datos de usuario:</h3>';
-$mensajeCompra .= "<b>Nombre y apellido</b>: " . $_SESSION["usuarios"]["nombre"] . "<br/>";
-$mensajeCompra .= "<b>Email</b>: " . $_SESSION["usuarios"]["email"] . "<br/>";
-$mensajeCompra .= "<b>País</b>: " . $_SESSION["usuarios"]["pais"] . "<br/>";
-$mensajeCompra .= "<b>Provincia</b>: " . $_SESSION["usuarios"]["provincia"] . "<br/>";
-$mensajeCompra .= "<b>Localidad</b>: " . $_SESSION["usuarios"]["localidad"] . "<br/>";
-$mensajeCompra .= "<b>Dirección</b>: " . $_SESSION["usuarios"]["direccion"] . "<br/>";
-$mensajeCompra .= "<b>Teléfono</b>: " . $_SESSION["usuarios"]["telefono"] . "<br/>";
+$mensajeCompra .= $datos_usuario;
 
-$correo->set("asunto", "COMPRA WEB");
+$correo->set("asunto", "NUEVA COMPRA ONLINE");
 $correo->set("receptor", EMAIL);
 $correo->set("emisor", EMAIL);
 $correo->set("mensaje", $mensajeCompra);
@@ -152,7 +143,7 @@ $correo->emailEnviar();
                                 CÓDIGO: <span> <?= $cod_pedido ?></span></h2>
                             <p>
                                 <b>Estado:</b> <?= $estado ?><br/>
-                                <b>Método de pago:</b> <?= $tipo ?>
+                                <b>Método de pago:</b> <?= mb_strtoupper($pedido_info["tipo"]); ?>
                             </p>
                             <table class="table table-hover text-left">
                                 <thead>
@@ -166,7 +157,7 @@ $correo->emailEnviar();
                                 $precio = 0;
                                 foreach ($carro as $carroItem) {
                                     $precio += ($carroItem["precio"] * $carroItem["cantidad"]);
-                                    if ($carroItem["id"] == "Envio-Seleccion") {
+                                    if ($carroItem["id"] == "Envio-Seleccion" || $carroItem["id"] == "Metodo-Pago") {
                                         $clase = "text-bold";
                                         $none = "hidden";
                                     } else {
@@ -202,13 +193,7 @@ $correo->emailEnviar();
                                 </tr>
                                 </tbody>
                             </table>
-                            <?php if ($pedido_info["tipo"] == 0): ?>
-                                <br/>
-                                <b>CUENTA BANCARIA: </b><br/>
-                                <?php $contenido->set("id", 9); ?>
-                                <?php $contenidoData = $contenido->view(); ?>
-                                <?= $contenidoData['contenido'] ?>
-                            <?php endif; ?>
+
                         </div>
                     </div>
                 </div>

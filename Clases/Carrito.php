@@ -118,4 +118,14 @@ class Carrito
         }
         return null;
     }
+
+    public function checkPago()
+    {
+        foreach ($_SESSION["carrito"] as $key => $val) {
+            if ($val['id'] === "Metodo-Pago") {
+                return $key;
+            }
+        }
+        return null;
+    }
 }

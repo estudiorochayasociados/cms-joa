@@ -476,4 +476,11 @@ $(document).ready(function(e) {
         loop: true
     });
     // ----------AND----------------
+
+
+});
+
+
+$(document).ready(function () {
+    $("#loader").hide();
 });

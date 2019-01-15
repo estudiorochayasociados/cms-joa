@@ -10,6 +10,7 @@ $categorias = new Clases\Categorias();
 $banners = new Clases\Banner();
 $carrito = new Clases\Carrito();
 //Productos
+
 $id = isset($_GET["id"]) ? $_GET["id"] : '';
 $productos->set("id", $id);
 $productData = $productos->view();
@@ -32,6 +33,7 @@ foreach ($categoriasData as $val) {
 
 $carro = $carrito->return();
 $carroEnvio = $carrito->checkEnvio();
+$carroPago = $carrito->checkPago();
 
 $template->set("title", ucfirst($productData['titulo']));
 $template->set("description", $productData['description']);
@@ -124,7 +126,7 @@ $template->themeInit();
                                                                  <?php
                                                              }
                                                              ?>
- </span>
+                                                    </span>
                                                     </span>
                                                         </div>
                                                     </div>
@@ -149,6 +151,10 @@ $template->themeInit();
                                                         if (isset($_POST["enviar"])) {
                                                             if ($carroEnvio != '') {
                                                                 $carrito->delete($carroEnvio);
+                                                            }
+
+                                                            if ($carroPago != '') {
+                                                                $carrito->delete($carroPago);
                                                             }
 
                                                             $carrito->set("id", $productData['id']);

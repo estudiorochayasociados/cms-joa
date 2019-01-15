@@ -16764,3 +16764,13 @@ body .jqtransformdone {
         margin-left: 20%
     }
 }
+
+.loading {
+    position:fixed;
+    top:0;
+    height:100vh;
+    z-index:999;
+    background:rgba(255,255,255,.7);
+    width:100%;
+    text-align:center;
+}

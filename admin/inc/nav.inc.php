@@ -1,5 +1,5 @@
 <?php
-$pages = ["ecommerce","contenidos", "novedades", "multimedia", "usuarios", "banners", "productos", "portfolio", "servicios", "configuracion", "categorias"];
+$pages = ["ecommerce","contenidos", "novedades", "multimedia", "usuarios", "banners", "productos", "portfolio", "servicios", "configuracion", "categorias", "marketing"];
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-30">
     <div class="col-md-12">
@@ -105,6 +105,19 @@ $pages = ["ecommerce","contenidos", "novedades", "multimedia", "usuarios", "bann
                         </a>
                         <a class="dropdown-item" href="<?=URL?>/index.php?op=pagos&accion=ver">
                             Métodos de Pagos
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown <?php if (!in_array('marketing', $pages)) {echo 'd-none';}?>">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        Marketing
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="<?=URL?>/index.php?op=landing&accion=ver">
+                            Landing Page
+                        </a>
+                        <a class="dropdown-item" href="<?=URL?>/index.php?op=analitica&accion=ver">
+                            Analítica
                         </a>
                     </div>
                 </li>

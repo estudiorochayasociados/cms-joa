@@ -5,9 +5,10 @@ class autoload
     public static function runSitio()
     {
         session_start();
-        $_SESSION["cod_pedido"] = isset($_SESSION["cod_pedido"]) ? $_SESSION["cod_pedido"] : substr(md5(uniqid(rand())), 0, 10);
+        $_SESSION["cod_pedido"] = mb_strtoupper(isset($_SESSION["cod_pedido"]) ? $_SESSION["cod_pedido"] : substr(md5(uniqid(rand())), 0, 10));
         define('URL', "http://".$_SERVER['HTTP_HOST']."/pintureria%20ariel");
         define('CANONICAL', "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"]);
+        define('GOOGLE_TAG', "GTM-M4M4KJJ");
         define('TITULO', "Pintureria Ariel");
         define('TELEFONO', "5555555");
         define('CIUDAD', "San Francisco");
@@ -41,7 +42,7 @@ class autoload
     public static function runAdmin()
     {
         session_start();
-        define('URLSITE',"http://".$_SERVER['HTTP_HOST']."/pintureria%20ariel/admin");
+        define('URLSITE',"http://".$_SERVER['HTTP_HOST']."/pintureria%20ariel");
         define('URL', "http://".$_SERVER['HTTP_HOST']."/pintureria ariel/admin");
         define('CANONICAL', "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"]);
         require_once "../Clases/Zebra_Image.php";

@@ -110,8 +110,9 @@ $carroEnvio = $carrito->checkEnvio();
                             </thead>
                             <tbody>
                             <?php
-                            if (isset($_POST["eliminarCarrito"])) {
-                                $carrito->delete($_POST["eliminarCarrito"]);
+                            if (isset($_GET["remover"])) {
+                                $carrito->delete($_GET["remover"]);
+                                $funciones->headerMove(URL . "/carrito");
                             }
 
                             $i = 0;
@@ -119,7 +120,7 @@ $carroEnvio = $carrito->checkEnvio();
                             foreach ($carro as $key => $carroItem) {
                                 $precio += ($carroItem["precio"] * $carroItem["cantidad"]);
                                 $opciones = @implode(" - ", $carroItem["opciones"]);
-                                if ($carroItem["id"] == "Envio-Seleccion") {
+                                if ($carroItem["id"] == "Envio-Seleccion" || $carroItem["id"] == "Metodo-Pago") {
                                     $clase = "text-bold";
                                     $none = "hidden";
                                 } else {
@@ -128,7 +129,7 @@ $carroEnvio = $carrito->checkEnvio();
                                 }
                                 ?>
                                 <tr class="<?= $clase ?>">
-                                    <td><b><?= $carroItem["titulo"]; ?></b><br/><?= $opciones ?></td>
+                                    <td><b><?= mb_strtoupper($carroItem["titulo"]); ?></b><br/><?= mb_strtoupper($opciones) ?></td>
                                     <td><span class="<?= $none ?>"><?= "$" . $carroItem["precio"]; ?></span></td>
                                     <td><span class="<?= $none ?>"><?= $carroItem["cantidad"]; ?></span></td>
                                     <td>
@@ -151,15 +152,36 @@ $carroEnvio = $carrito->checkEnvio();
                             </tbody>
                         </table>
                     </div>
-                    <form class="col-md-4 hidden">
-                        <div class="form-bd">
-                            <h3>DISCOUNT CODES</h3>
-                            <p class="formbd2">Enter your coupon code if you have one.</p>
-                            <input class="styleip" type="text" value="" size="30"/>
-                            <span class="style-bd">Apply coupon</span>
-                        </div>
-                    </form>
-                    <form class="form-right pull-right col-md-6" method="post" action="<?= URL ?>/pagar">
+                    <form class="form-right pull-right col-md-6" method="post">
+                        <?php
+                        $metodo = isset($_POST["metodos-pago"]) ? $_POST["metodos-pago"] : '';
+                        $metodo_get = isset($_GET["metodos-pago"]) ? $_GET["metodos-pago"] : '';
+                        if ($metodo != '') {
+                            $key_metodo = $carrito->checkPago();
+                            $carrito->delete($key_metodo);
+                            $pagos->set("cod", $metodo);
+                            $pago__ = $pagos->view();
+                            $precio_final_metodo = $carrito->precio_total();
+                            if ($pago__["aumento"] != 0 || $pago__["disminuir"] != '') {
+                                if ($pago__["aumento"]) {
+                                    $numero = (($precio_final_metodo * $pago__["aumento"]) / 100);
+                                    $carrito->set("id", "Metodo-Pago");
+                                    $carrito->set("cantidad", 1);
+                                    $carrito->set("titulo", "CARGO +" . $pago__['aumento'] . "% / " . mb_strtoupper($pago__["titulo"]));
+                                    $carrito->set("precio", $numero);
+                                    $carrito->add();
+                                } else {
+                                    $numero = (($precio_final_metodo * $pago__["disminuir"]) / 100);
+                                    $carrito->set("id", "Metodo-Pago");
+                                    $carrito->set("cantidad", 1);
+                                    $carrito->set("titulo", "DESCUENTO -" . $pago__['disminuir'] . "% / " . mb_strtoupper($pago__["titulo"]));
+                                    $carrito->set("precio", "-" . $numero);
+                                    $carrito->add();
+                                }
+                                $funciones->headerMove(CANONICAL . "/" . $metodo);
+                            }
+                        }
+                        ?>
                         <div class="form-bd">
                             <h3 class="mb-0">
                                 <span class="text3">TOTAL:</span>
@@ -174,13 +196,20 @@ $carroEnvio = $carrito->checkEnvio();
                                 foreach ($lista_pagos as $pago) {
                                     ?>
                                     <div class="radioButtonPay mb-10">
-                                        <input type="radio" id="<?= mb_strtoupper($pago["cod"]) ?>" name="metodos-pago" value="<?= mb_strtoupper($pago["cod"]) ?>">
-                                        <label for="<?= mb_strtoupper($pago["cod"]) ?>"><b><?= mb_strtoupper($pago["titulo"]) ?></b></label>
+                                        <input type="radio" id="<?= ($pago["cod"]) ?>" name="metodos-pago" value="<?= ($pago["cod"]) ?>" onclick="this.form.submit()" <?php if ($metodo_get === $pago["cod"]) {
+                                            echo " checked ";
+                                        } ?>>
+                                        <label for="<?= ($pago["cod"]) ?>"><b><?= mb_strtoupper($pago["titulo"]) ?></b></label>
+                                        <p>
+                                            <?= $pago["leyenda"] ?>
+                                        </p>
                                     </div>
                                     <?php
                                 }
                                 ?>
-                                <button type="submit" name="pagar" class="mb-40 btn btn-success">PAGAR EL CARRITO</button>
+                            <?php } ?>
+                            <?php if ($metodo_get != '') { ?>
+                                <a href="<?= URL ?>/pagar/<?= $metodo_get ?>" class="mb-40 btn btn-success">PAGAR EL CARRITO</a>
                             <?php } ?>
                         </div>
                     </form>
