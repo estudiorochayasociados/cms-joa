@@ -46,7 +46,7 @@ $enviarFooter = new Clases\Email();
                                     <li class="pd-right">
                                         <div class="clearfix">
                                             <div class="divfoot1">
-                                                <img src="<?=URL?>/assets/images/iconos/marker.png" width="55%">
+                                                <i class="fa fa-map-marker"></i>
                                             </div>
                                             <div class="divfoot2">
                                                 <h5>Las Malvinas 930 - San Francisco (CBA)</h5>
@@ -56,7 +56,7 @@ $enviarFooter = new Clases\Email();
                                     <li>
                                         <div class="clearfix">
                                             <div class="divfoot1">
-                                                <img src="<?=URL?>/assets/images/iconos/call.png" width="50%">
+                                                <i class="fa fa-phone-square"></i>
                                             </div>
                                             <div class="divfoot2">
                                                 <h5>(03564) 438484 / (03564) 443393</h5>
@@ -66,7 +66,7 @@ $enviarFooter = new Clases\Email();
                                     <li>
                                         <div class="clearfix">
                                             <div class="divfoot1">
-                                                <img src="<?=URL?>/assets/images/iconos/mail.png" width="50%">
+                                                <i class="fa fa-envelope"></i>
                                             </div>
                                             <div class="divfoot2">
                                                 <h5>

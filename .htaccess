@@ -7,7 +7,6 @@ RewriteRule ^(.*)$ $1.php
 
 RewriteRule ^producto/(.*)/(.*)$ ./producto.php?id=$2
 RewriteRule ^productos/(.*)/(.*)/(.*)/(.*)$ ./productos.php?$1=$2&$3=$4&$5=$6
-RewriteRule ^contacto ./contact.php
 RewriteRule ^checkout(.*)/(.*)/(.*)$ ./checkout.php?cod_pedido=$2&tipo_pedido=$3
 RewriteRule ^inicio ./index.php
 RewriteRule ^blog/(.*)/(.*)$ ./blog.php?cod=$2
