@@ -1,5 +1,5 @@
 <?php
-require_once "Config/Autoload.php";
+ require_once "Config/Autoload.php";
 Config\Autoload::runSitio();
 $template = new Clases\TemplateSite();
 $funciones = new Clases\PublicFunction();
@@ -1026,3 +1026,12 @@ $productDataRel = $productos->listWithOps('', ' RAND() ', '');
 <?php
 $template->themeEnd();
 ?>
+
+<script>
+    $("a.nav").each(function (){
+        console.log(this.href);
+    });
+</script>
+
+
+

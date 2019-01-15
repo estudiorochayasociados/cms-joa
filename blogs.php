@@ -68,20 +68,20 @@ if(@count($_GET) == 0) {
                                         $fecha = explode("-", $nov['fecha']);
                                         ?>
                                         <div class="postWrapper v1">
-                                            <a class="post-img" href="<?php echo URL . '/blog/' . $funciones->normalizar_link($nov['titulo']) . "/" . $nov['id'] ?>"
+                                            <a class="post-img" href="<?php echo URL . '/blog/' . $funciones->normalizar_link($nov['titulo']) . "/" . $nov['cod'] ?>"
                                                style="height:440px;background:url(<?= URL . '/' . $img['ruta'] ?>)center/cover;">
                                             </a>
                                             <div class="date">
                                                 <span class="poster"><?php echo $fecha[2] . "/" . $fecha[1] . "/" . $fecha[0] ?></span>
                                             </div>
                                             <div class="post-title">
-                                                <a href="<?php echo URL . '/blog/' . $funciones->normalizar_link($nov['titulo']) . "/" . $nov['id'] ?>"><?= ucfirst($nov['titulo']) ?></a>
+                                                <a href="<?php echo URL . '/blog/' . $funciones->normalizar_link($nov['titulo']) . "/" . $nov['cod'] ?>"><?= ucfirst($nov['titulo']) ?></a>
                                             </div>
                                             <div class="post-content">
                                                 <p><?php echo strip_tags(substr($nov["desarrollo"],0,400)); ?>...</p>
                                             </div>
                                             <div class="link-readmore">
-                                                <a title="Leer más" href="<?php echo URL . '/blog/' . $funciones->normalizar_link($nov['titulo']) . "/" . $nov['id'] ?>">Leer más</a>
+                                                <a title="Leer más" href="<?php echo URL . '/blog/' . $funciones->normalizar_link($nov['titulo']) . "/" . $nov['cod'] ?>">Leer más</a>
                                             </div>
                                         </div>
                                         <?php

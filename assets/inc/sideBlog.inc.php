@@ -22,13 +22,13 @@ $imagenesSide= new Clases\Imagenes();
                             ?>
                             <div class="item-child">
                                 <div class="item-img">
-                                    <a class="post-img" title="<?= ucfirst($novSide['titulo']); ?>" href="<?php echo URL . '/blog/' . $funcionesSide->normalizar_link($novSide['titulo']) . "/" . $novSide['id'] ?>">
+                                    <a class="post-img" title="<?= ucfirst($novSide['titulo']); ?>" href="<?php echo URL . '/blog/' . $funcionesSide->normalizar_link($novSide['titulo']) . "/" . $novSide['cod'] ?>">
                                         <img alt="" src="<?= URL. '/' . $imgSide['ruta'] ?>">
                                     </a>
                                 </div>
                                 <div class="item-content">
                                     <div class="post-title">
-                                        <a title="<?= ucfirst($novSide['titulo']); ?>" href="<?php echo URL . '/blog/' . $funcionesSide->normalizar_link($novSide['titulo']) . "/" . $novSide['id'] ?>" > <?= substr(ucfirst($novSide['titulo']),0,20) ?>... </a>
+                                        <a title="<?= ucfirst($novSide['titulo']); ?>" href="<?php echo URL . '/blog/' . $funcionesSide->normalizar_link($novSide['titulo']) . "/" . $novSide['cod'] ?>" > <?= substr(ucfirst($novSide['titulo']),0,20) ?>... </a>
                                     </div>
                                     <div class="date">
                                         <i class="fa fa-calendar-o"></i>

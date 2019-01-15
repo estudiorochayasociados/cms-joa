@@ -10,12 +10,14 @@ RewriteRule ^productos/(.*)/(.*)/(.*)/(.*)$ ./productos.php?$1=$2&$3=$4&$5=$6
 RewriteRule ^contacto ./contact.php
 RewriteRule ^checkout(.*)/(.*)/(.*)$ ./checkout.php?cod_pedido=$2&tipo_pedido=$3
 RewriteRule ^inicio ./index.php
-RewriteRule ^blog/(.*)/(.*)$ ./blog.php?id=$2
+RewriteRule ^blog/(.*)/(.*)$ ./blog.php?cod=$2
 RewriteRule ^pagar/(.*)/(.*)$ ./pagar.php?metodos-pago=$2
 RewriteRule ^carrito/(.*)/(.*)$ ./carrito.php?metodos-pago=$2
 RewriteRule ^c/(.*)/(.*)$ ./contenidos.php?id=$2
 RewriteRule ^sesion/(.*)/(.*)$ ./sesion.php?op=$2
 RewriteRule ^landing/(.*)/(.*)$ ./landing.php?cod=$2
+RewriteRule ^servicios/(.*)/(.*)$ ./servicios.php?cod=$2
+RewriteRule ^portfolio/(.*)/(.*)$ ./portfolio.php?cod=$2
 
 
 ErrorDocument 404 https://www.pintureriasariel.com.ar/404
