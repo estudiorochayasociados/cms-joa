@@ -25,7 +25,7 @@ if (isset($_POST["agregar"])) {
     $productos->set("fecha", $funciones->antihack_mysqli(isset($_POST["fecha"]) ? $_POST["fecha"] : date("Y-m-d")));
     $productos->set("meli", $funciones->antihack_mysqli(isset($_POST["meli"]) ? $_POST["meli"] : ''));
     $productos->set("url", $funciones->antihack_mysqli(isset($_POST["url"]) ? $_POST["url"] : ''));
-
+/*
     foreach ($_FILES['files']['name'] as $f => $name) {
         $imgInicio = $_FILES["files"]["tmp_name"][$f];
         $tucadena  = $_FILES["files"]["name"][$f];
@@ -57,9 +57,11 @@ if (isset($_POST["agregar"])) {
 
         $count++;
     }
+*/
 
+    $productos->add_meli();
     $productos->add();
-    $funciones->headerMove(URL . "/index.php?op=productos");
+    //$funciones->headerMove(URL . "/index.php?op=productos");
 }
 ?>
 

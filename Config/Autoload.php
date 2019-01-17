@@ -2,12 +2,14 @@
 namespace config;
 class autoload
 {
+
     public static function runSitio()
     {
+        require_once "Config/Minify.php";
         session_start();
         $_SESSION["cod_pedido"] = mb_strtoupper(isset($_SESSION["cod_pedido"]) ? $_SESSION["cod_pedido"] : substr(md5(uniqid(rand())), 0, 10));
-        define('URL', "http://".$_SERVER['HTTP_HOST']."/pintureria%20ariel");
-        define('CANONICAL', "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"]);
+        define('URL', "http://" . $_SERVER['HTTP_HOST'] . "/pintureriaariel");
+        define('CANONICAL', "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
         define('GOOGLE_TAG', "GTM-M4M4KJJ");
         define('TITULO', "Pintureria Ariel");
         define('TELEFONO', "5555555");
@@ -20,8 +22,7 @@ class autoload
         define('LOGO', URL . "/assets/images/logo.png");
         define('APP_ID_FB', "");
         spl_autoload_register(
-            function($clase)
-            {
+            function ($clase) {
                 $ruta = str_replace("\\", "/", $clase) . ".php";
                 include_once $ruta;
             }
@@ -31,10 +32,9 @@ class autoload
     public static function runSitio2()
     {
         spl_autoload_register(
-            function($clase)
-            {
+            function ($clase) {
                 $ruta = str_replace("\\", "/", $clase) . ".php";
-                include_once "../../".$ruta;
+                include_once "../../" . $ruta;
             }
         );
     }
@@ -42,13 +42,12 @@ class autoload
     public static function runAdmin()
     {
         session_start();
-        define('URLSITE',"http://".$_SERVER['HTTP_HOST']."/pintureria%20ariel");
-        define('URL', "http://".$_SERVER['HTTP_HOST']."/pintureria ariel/admin");
-        define('CANONICAL', "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"]);
+        define('URLSITE', "http://" . $_SERVER['HTTP_HOST'] . "/pintureriaariel");
+        define('URL', "http://" . $_SERVER['HTTP_HOST'] . "/pintureriaariel/admin");
+        define('CANONICAL', "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
         require_once "../Clases/Zebra_Image.php";
         spl_autoload_register(
-            function ($clase)
-            {
+            function ($clase) {
                 $ruta = str_replace("\\", "/", $clase) . ".php";
                 include_once "../" . $ruta;
             }

@@ -193,11 +193,13 @@ asort($pedidosArraySinAgrupar);
                             <?= $value["tipo"] ?>
                         </div>
                         <div class="clearfix"></div>
+                        <?php if($value["detalle"] != '') { ?>
                         <h6><b>OBSERVACIONES</b></h6>
                         <hr/>
                         <div class="alert alert-info" style="border-radius: 10px; padding: 10px;">
-                            <?= isset($value["detalle"]) ? $value["detalle"] : 'No hay observaciones del pedido'; ?>
+                            <?= $value["detalle"]; ?>
                         </div>
+                        <?php } ?>
                         <hr/>
                         <b>CAMBIAR ESTADO: </b>
                         <a href="<?= CANONICAL ?>&estado=1&cod=<?= $value['cod'] ?>" class="btn btn-warning">Pendiente</a>

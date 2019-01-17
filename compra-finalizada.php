@@ -20,13 +20,14 @@ $pedidos->set("cod", $cod_pedido);
 $pedido_info = $pedidos->info();
 
 if (count($_SESSION["carrito"]) == 0) {
-    $funciones->headerMove(URL . "/index");
+    //$funciones->headerMove(URL . "/index");
 }
-
 
 if ($estado_get != '') {
     $pedidos->set("estado", $estado_get);
     $pedidos->cambiar_estado();
+    $pedidos->set("cod", $cod_pedido);
+    $pedido_info = $pedidos->info();
 }
 
 switch ($pedido_info["estado"]) {

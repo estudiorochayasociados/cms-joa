@@ -44,7 +44,7 @@ $novedadesData = $novedades->list('');
                                    aria-controls="collapse<?= $value['id'] ?>"><span
                                             class="catCirculo">+</span></a>
                                 <a href="<?= URL ?>/productos?linea=<?= strtolower($funcionesIncSide->normalizar_link($value['categoria'])) ?>&id=<?= $value['id'] ?>">
-                                    <?= $value['categoria'] ?>
+                                    <b><?= $value['categoria'] ?></b>
                                 </a>
                             </li>
 

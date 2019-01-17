@@ -110,13 +110,12 @@ $enviarFooter = new Clases\Email();
     <!-- AND FOOTER MD LG-->
 </div>
 
-<script src="<?= URL ?>/assets/js/bootstrap.min.js"></script>
-<script src="<?= URL ?>/assets/js/less.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!--<script src="<?= URL ?>/assets/js/less.min.js"></script>-->
 <script src="<?= URL ?>/assets/js/owl-carousel/owl.carousel.min.js"></script>
 <script src="<?= URL ?>/assets/js/sns-extend.js"></script>
 <script src="<?= URL ?>/assets/js/custom.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script src="<?= URL ?>/assets/js/list-grid.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 
 <div style="position: fixed;bottom:20px;left:15px;z-index: 999">
     <a target="_blank" href="https://m.me/pintureria.ariel"

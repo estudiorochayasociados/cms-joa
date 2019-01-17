@@ -26,7 +26,7 @@ $pago = $pagos->view();
 $usuarioSesion = $usuarios->view_sesion();
 
 $carro = $carrito->return();
-$precio = $carrito->precioFinal();
+$precio = $carrito->precio_total();
 
 $timezone = -3;
 $fecha = gmdate("Y-m-j H:i:s", time() + 3600 * ($timezone + date("I")));
