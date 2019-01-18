@@ -19,6 +19,7 @@ class Productos
     public $description;
     public $fecha;
     public $meli;
+    public $img;
     public $url;
     private $con;
     private $funciones;
@@ -84,59 +85,48 @@ class Productos
         $meli = json_decode($meli, true);
         $meli_categoria = $meli["id"];
 
-        $cod_p = explode("/", $this->cod_producto);
         $data = '{
         "title": "' . $this->titulo . '",
         "category_id": "' . $meli_categoria . '",
         "price": ' . $this->precio . ',
         "currency_id": "ARS",
-        "available_quantity": 1,
+        "available_quantity": '.$this->stock.',
         "buying_mode": "buy_it_now",
         "listing_type_id": "gold_special",
         "condition": "new",
-        "description": "' . $this->titulo . '",
+        "description": "' . $this->desarrollo . '",
         "tags": [
         "immediate_payment"
         ],
-        "pictures": [
-            {
-                "source": "http://c1361264.ferozo.com/assets/archivos/img_productos/' . $cod_p[0] . '/' . str_replace("/", "-", $this->cod_producto) . '.jpg";
-            }]
+        "pictures": [' . $this->img . ']
         }';
 
+        //echo $data;
         $meli = $this->funciones->curl("POST", "https://api.mercadolibre.com/items?access_token=" . $_SESSION["access_token"], $data);
-        var_dump($meli);
+        $meli = json_decode($meli, true);
+        return $meli;
     }
 
 
     public function edit_meli()
     {
-
-        $meli = $this->funciones->curl("GET", "https://api.mercadolibre.com/sites/MLA/category_predictor/predict?title=" . $this->funciones->normalizar_meli($this->titulo) . "", "");
-        $meli = json_decode($meli, true);
-        $meli_categoria = $meli["path_from_root"][0]["id"];
-        echo $meli_categoria;
-        $cod_p = explode("/", $this->cod_producto);
         $data = '{
-        "title": "' . $this->titulo . '",
-        "category_id": "' . $meli_categoria . '",
-        "price": ' . $this->precio . ',
-        "currency_id": "ARS",
-        "available_quantity": 1,
-        "buying_mode": "buy_it_now",
-        "listing_type_id": "gold_special",
-        "condition": "new",
-        "description": "' . $this->titulo . '",
-        "tags": [
-        "immediate_payment"
-        ],
-        "pictures": [
-            {
-                "source": "http://c1361264.ferozo.com/assets/archivos/img_productos/' . $cod_p[0] . '/' . str_replace("/", "-", $this->cod_producto) . '.jpg";
-            }]
+        "title": "' . $this->titulo . '",  
+        "price": ' . $this->precio . ', 
+        "available_quantity": '.$this->stock.',     
+        "pictures": [' . $this->img . ']
         }';
-        $meli = $this->funciones->curl("POST", "https://api.mercadolibre.com/items?access_token=" . $_SESSION["access_token"], $data);
-        var_dump($meli);
+        $meli = $this->funciones->curl("PUT", "https://api.mercadolibre.com/items/$this->meli?access_token=" . $_SESSION["access_token"], $data);
+        return $meli;
+    }
+
+    public function delete_meli()
+    {
+        $data_status = '{ "status":"closed" }';
+        $data_delete = '{ "deleted":"true" }';
+        $meli = $this->funciones->curl("PUT", "https://api.mercadolibre.com/items/$this->meli?access_token=" . $_SESSION["access_token"], $data_status);
+        $meli = $this->funciones->curl("PUT", "https://api.mercadolibre.com/items/$this->meli?access_token=" . $_SESSION["access_token"], $data_delete);
+        return $meli;
     }
 
 

@@ -40,6 +40,11 @@ if (is_array($data)) {
 if (isset($_GET["borrar"])) {
     $cod = $funciones->antihack_mysqli(isset($_GET["borrar"]) ? $_GET["borrar"] : '');
     $productos->set("cod", $cod);
+    $producto = $productos->view("cod = '$cod'");
+    if($producto["meli"] != '') {
+        $productos->set("meli",$producto["meli"]);
+        $_meli = $productos->delete_meli();
+    }
     $imagenes->set("cod", $cod);
     $productos->delete();
     $imagenes->deleteAll();
