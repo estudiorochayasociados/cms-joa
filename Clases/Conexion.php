@@ -3,8 +3,7 @@
 class Conexion
 {
     //private $datos = array("host"=> "localhost","user"=> "root","pass"=> "","db"  => "pintureria_ariel");
-    //private $datos = array("host"=> "162.144.180.63","user"=> "estudfh2_ariel","pass"=> "faAr2010","db"  => "estudfh2_ariel");
-    private $datos = array("host"=> "estudiorochayasoc.com","user"=> "estudfh2_ariel","pass"=> "faAr2010","db"  => "estudfh2_ariel");
+    private $datos = array("host"=> "162.144.180.63","user"=> "estudfh2_ariel","pass"=> "faAr2010","db"  => "estudfh2_ariel");
 
     private $con;
 
