@@ -8,7 +8,7 @@ class autoload
         require_once "Config/Minify.php";
         session_start();
         $_SESSION["cod_pedido"] = mb_strtoupper(isset($_SESSION["cod_pedido"]) ? $_SESSION["cod_pedido"] : substr(md5(uniqid(rand())), 0, 10));
-        define('URL', "http://" . $_SERVER['HTTP_HOST'] . "/pintureriaariel");
+        define('URL', "http://" . $_SERVER['HTTP_HOST'] . "");
         define('CANONICAL', "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
         define('GOOGLE_TAG', "GTM-M4M4KJJ");
         define('TITULO', "Pintureria Ariel");
@@ -42,8 +42,8 @@ class autoload
     public static function runAdmin()
     {
         session_start();
-        define('URLSITE', "http://" . $_SERVER['HTTP_HOST'] . "/pintureriaariel");
-        define('URL', "http://" . $_SERVER['HTTP_HOST'] . "/pintureriaariel/admin");
+        define('URLSITE', "http://" . $_SERVER['HTTP_HOST'] . "");
+        define('URL', "http://" . $_SERVER['HTTP_HOST'] . "/admin");
         define('CANONICAL', "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
         require_once "../Clases/Zebra_Image.php";
         spl_autoload_register(
