@@ -90,11 +90,11 @@ class Productos
         "category_id": "' . $meli_categoria . '",
         "price": ' . $this->precio . ',
         "currency_id": "ARS",
-        "available_quantity": '.$this->stock.',
+        "available_quantity": ' . $this->stock . ',
         "buying_mode": "buy_it_now",
         "listing_type_id": "gold_special",
         "condition": "new",
-        "description": "' . $this->desarrollo . '",
+        "description": {"plain_text": "' . strip_tags($this->desarrollo) . '"},
         "tags": [
         "immediate_payment"
         ],
@@ -113,7 +113,7 @@ class Productos
         $data = '{
         "title": "' . $this->titulo . '",  
         "price": ' . $this->precio . ', 
-        "available_quantity": '.$this->stock.',     
+        "available_quantity": ' . $this->stock . ',      
         "pictures": [' . $this->img . ']
         }';
         $meli = $this->funciones->curl("PUT", "https://api.mercadolibre.com/items/$this->meli?access_token=" . $_SESSION["access_token"], $data);

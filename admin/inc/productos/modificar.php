@@ -85,8 +85,9 @@ if (isset($_POST["agregar"])) {
         }
     }
 
+    var_dump($_meli);
     $productos->edit();
-    $funciones->headerMove(URL . "/index.php?op=productos");
+    //$funciones->headerMove(URL . "/index.php?op=productos");
 }
 ?>
 
