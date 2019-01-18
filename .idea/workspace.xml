@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d06e5cdf-69fd-40c2-9307-1de6517dce6d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clases/Productos.php" beforeDir="false" afterPath="$PROJECT_DIR$/Clases/Productos.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/inc/productos/agregar.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/inc/productos/agregar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/inc/productos/modificar.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/inc/productos/modificar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/inc/productos/ver.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/inc/productos/ver.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clases/Conexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Clases/Conexion.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,11 +43,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/inc/productos/ver.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="739">
-              <caret line="50" column="4" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
+            <state relative-caret-position="501">
+              <caret line="36" column="10" lean-forward="true" selection-start-line="36" selection-start-column="10" selection-end-line="36" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Clases/Contacto.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Clases/Conexion.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="131" selection-start-line="5" selection-start-column="131" selection-end-line="5" selection-end-column="131" />
             </state>
           </provider>
         </entry>
@@ -161,7 +172,6 @@
         <option value="$PROJECT_DIR$/assets/inc/sideIndex.inc.php" />
         <option value="$PROJECT_DIR$/Config/Minify.php" />
         <option value="$PROJECT_DIR$/.htaccess" />
-        <option value="$PROJECT_DIR$/Clases/Conexion.php" />
         <option value="$PROJECT_DIR$/Config/Autoload.php" />
         <option value="$PROJECT_DIR$/admin/inc/header.inc.php" />
         <option value="$PROJECT_DIR$/Clases/Meli.php" />
@@ -175,6 +185,7 @@
         <option value="$PROJECT_DIR$/admin/inc/productos/modificar.php" />
         <option value="$PROJECT_DIR$/Clases/Productos.php" />
         <option value="$PROJECT_DIR$/admin/inc/productos/ver.php" />
+        <option value="$PROJECT_DIR$/Clases/Conexion.php" />
       </list>
     </option>
   </component>
@@ -315,12 +326,12 @@
       <workItem from="1547729485722" duration="1183000" />
       <workItem from="1547757069496" duration="920000" />
       <workItem from="1547758067748" duration="6956000" />
-      <workItem from="1547809858705" duration="3849000" />
+      <workItem from="1547809858705" duration="5180000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="252966000" />
+    <option name="totallyTimeSpent" value="254297000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -397,9 +408,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/contacto.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/Clases/Novedades.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="969">
@@ -594,13 +602,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Clases/Conexion.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="25" lean-forward="true" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Clases/Email.php">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -737,8 +738,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/inc/productos/ver.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="739">
-          <caret line="50" column="4" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
+        <state relative-caret-position="501">
+          <caret line="36" column="10" lean-forward="true" selection-start-line="36" selection-start-column="10" selection-end-line="36" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Clases/Contacto.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Clases/Conexion.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="131" selection-start-line="5" selection-start-column="131" selection-end-line="5" selection-end-column="131" />
         </state>
       </provider>
     </entry>

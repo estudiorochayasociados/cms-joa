@@ -2,7 +2,8 @@
 
 class Conexion
 {
-    private $datos = array("host"=> "localhost","user"=> "root","pass"=> "","db"  => "pintureria_ariel");
+    //private $datos = array("host"=> "localhost","user"=> "root","pass"=> "","db"  => "pintureria_ariel");
+    private $datos = array("host"=> "sql10.freemysqlhosting.net","user"=> "sql10274708","pass"=> "Gf8ZhMiV6u","db"  => "sql10274708");
 
     private $con;
 
