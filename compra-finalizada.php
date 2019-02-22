@@ -4,23 +4,24 @@ Config\Autoload::runSitio();
 $template = new Clases\TemplateSite();
 $funciones = new Clases\PublicFunction();
 
+$template->set("title", "Pinturería Ariel | Compra finalizada");
+$template->set("description", "Gracias por cerra tu operación en nuestra plataforma online");
+$template->set("keywords", "compra de pintura online, carrito de pintura online, compra pintureria, pintura online, pintureria online");
 
-$template->set("title", "Compra finalizada");
-$template->set("description", "Compra finalizada");
-$template->set("keywords", "Compra finalizada");
 $template->set("favicon", LOGO);
 $template->themeInit();
-$estado_get = isset($_GET["estado"]) ? $_GET["estado"] : '';
 $pedidos = new Clases\Pedidos();
 $carritos = new Clases\Carrito();
 $contenido = new Clases\Contenidos();
 $correo = new Clases\Email();
+
+$estado_get = $funciones->antihack_mysqli(isset($_GET["estado"]) ? $_GET["estado"] : '');
 $cod_pedido = $_SESSION["cod_pedido"];
 $pedidos->set("cod", $cod_pedido);
 $pedido_info = $pedidos->info();
 
 if (count($_SESSION["carrito"]) == 0) {
-    //$funciones->headerMove(URL . "/index");
+    $funciones->headerMove(URL . "/index");
 }
 
 if ($estado_get != '') {

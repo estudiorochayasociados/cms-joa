@@ -3,14 +3,14 @@ require_once "Config/Autoload.php";
 Config\Autoload::runSitio();
 $template = new Clases\TemplateSite();
 $funciones = new Clases\PublicFunction();
-$template->set("title", "Cierre de compra");
-$template->set("description", "Cierre de compra");
-$template->set("keywords", "Cierre de compra");
+$template->set("title", "Pinturería Ariel | Cierre de compra");
+$template->set("description", "Finalizá tu compra eligiendo tu medio de pago y la forma de envío");
+$template->set("keywords", "compra de pintura online, carrito de pintura online, compra pintureria, pintura online, pintureria online");
 $template->set("favicon", LOGO);
 $template->themeInit();
 
-$cod_pedido = isset($_GET["cod_pedido"]) ? $_GET["cod_pedido"] : '';
-$tipo_pedido = isset($_GET["tipo_pedido"]) ? $_GET["tipo_pedido"] : '';
+$cod_pedido = $funciones->antihack_mysqli(isset($_GET["cod_pedido"]) ? $_GET["cod_pedido"] : '');
+$tipo_pedido = $funciones->antihack_mysqli(isset($_GET["tipo_pedido"]) ? $_GET["tipo_pedido"] : '');
 
 $carrito = new Clases\Carrito();
 $pedidos = new Clases\Pedidos();

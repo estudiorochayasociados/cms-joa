@@ -14,7 +14,7 @@ $carro = $carrito->return();
 $filterRubrosCategorias = array("categoria != '' GROUP BY categoria");
 $rubrosArrayCategorias = $rubros->list($filterRubrosCategorias, "categoria ASC", "");
 
-$buscar = isset($_GET["buscar"]) ? $_GET["buscar"] : '';
+$buscar = $funcionesNav->antihack_mysqli(isset($_GET["buscar"]) ? $_GET["buscar"] : '');
 foreach ($categoriasDataNav as $valNav) {
     if ($valNav['titulo'] == 'Botonera' && $valNav['area'] == 'banners') {
         $bannersNav->set("categoria", $valNav['cod']);
@@ -49,7 +49,7 @@ foreach ($categoriasDataNav as $valNav) {
                             </div>
                             <div class="customer-ct content">
                                 <ul class="links">
-                                    <?php if (isset($_SESSION["usuarios"])): ?>
+                                    <?php if (isset($_SESSION["usuarios"])){ ?>
                                         <li>
                                             <a class="top-link-myaccount" title="cuenta" href="<?= URL ?>/sesion">Mi
                                                 cuenta</a>
@@ -57,16 +57,14 @@ foreach ($categoriasDataNav as $valNav) {
                                         <li>
                                             <a class="top-link-login" title="salir" href="<?= URL ?>/sesion/logout">Salir</a>
                                         </li>
-                                    <?php else: ?>
+                                    <?php } else { ?>
                                         <li class=" last">
-                                            <a class="top-link-login" data-toggle="modal" data-target="#login"
-                                               title="Iniciar sesion" href="#">Iniciar sesión</a>
+                                            <a href="<?= URL ?>/usuarios">Iniciar sesión</a>
                                         </li>
                                         <li class=" last">
-                                            <a class="top-link-login" data-toggle="modal" data-target="#registrar"
-                                               title="Registrar" href="#">Registrar</a>
+                                            <a href="<?= URL ?>/usuarios">Registrar</a>
                                         </li>
-                                    <?php endif; ?>
+                                    <?php } ?>
                                 </ul>
                             </div>
                         </div>

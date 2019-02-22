@@ -1,10 +1,10 @@
 <?php
 $categorias = new Clases\Categorias(); 
-$cod   = isset($_GET["cod"]) ? $_GET["cod"] : '';
+$imagenes  = new Clases\Imagenes();
+$zebra     = new Clases\Zebra_Image();
+$cod   = $funciones->antihack_mysqli(isset($_GET["cod"]) ? $_GET["cod"] : '');
 $categorias->set("cod", $cod);
 $data = $categorias->view();
-$imagenes  = new Clases\Imagenes();  
-$zebra     = new Clases\Zebra_Image();
 
 if (isset($_POST["agregar"])) {
     $count = 0;    

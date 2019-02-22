@@ -15,8 +15,8 @@ $funciones = new Clases\PublicFunction();
 if (!isset($_SESSION["admin"])) {
     $admin->loginForm();
 } else {
-    $op = isset($_GET["op"]) ? $_GET["op"] : 'inicio';
-    $accion = isset($_GET["accion"]) ? $_GET["accion"] : 'ver';
+    $op = $funciones->antihack_mysqli(isset($_GET["op"]) ? $_GET["op"] : 'inicio');
+    $accion = $funciones->antihack_mysqli(isset($_GET["accion"]) ? $_GET["accion"] : 'ver');
     if ($op != '') {
         if ($op == "salir") {
             session_destroy();

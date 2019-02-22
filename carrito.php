@@ -3,9 +3,9 @@ require_once "Config/Autoload.php";
 Config\Autoload::runSitio();
 $template = new Clases\TemplateSite();
 $funciones = new Clases\PublicFunction();
-$template->set("title", "Admin");
-$template->set("description", "Admin");
-$template->set("keywords", "Inicio");
+$template->set("title", "Pinturería Ariel | Carrito de Compra");
+$template->set("description", "Finalizá tu compra eligiendo tu medio de pago y la forma de envío");
+$template->set("keywords", "compra de pintura online, carrito de pintura online, compra pintureria, pintura online, pintureria online");
 $template->set("favicon", LOGO);
 $template->themeInit();
 //Clases
@@ -111,6 +111,14 @@ $carroEnvio = $carrito->checkEnvio();
                             <tbody>
                             <?php
                             if (isset($_GET["remover"])) {
+                                $carroPago = $carrito->checkPago();
+                                if ($carroPago != '') {
+                                    $carrito->delete($carroPago);
+                                }
+                                $carroEnvio = $carrito->checkEnvio();
+                                if ($carroEnvio != '') {
+                                    $carrito->delete($carroEnvio);
+                                }
                                 $carrito->delete($_GET["remover"]);
                                 $funciones->headerMove(URL . "/carrito");
                             }
@@ -154,8 +162,8 @@ $carroEnvio = $carrito->checkEnvio();
                     </div>
                     <form class="form-right pull-right col-md-6" method="post">
                         <?php
-                        $metodo = isset($_POST["metodos-pago"]) ? $_POST["metodos-pago"] : '';
-                        $metodo_get = isset($_GET["metodos-pago"]) ? $_GET["metodos-pago"] : '';
+                        $metodo = $funciones->antihack_mysqli(isset($_POST["metodos-pago"]) ? $_POST["metodos-pago"] : '');
+                        $metodo_get = $funciones->antihack_mysqli(isset($_GET["metodos-pago"]) ? $_GET["metodos-pago"] : '');
                         if ($metodo != '') {
                             $key_metodo = $carrito->checkPago();
                             $carrito->delete($key_metodo);

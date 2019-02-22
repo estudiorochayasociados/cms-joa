@@ -78,11 +78,17 @@ if (isset($_POST["agregar"])) {
         </label>
         <label class="col-md-2">
             Invitado (1 Si, 0 No):<br/>
-            <input type="number" min="0" max="1" name="invitado" value="<?=$usuario['invitado'];?>" />
+            <select name="invitado" class="form-control">
+                <option value="1" <?php if($usuario["invitado"] == 1) { echo "selected"; } ?>>SI</option>
+                <option value="0" <?php if($usuario["invitado"] == 0) { echo "selected"; } ?>>NO</option>
+            </select>
         </label>
         <label class="col-md-2">
             Tipo (1 Mayorista, 0 Minorista):<br/>
-            <input type="number" min="0" max="1" name="descuento" value="<?=$usuario['descuento'];?>" />
+            <select name="descuento" class="form-control">
+                <option value="1" <?php if($usuario["descuento"] == 1) { echo "selected"; } ?>>SI</option>
+                <option value="0" <?php if($usuario["descuento"] == 0) { echo "selected"; } ?>>NO</option>
+            </select>
         </label>
         <div class="clearfix"></div><br/>
         <div class="col-md-12">

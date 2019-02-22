@@ -80,19 +80,19 @@ class Imagenes
     function listForProduct() {
         $array = array();
         $sql   = "SELECT * FROM `imagenes` WHERE cod = '{$this->cod}' ORDER BY id ASC";
-        $notas = $this->con->sqlReturn($sql);
+        $imagenes = $this->con->sqlReturn($sql);
 
-       // if ($notas) {
-       //     while ($row = mysqli_fetch_assoc($notas)) {
+       // if ($imagenes) {
+       //     while ($row = mysqli_fetch_assoc($imagenes)) {
        //         $array[] = $row;
        //     }
        //     return $array;
        // }
-        if ($notas===NULL) {
+        if ($imagenes===NULL) {
             $row['ruta']      =  "assets/archivos/sin_imagen.jpg";
         return $row;
         }else {
-            while ($row = mysqli_fetch_assoc($notas)) {
+            while ($row = mysqli_fetch_assoc($imagenes)) {
                  $array[] = $row;
              }
              return $array;
@@ -109,13 +109,33 @@ class Imagenes
         }
 
         $sql   = "SELECT * FROM `imagenes` $filterSql  ORDER BY id ASC";
-        $notas = $this->con->sqlReturn($sql);
+        $imagenes = $this->con->sqlReturn($sql);
 
-        if ($notas) {
-            while ($row = mysqli_fetch_assoc($notas)) {
+        if ($imagenes) {
+            while ($row = mysqli_fetch_assoc($imagenes)) {
                 $array[] = $row;
             }
             return $array;
+        }
+    }
+
+    function list_meli($filter) {
+        $array = array();
+        if (is_array($filter)) {
+            $filterSql = "WHERE ";
+            $filterSql .= implode(" AND ", $filter);
+        } else {
+            $filterSql = '';
+        }
+
+        $sql   = "SELECT * FROM `imagenes` $filterSql  ORDER BY id ASC";
+        $imagenes = $this->con->sqlReturn($sql);
+        $img = '';
+        if ($imagenes) {
+            while ($row = mysqli_fetch_assoc($imagenes)) {
+                $img .= '{"source":"' . URLSITE . "/" .$row["ruta"] . '"},';
+            }
+            return $img;
         }
     }
 

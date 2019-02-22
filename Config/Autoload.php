@@ -8,7 +8,7 @@ class autoload
         require_once "Config/Minify.php";
         session_start();
         $_SESSION["cod_pedido"] = mb_strtoupper(isset($_SESSION["cod_pedido"]) ? $_SESSION["cod_pedido"] : substr(md5(uniqid(rand())), 0, 10));
-        define('URL', "http://" . $_SERVER['HTTP_HOST'] . "/pintureriaariel");
+        define('URL', "http://" . $_SERVER['HTTP_HOST'] . "/pintureria-ariel");
         define('CANONICAL', "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
         define('GOOGLE_TAG', "GTM-M4M4KJJ");
         define('TITULO', "Pintureria Ariel");
@@ -19,6 +19,7 @@ class autoload
         define('PASS_EMAIL', "weAr2010");
         define('SMTP_EMAIL', "estudiorochayasoc.com.ar");
         define('DIRECCION', "asdasdas a22");
+        define('SALT',hash("sha256","salt@estudiorochayasoc.com.ar"));
         define('LOGO', URL . "/assets/images/logo.png");
         define('APP_ID_FB', "");
         spl_autoload_register(
@@ -42,8 +43,8 @@ class autoload
     public static function runAdmin()
     {
         session_start();
-        define('URLSITE', "http://" . $_SERVER['HTTP_HOST'] . "/pintureriaariel");
-        define('URL', "http://" . $_SERVER['HTTP_HOST'] . "/pintureriaariel/admin");
+        define('URLSITE', "http://" . $_SERVER['HTTP_HOST'] . "/pintureria-ariel");
+        define('URL', "http://" . $_SERVER['HTTP_HOST'] . "/pintureria-ariel/admin");
         define('CANONICAL', "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
         require_once "../Clases/Zebra_Image.php";
         spl_autoload_register(

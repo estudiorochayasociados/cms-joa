@@ -3,7 +3,11 @@ require_once "Config/Autoload.php";
 Config\Autoload::runSitio();
 $template = new Clases\TemplateSite();
 $funciones = new Clases\PublicFunction();
-$template->set("title", "Gracias");
+
+$template->set("title", "Pinturería Ariel | Gracias por enviarnos un mensaje");
+$template->set("description", "Gracias por enviarnos tu mensaje, pronto responderemos");
+$template->set("keywords", "enviar contacto, especialistas en pinturas, contactar pintureria");
+$template->set("favicon", LOGO);
 $template->themeInit();
 //
 ?>

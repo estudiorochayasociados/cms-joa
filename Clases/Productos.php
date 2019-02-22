@@ -79,6 +79,33 @@ class Productos
     }
 
 
+    public function import_meli()
+    {
+        $productos = $this->listWithOps("", "", "0,300");
+        foreach ($productos as $producto) {
+            $meli = $this->funciones->curl("GET", "https://api.mercadolibre.com/sites/MLA/category_predictor/predict?title=" . $this->funciones->normalizar_meli($producto["titulo"]) . "", "");
+            $meli = json_decode($meli, true);
+            $meli_categoria = $meli["id"];
+            $data = '{
+                "title": "' . $producto["titulo"] . '",
+                "category_id": "' . $meli_categoria . '",
+                "price": ' . $producto["precio"] . ',
+                "currency_id": "ARS",
+                "available_quantity": 50,
+                "buying_mode": "buy_it_now",
+                "listing_type_id": "gold_special",
+                "condition": "new",
+                "description": {"plain_text": "Características: Látex Acrílico premium línea eco exteriores e interior de acabado mate, de máximo poder cubritivo, resistente a la formación de hongos y algas y de rápido secado.Se aplica sobre mampostería, revoque, yeso, papel, ladrillos, fribrocemento entro otros. Jupi decoradora la superficie en su amplia gama de colores por muchos años, su formulación le permite conservar permeabilidad al vapor de la mampostería sin ampollarse.Rendimiento: De 10 a 12 m2 por litro y por mano, variando según el color y la absorción de la superficie.Secado: Al tacto 1 hora no repintar antes de las 4 horas, secado final entre las 12 y 24 hs.mprimación preparación de la superficie: En superficies vírgenes, entizadas o muy absorbentes, aplicar previamente una mano de enduido con un 20% de agua y aplicar a modo de imprimación. En superficies repintadas eliminar con espátula y/o cepillo de alambre las partes flojas o descascaradas previamente a la aplicación de la mano de la imprimación. Eliminar hongos con agua y detergente.Aplicación: Se aplica a pincel o rodillo en dos manos sin diluir dejando secar entre manos.Primeros Auxilios: No ingerir, evitar inhalación prologada de los vapores. Mantener alejado del alcance de los niños.Ventilar ambientes en caso de inhalación prolongada. En caso de ingestión accidental consultar a un médico.Producto no infamable.Consultar stock antes de ofertar.Consultar precio por cantidad."},
+                "tags": [
+                "immediate_payment"
+                ],
+                "pictures" : [{"source":"https://assets.trome.pe/files/ec_article_multimedia_gallery/uploads/2018/04/17/5ad609d27c1a7.jpeg"}]
+                }';
+            $meli = $this->funciones->curl("POST", "https://api.mercadolibre.com/items?access_token=" . $_SESSION["access_token"], $data);
+            var_dump($meli);
+        }
+    }
+
     public function add_meli()
     {
         $meli = $this->funciones->curl("GET", "https://api.mercadolibre.com/sites/MLA/category_predictor/predict?title=" . $this->funciones->normalizar_meli($this->titulo) . "", "");
@@ -110,11 +137,11 @@ class Productos
 
     public function edit_meli()
     {
-        $data = '{
+            $data = '{
         "title": "' . $this->titulo . '",  
         "price": ' . $this->precio . ', 
         "available_quantity": ' . $this->stock . ',      
-        "pictures": [' . $this->img . ']
+        "pictures": [' . $this->img . ',{"source":"http://pintureriasariel.com.ar/Images/logo-grande.png"}]
         }';
         $meli = $this->funciones->curl("PUT", "https://api.mercadolibre.com/items/$this->meli?access_token=" . $_SESSION["access_token"], $data);
         return $meli;

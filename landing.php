@@ -9,7 +9,7 @@ $imagenes = new Clases\Imagenes();
 $landing = new Clases\Landing();
 $categorias = new Clases\Categorias();
 //Productos
-$cod = isset($_GET["cod"]) ? $_GET["cod"] : '';
+$cod = $funciones->antihack_mysqli(isset($_GET["cod"]) ? $_GET["cod"] : '');
 $landing->set("cod", $cod);
 $landing_ = $landing->view();
 $imagenes->set("cod", $landing_['cod']);

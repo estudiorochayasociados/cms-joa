@@ -67,7 +67,6 @@ if (isset($_POST["agregar"])) {
 
             $imagenes->set("cod", $cod);
             $imagenes->set("ruta", str_replace("../", "", $destinoRecortado));
-            $img_meli .= '{"source":"' . URLSITE . str_replace("../", "/", $destinoRecortado) . '"},';
             $imagenes->add();
         }
         $count++;
@@ -79,14 +78,14 @@ if (isset($_POST["agregar"])) {
             $_meli = $productos->add_meli();
             $productos->set("meli", $_meli["id"]);
         } else {
+            $img_meli = $imagenes->list_meli(array("cod = '$cod'"));
             $productos->set("meli", $producto["meli"]);
             $productos->set("img", substr($img_meli, 0, -1));
             $_meli = $productos->edit_meli();
         }
     }
-
-    var_dump($_meli);
     $productos->edit();
+    var_dump($_meli);
     //$funciones->headerMove(URL . "/index.php?op=productos");
 }
 ?>

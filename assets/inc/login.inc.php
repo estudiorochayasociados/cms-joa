@@ -1,20 +1,16 @@
 <?php
-$funcionesNav = new Clases\PublicFunction();
 //Clases
-$imagenesNav = new Clases\Imagenes();
+$funcionesNav = new Clases\PublicFunction();
 $usuario = new Clases\Usuarios();
-$categoriasNav = new Clases\Categorias();
-$bannersNav = new Clases\Banner();
-$carrito = new Clases\Carrito();
-$rubros = new Clases\Rubros();
-if (isset($_POST["login"])):
+
+if (isset($_POST["login"])) {
     $email = $funcionesNav->antihack_mysqli(isset($_POST["email"]) ? $_POST["email"] : '');
     $password = $funcionesNav->antihack_mysqli(isset($_POST["password"]) ? $_POST["password"] : '');
 
     $usuario->set("email", $email);
     $usuario->set("password", $password);
 
-    if ($usuario->login() == 0):
+    if (!$usuario->login()) {
         ?>
         <script>
             $(document).ready(function () {
@@ -22,11 +18,11 @@ if (isset($_POST["login"])):
                 $('#login').modal("show");
             });
         </script>
-    <?php
-    else:
+        <?php
+    } else {
         $funcionesNav->headerMove(CANONICAL);
-    endif;
-endif;
+    }
+}
 ?>
 <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myLogin" aria-hidden="true">
     <div class="modal-dialog">
@@ -49,7 +45,7 @@ endif;
                         <span class="input-group-addon"> <i class="login_icon glyphicon glyphicon-lock"></i></span>
                     </div>
                     <br/>
-                    <button type="submit" name="login" class="btn btn-submit">Ingresar</button>
+                    <button type="submit" name="login" class="btn btn-default">Ingresar</button>
                     <br/><br/>
                     <div class="text-left">
                         <a href="#">¿Olvidaste tu contraseña?</a>
@@ -61,8 +57,8 @@ endif;
 </div><!-- End modal -->
 <!-- REGISTRAR -->
 <?php
-if (isset($_POST["registrar"])):
-    if ($_POST["password"] == $_POST["password2"]):
+if (isset($_POST["registrar"])) {
+    if ($_POST["password"] == $_POST["password2"]) {
         $nombre = $funcionesNav->antihack_mysqli(isset($_POST["nombre"]) ? $_POST["nombre"] : '');
         $apellido = $funcionesNav->antihack_mysqli(isset($_POST["apellido"]) ? $_POST["apellido"] : '');
         $email = $funcionesNav->antihack_mysqli(isset($_POST["email"]) ? $_POST["email"] : '');
@@ -77,8 +73,10 @@ if (isset($_POST["registrar"])):
         $usuario->set("email", $email);
         $usuario->set("password", $password);
         $usuario->set("fecha", $fecha);
-
-        if ($usuario->add() == 0):
+        $usuario->set("invitado", 0);
+        $usuario->set("descuento", 0);
+        $add = $usuario->add();
+        if ($add == false) {
             ?>
             <script>
                 $(document).ready(function () {
@@ -86,12 +84,14 @@ if (isset($_POST["registrar"])):
                     $('#registrar').modal("show");
                 });
             </script>
-        <?php
-        else:
+            <?php
+        } else {
+            $email = $funcionesNav->antihack_mysqli(isset($_POST["email"]) ? $_POST["email"] : '');
+            $password = $funcionesNav->antihack_mysqli(isset($_POST["password"]) ? $_POST["password"] : '');
             $usuario->login();
-            $funcionesNav->headerMove(CANONICAL);
-        endif;
-    else:
+            $funcionesNav->headerMove(URL."/sesion");
+        }
+    } else {
         ?>
         <script>
             $(document).ready(function () {
@@ -99,9 +99,9 @@ if (isset($_POST["registrar"])):
                 $('#registrar').modal("show");
             });
         </script>
-    <?php
-    endif;
-endif;
+        <?php
+    }
+}
 ?>
 <div class="modal fade" id="registrar" tabindex="-1" role="dialog" aria-labelledby="registrar" aria-hidden="true">
     <div class="modal-dialog">
@@ -143,7 +143,7 @@ endif;
                         <span class="input-group-addon"> <i class="login_icon glyphicon glyphicon-lock"></i></span>
                     </div>
                     <br/>
-                    <button type="submit" name="registrar" class="btn btn-submit">Registrar</button>
+                    <button type="submit" name="registrar" class="btn btn-default">Registrar</button>
                 </form>
             </div>
         </div>

@@ -63,12 +63,16 @@ $maximoColumnas = "D";
                     $query = "insert into `productos` (`cod_producto`,`titulo`, `precio`, `precio_mayorista`,  `categoria`, `subcategoria`) VALUES ";
                     for ($row = 2; $row <= $total_rows; $row++) {
                         $single_row = $sheet->rangeToArray('A' . $row . ':' . $highest_column . $row, null, true, false);
+
+
                         if ($single_row[0][0] != '') {
                             $explotarId = explode("/", $single_row[0][0]);
                             $categoria = $explotarId[0];
                             $subcategoria = $explotarId[1];
                             echo "<tr>";
                             $query .= "(";
+                            $single_row[0][2] = number_format($single_row[0][2] * 1.21, 2,".","");
+                            $single_row[0][3] = number_format($single_row[0][3] * 1.21, 2,".","");
                             foreach ($single_row[0] as $key => $value) {
                                 $value = trim(str_replace("'", "", $value));
                                 $value = trim(str_replace('"', "", $value));
@@ -88,6 +92,7 @@ $maximoColumnas = "D";
                     echo '</table>';
                     unlink($file);
                     $_SESSION["query"] = $query;
+
                 } else {
                     echo '<span class="alert alert-danger">Archivo no subido</span>';
                 }
@@ -98,8 +103,6 @@ $maximoColumnas = "D";
             echo '<span class="alert alert-danger">Seleccionar primero el archivo a subir.</span>';
         }
     }
-
-    echo $query;
 
     if (isset($_POST["subir"])) {
         if (!empty($_SESSION["query"])) {

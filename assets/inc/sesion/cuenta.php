@@ -169,6 +169,6 @@ $usuarioData = $usuario->view();
             </div>
         </div>
         <br/>
-        <button type="submit" name="guardar" class="btn btn-submit ">Guardar</button>
+        <button type="submit" name="guardar" class="btn btn-default ">Guardar</button>
     </form>
 </div>

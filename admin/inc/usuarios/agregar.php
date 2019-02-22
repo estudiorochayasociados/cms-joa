@@ -78,11 +78,17 @@ if (isset($_POST["agregar"])) {
         </label>
         <label class="col-md-2">
             Invitado (1 Si, 0 No):<br/>
-            <input type="number" min="0" max="1" name="invitado" />
+            <select name="invitado" class="form-control">
+                <option value="1">SI</option>
+                <option value="0">NO</option>
+            </select>
         </label>
         <label class="col-md-2">
             Tipo (1 Mayorista, 0 Minorista):<br/>
-            <input type="number" min="0" max="1" name="descuento" />
+            <select name="descuento" class="form-control">
+                <option value="1">SI</option>
+                <option value="0">NO</option>
+            </select>
         </label>
         <div class="clearfix">
         </div><br/>

@@ -4,15 +4,15 @@ Config\Autoload::runSitio();
 $template = new Clases\TemplateSite();
 $funciones = new Clases\PublicFunction();
 $enviar = new Clases\Email();
-$template->set("title", "Pinturería Ariel | Contacto");
-$template->set("description", "Contacto Pinturería Ariel");
-$template->set("keywords", "Contacto Pinturería Ariel");
+$template->set("title", "Pinturería Ariel | Ingreso de Usuario");
+$template->set("description", "En este panel conocerás todo sobre tus herramientas");
+$template->set("keywords", "herramientas ecommerce, comercio electrónico de pinturas");
 $template->set("favicon", LOGO);
 $template->themeInit();
 $usuarios = new Clases\Usuarios();
 $usuarioSesion = $usuarios->view_sesion();
 if (count($usuarioSesion) == 0) {
-    $funciones->headerMove(URL . "/index");
+   $funciones->headerMove(URL . "/index");
 }
 ?>
 <body id="bd" class="cms-index-index2 header-style2 prd-detail sns-contact-us cms-simen-home-page-v2 default cmspage">
@@ -23,14 +23,20 @@ if (count($usuarioSesion) == 0) {
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div id="sns_titlepage"></div>
+                    <div id="sns_titlepage">
+
+                    </div>
                     <div id="sns_pathway" class="clearfix">
                         <div class="pathway-inner">
-                            <span class="icon-pointer "></span>
+                            <span class="icon-pointer ">
+
+                            </span>
                             <ul class="breadcrumbs">
                                 <li class="home">
                                     <a href="<?= URL . '/index' ?>">
-                                        <i class="fa fa-home"></i>
+                                        <i class="fa fa-home">
+
+                                        </i>
                                         <span>Inicio</span>
                                     </a>
                                 </li>
@@ -59,20 +65,42 @@ if (count($usuarioSesion) == 0) {
                                     <ul>
                                         <li>
                                             <a href="<?= URL ?>/sesion/cuenta">
-                                                <span class="no_line_h"><i class="fa fa-user"
-                                                                           aria-hidden="true"></i></span> Mi cuenta
+                                                <span class="no_line_h">
+                                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                                </span>
+                                                Mi cuenta
                                             </a>
                                         </li>
                                         <li>
                                             <a href="<?= URL ?>/sesion/pedidos">
-                                                <span class="no_line_h"><i class="fa fa-bookmark"
-                                                                           aria-hidden="true"></i></span> Mis
-                                                pedidos
+                                                <span class="no_line_h">
+                                                    <i class="fa fa-bookmark" aria-hidden="true"></i>
+                                                </span>
+                                                Mis pedidos
                                             </a>
                                         </li>
+                                        <?php
+                                        if (isset($usuarioSesion["descuento"])) {
+                                            if ($usuarioSesion["descuento"] == 1) {
+                                                ?>
+                                                <li>
+                                                    <a href="<?= URL ?>/sesion/lista-de-precios">
+                                                <span class="no_line_h">
+                                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                                </span>
+                                                        Lista de Precios
+                                                    </a>
+                                                </li>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
                                         <li>
                                             <a href="<?= URL ?>/sesion/logout">
-                                                <span class="no_line_h"><i class="fa fa-sign-out" aria-hidden="true"></i></span>Salir
+                                                <span class="no_line_h">
+                                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                                </span>
+                                                Salir
                                             </a>
                                         </li>
                                     </ul>
@@ -83,7 +111,7 @@ if (count($usuarioSesion) == 0) {
                 </div>
 
                 <?php
-                $op = isset($_GET["op"]) ? $_GET["op"] : 'pedidos';
+                $op = $funciones->antihack_mysqli(isset($_GET["op"]) ? $_GET["op"] : 'pedidos');
                 if ($op != '') {
                     include("assets/inc/sesion/" . $op . ".php");
                 }

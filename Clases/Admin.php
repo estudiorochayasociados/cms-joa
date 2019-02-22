@@ -82,8 +82,8 @@ class Admin {
                         <form role="form" method="post">
                             <?php
                             if (isset($_POST["login"])) {
-                                $admin->set("email", isset($_POST["email"]) ? $_POST["email"] : '');
-                                $admin->set("password", isset($_POST["password"]) ? $_POST["password"] : ''); 
+                                $admin->set("email", $funciones->antihack_mysqli(isset($_POST["email"]) ? $_POST["email"] : ''));
+                                $admin->set("password", $funciones->antihack_mysqli(isset($_POST["password"]) ? $_POST["password"] : ''));
                                 $adm = $admin->login();
                                 if($adm == 1) {
                                     $funciones->headerMove(URL."/index.php");

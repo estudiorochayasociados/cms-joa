@@ -237,4 +237,5 @@ class PublicFunction
 
         return $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $path . $query;
     }
+
 }

@@ -3,16 +3,18 @@ require_once "Config/Autoload.php";
 Config\Autoload::runSitio();
 $template  = new Clases\TemplateSite();
 $funciones = new Clases\PublicFunction();
-$template->set("title", "Admin");
-$template->set("description", "Admin");
-$template->set("keywords", "Inicio");
+$template->set("title", "Pinturería Ariel | Dejanos tus datos");
+$template->set("description", "Dejanos tus datos y seguí con tu compra");
+$template->set("keywords", "gracias por tu compra, compra online de pintura, compra online de articulos de pintura, pintureria online");
 $template->set("favicon", LOGO);
+$template->themeInit();
+
 $template->themeInit();
 $carrito    = new Clases\Carrito();
 $usuarios    = new Clases\Usuarios();
 $usuarioSesion = $usuarios->view_sesion();
 $cod_pedido   = $_SESSION["cod_pedido"];
-$tipo_pedido = isset($_GET["metodos-pago"]) ? $_GET["metodos-pago"] : '';
+$tipo_pedido = $funciones->antihack_mysqli(isset($_GET["metodos-pago"]) ? $_GET["metodos-pago"] : '');
 if($tipo_pedido == '') {
     $funciones->headerMove(URL . "/carrito");
 }

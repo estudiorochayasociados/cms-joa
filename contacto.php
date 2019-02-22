@@ -5,8 +5,8 @@ $template = new Clases\TemplateSite();
 $funciones = new Clases\PublicFunction();
 $enviar = new Clases\Email();
 $template->set("title", "Pinturería Ariel | Contacto");
-$template->set("description", "Contacto Pinturería Ariel");
-$template->set("keywords", "Contacto Pinturería Ariel");
+$template->set("description", "Envianos tus consultas y nosotros te las respondemos en menos de 24 horas");
+$template->set("keywords", "enviar contacto, especialistas en pinturas, contactar pintureria");
 $template->set("favicon", LOGO);
 $template->themeInit();
 //

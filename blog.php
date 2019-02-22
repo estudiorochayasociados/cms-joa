@@ -9,7 +9,7 @@ $imagenes = new Clases\Imagenes();
 $novedades = new Clases\Novedades();
 $banners = new Clases\Banner();
 //Productos
-$cod       = isset($_GET["cod"]) ? $_GET["cod"] : '';
+$cod       = $funciones->antihack_mysqli(isset($_GET["cod"]) ? $_GET["cod"] : '');
 $novedades->set("cod",$cod);
 $novedadData = $novedades->view();
 $imagenes->set("cod",$novedadData['cod']);

@@ -4,11 +4,11 @@ $pedidos = new Clases\Pedidos();
 $funciones = new Clases\PublicFunction();
 $usuarios = new Clases\Usuarios();
 
-$estadoFiltro = isset($_GET["estadoFiltro"]) ? $_GET["estadoFiltro"] : '';
-$estado = isset($_GET["estado"]) ? $_GET["estado"] : '';
-$cod = isset($_GET["cod"]) ? $_GET["cod"] : '';
-$tipo = isset($_GET["tipo"]) ? $_GET["tipo"] : '';
-$usuario = isset($_GET["usuario"]) ? $_GET["usuario"] : '';
+$estadoFiltro = $funciones->antihack_mysqli(isset($_GET["estadoFiltro"]) ? $_GET["estadoFiltro"] : '');
+$estado = $funciones->antihack_mysqli(isset($_GET["estado"]) ? $_GET["estado"] : '');
+$cod = $funciones->antihack_mysqli(isset($_GET["cod"]) ? $_GET["cod"] : '');
+$tipo = $funciones->antihack_mysqli(isset($_GET["tipo"]) ? $_GET["tipo"] : '');
+$usuario = $funciones->antihack_mysqli(isset($_GET["usuario"]) ? $_GET["usuario"] : '');
 
 if ($estado != '' && $cod != '' && $tipo != '' && $usuario != '') {
     $pedidos->set("estado", $estado);

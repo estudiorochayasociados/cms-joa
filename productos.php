@@ -1,13 +1,6 @@
 <?php
 require_once "Config/Autoload.php";
 Config\Autoload::runSitio();
-$template = new Clases\TemplateSite();
-$funciones = new Clases\PublicFunction();
-$template->set("title", "Pinturería Ariel | Productos");
-$template->set("description", "");
-$template->set("keywords", "");
-$template->set("favicon", LOGO);
-$template->themeInit();
 //Clases
 $productos = new Clases\Productos();
 $imagenes = new Clases\Imagenes();
@@ -15,13 +8,25 @@ $categorias = new Clases\Categorias();
 $subcategorias = new Clases\Subcategorias();
 $banners = new Clases\Banner();
 $rubros = new Clases\Rubros();
+$template = new Clases\TemplateSite();
+$funciones = new Clases\PublicFunction();
 
-$linea = isset($_GET["linea"]) ? $_GET["linea"] : '';
-$rubro = isset($_GET["rubro"]) ? $_GET["rubro"] : '';
-$id = isset($_GET["id"]) ? $_GET["id"] : '';
-$buscar = isset($_GET["buscar"]) ? $_GET["buscar"] : '';
-$orden_pagina = isset($_GET["order"]) ? $_GET["order"] : '';
-$pagina = isset($_GET["pagina"]) ? $_GET["pagina"] : '0';
+$linea = $funciones->antihack_mysqli(isset($_GET["linea"]) ? $_GET["linea"] : '');
+$rubro = $funciones->antihack_mysqli(isset($_GET["rubro"]) ? $_GET["rubro"] : '');
+$id = $funciones->antihack_mysqli(isset($_GET["id"]) ? $_GET["id"] : '');
+$buscar = $funciones->antihack_mysqli(isset($_GET["buscar"]) ? $_GET["buscar"] : '');
+$orden_pagina = $funciones->antihack_mysqli(isset($_GET["order"]) ? $_GET["order"] : '');
+$pagina = $funciones->antihack_mysqli(isset($_GET["pagina"]) ? $_GET["pagina"] : '0');
+if ($linea != '') {
+    $template->set("title", "Pinturería Ariel | " . ucwords(str_replace("-", " ", $linea)));
+} else {
+    $template->set("title", "Pinturería Ariel | Productos");
+}
+$template->set("description", "");
+$template->set("keywords", "");
+$template->set("favicon", LOGO);
+$template->themeInit();
+
 
 $filter = array();
 
@@ -331,7 +336,12 @@ $productosPaginador = $productos->paginador($filter, 24);
                                                         <a class="product-image have-additional"
                                                            href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productos['titulo']) . "/" . $productos['id'] ?>">
                                                             <span class="img-main">
+                                                                <?php
+                                                                if (getimagesize($rutaImg)) { ?>
                                                              <div style="height:200px;background:url(<?= $rutaImg ?>)no-repeat center center/contain;">
+                                                             <?php } else { ?>
+                                                             <div style="height:200px;background:url('assets/images/sin_imagen.jpg')no-repeat center center/contain;">
+                                                             <?php } ?>
                                                              </div>
                                                          </span>
                                                         </a>

@@ -11,7 +11,7 @@ $banners = new Clases\Banner();
 $carrito = new Clases\Carrito();
 //Productos
 
-$id = isset($_GET["id"]) ? $_GET["id"] : '';
+$id = $funciones->antihack_mysqli(isset($_GET["id"]) ? $_GET["id"] : '');
 $productos->set("id", $id);
 $productData = $productos->view();
 

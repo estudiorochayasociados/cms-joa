@@ -22,7 +22,7 @@ foreach (($data=$novedades->list("")) as $novedad) {
 foreach (($data=$productos->listWithOps("","titulo desc",'')) as $producto) {
     $cod = $producto["id"];
     $titulo = $funciones->normalizar_link($producto["titulo"]);
-    $xml .=  '<url><loc>'.URL.'/producto/'.$titulo.'/'.$cod.'</loc><lastmod>'.$producto["fecha"].'</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>';
+    $xml .=  '<url><loc>'.URL.'/producto/'.$titulo.'/'.$cod.'</loc><lastmod>'.date("Y-m-d").'</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>';
 }
 
 foreach (($data=$contenidos->list("")) as $contenido) {

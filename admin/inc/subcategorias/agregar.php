@@ -1,7 +1,8 @@
 <?php
 $categorias    = new Clases\Categorias();
 $subcategorias = new Clases\Subcategorias();
-$categoriaCod  = isset($_GET["cod"]) ? $_GET["cod"] : '';
+$funciones = new Clases\PublicFunction();
+$categoriaCod  = $funciones->antihack_mysqli(isset($_GET["cod"]) ? $_GET["cod"] : '');
 $categorias->set("cod",$categoriaCod);
 $dataCategoria = $categorias->view();
 $cate          = $categorias->list("");

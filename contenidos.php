@@ -8,11 +8,11 @@ $funciones = new Clases\PublicFunction();
 $contenidos = new Clases\Contenidos();
 //Productos
 
-$id = isset($_GET["id"]) ? $_GET["id"] : '';
+$id = $funciones->antihack_mysqli(isset($_GET["id"]) ? $_GET["id"] : '');
 $id = str_replace("-", " ", $id);
 $contenidos->set("cod", $id);
 $contenido = $contenidos->view();
-$template->set("title", ucfirst($contenido['cod']));
+$template->set("title", "Pinturería Ariel | ".ucfirst($contenido['cod']));
 $template->set("description", "");
 $template->set("keywords", "");
 $template->set("favicon", LOGO);

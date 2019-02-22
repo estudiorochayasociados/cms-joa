@@ -4,7 +4,7 @@ class Conexion
 {
     //private $datos = array("host"=> "localhost","user"=> "root","pass"=> "","db"  => "pintureria_ariel");
     //private $datos = array("host"=> "162.144.180.63","user"=> "estudfh2_ariel","pass"=> "faAr2010","db"  => "estudfh2_ariel");
-    private $datos = array("host"=> "localhost","user"=> "root","pass"=> "","db"  => "pintureria_ariel");
+    private $datos = array("host"=> "localhost","user"=> "root","pass"=> "root","db"  => "pintureria-ariel");
     private $con;
 
     public function __construct()
@@ -21,6 +21,11 @@ class Conexion
         return $conexion;
     }
 
+    public function backup()
+    {
+        return $this->datos;
+    }
+
     public function sql($query)
     {
         $this->con->query($query);
@@ -30,24 +35,5 @@ class Conexion
     {
         $dato = $this->con->query($query);
         return $dato;
-    }
-
-    public function backup($archivo, $sql, $compress) {
-        if ($compress) {
-            if (!($zf = gzopen($archivo, 'w9'))) {
-                $this->error = 'Can\'t create the output file.';
-                return false;
-            }
-            gzwrite($zf, $sql);
-            gzclose($zf);
-        } else {
-            if (!($f = fopen($archivo, 'w'))) {
-                $this->error = 'Can\'t create the output file.';
-                return false;
-            }
-            fwrite($f, $sql);
-            fclose($f);
-        }
-        return true;
     }
 }
