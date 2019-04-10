@@ -62,7 +62,9 @@ $carroEnvio = $carrito->checkEnvio();
                     <div class="col-md-12">
                         <div class="envio">
                             <?php
-                            $metodos_de_envios = $envios->list(array("peso >= " . $carrito->peso_final() . " OR peso = 0"));
+                            $pesoFinal = $carrito->peso_final();
+                            $tope = $envios->peso($pesoFinal);
+                            $metodos_de_envios = $envios->list(array("peso BETWEEN " . $carrito->peso_final() . " AND " . $tope . " OR peso = 0"));
                             if ($carroEnvio == '') {
                                 echo "<h3>Seleccioná el envió que más te convenga:</h3>";
                                 if (isset($_POST["envio"])) {

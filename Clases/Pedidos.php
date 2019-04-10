@@ -10,19 +10,24 @@ class Pedidos
     public $cod;
     public $producto;
     public $cantidad;
-    public $precio;
+    public $total;
     public $estado;
     public $tipo;
     public $usuario;
     public $detalle;
     public $fecha;
-    private $con;
+    public $hub_cod;
 
+    private $con;
+    private $detallePedido;
+    private $user;
 
     //Metodos
     public function __construct()
     {
         $this->con = new Conexion();
+        $this->detallePedido = new DetallePedidos();
+        $this->user = new Usuarios();
     }
 
     public function set($atributo, $valor)
@@ -37,26 +42,26 @@ class Pedidos
 
     public function add()
     {
-        $sql   = "INSERT INTO `pedidos`(`cod`, `producto`,`cantidad`,`precio`, `estado`, `tipo`, `usuario`, `detalle`, `fecha`) VALUES ('{$this->cod}', '{$this->producto}','{$this->cantidad}','{$this->precio}', '{$this->estado}', '{$this->tipo}', '{$this->usuario}', '{$this->detalle}', '{$this->fecha}')";
+        $sql = "INSERT INTO `pedidos`(`cod`,`total`, `estado`, `tipo`, `usuario`, `detalle`, `fecha`, `hub_cod`) 
+                  VALUES ('{$this->cod}',
+                          '{$this->total}',
+                          '{$this->estado}',
+                          '{$this->tipo}',
+                          '{$this->usuario}',
+                          '{$this->detalle}',
+                          '{$this->fecha}',
+                          '{$this->hub_cod}')";
+        $query = $this->con->sql($sql);
+        return true;
+    }
+
+    public function changeState(){
+        $sql = "UPDATE `pedidos` SET `estado`='{$this->estado}' WHERE `cod`='{$this->cod}'";
         $query = $this->con->sql($sql);
         return $query;
     }
 
-    public function edit()
-    {
-        $sql   = "UPDATE `pedidos` SET  `producto`='{$this->producto}',`cantidad`='{$this->cantidad}',`precio`='{$this->precio}',`estado`='{$this->estado}',`tipo`='{$this->tipo}',`usuario`='{$this->usuario}',`detalle`='{$this->detalle}',`fecha`='{$this->fecha}' WHERE `id`='{$this->id}'";
-        $query = $this->con->sql($sql);
-        return $query;
-    }
-
-    public function cambiar_estado()
-    {
-        $sql   = "UPDATE `pedidos` SET `estado`='{$this->estado}' WHERE `cod`='{$this->cod}'";
-        $query = $this->con->sql($sql);
-        return $query;
-    }
-
-    public function cambiar_valor($key)
+    public function changeValue($key)
     {
         $sql   = "UPDATE `pedidos` SET `$key`='{$this->$key}' WHERE `cod`='{$this->cod}'";
         $query = $this->con->sql($sql);
@@ -65,28 +70,26 @@ class Pedidos
 
     public function delete()
     {
-        $sql   = "DELETE FROM `pedidos` WHERE `cod`  = '{$this->cod}'";
+        $sql = "DELETE FROM `pedidos` WHERE `cod`  = '{$this->cod}'";
         $query = $this->con->sql($sql);
+        $this->detallePedido->delete($this->cod);
         return $query;
     }
 
     public function view()
     {
-        $sql   = "SELECT * FROM `pedidos` WHERE cod = '{$this->cod}' ORDER BY id DESC";
-        $pedidos = $this->con->sqlReturn($sql);
-        $row   = mysqli_fetch_assoc($pedidos);
-        return $row;
-    }
-
-    public function info()
-    {
-        $sql = "SELECT * FROM `pedidos` WHERE cod = '{$this->cod}' GROUP BY cod";
+        $sql = "SELECT * FROM `pedidos` WHERE cod = '{$this->cod}' ORDER BY id DESC";
         $pedidos = $this->con->sqlReturn($sql);
         $row = mysqli_fetch_assoc($pedidos);
-        return $row;
+        $details = $this->detallePedido->list($this->cod);
+        $this->user->set("cod",$row['usuario']);
+        $user = $this->user->view();
+        $array = array("data"=>$row, "user" => $user, "detail" => $details);
+        return $array;
     }
 
-    function list($filter) {
+    function listWithOps($filter, $order, $limit)
+    {
         $array = array();
         if (is_array($filter)) {
             $filterSql = "WHERE ";
@@ -95,12 +98,25 @@ class Pedidos
             $filterSql = '';
         }
 
-        $sql   = "SELECT * FROM `pedidos` $filterSql  ORDER BY id DESC";
-        $pedidos = $this->con->sqlReturn($sql);
+        if ($order != '') {
+            $orderSql = $order;
+        } else {
+            $orderSql = "id DESC";
+        }
 
-        if ($pedidos) {
-            while ($row = mysqli_fetch_assoc($pedidos)) {
-                $array[] = $row;
+        if ($limit != '') {
+            $limitSql = "LIMIT " . $limit;
+        } else {
+            $limitSql = '';
+        }
+        $sql = "SELECT * FROM `pedidos` $filterSql  ORDER BY $orderSql $limitSql";
+        $result = $this->con->sqlReturn($sql);
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $details = $this->detallePedido->list($row['cod']);
+                $this->user->set("cod", $row['usuario']);
+                $user = $this->user->view();
+                $array[] = array("data" => $row, "user" => $user, "detail" => $details);
             }
             return $array;
         }

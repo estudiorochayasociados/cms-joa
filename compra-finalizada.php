@@ -18,7 +18,7 @@ $correo = new Clases\Email();
 $estado_get = $funciones->antihack_mysqli(isset($_GET["estado"]) ? $_GET["estado"] : '');
 $cod_pedido = $_SESSION["cod_pedido"];
 $pedidos->set("cod", $cod_pedido);
-$pedido_info = $pedidos->info();
+$pedido_info = $pedidos->view();
 
 if (count($_SESSION["carrito"]) == 0) {
     $funciones->headerMove(URL . "/index");
@@ -26,12 +26,12 @@ if (count($_SESSION["carrito"]) == 0) {
 
 if ($estado_get != '') {
     $pedidos->set("estado", $estado_get);
-    $pedidos->cambiar_estado();
+    $pedidos->changeState();
     $pedidos->set("cod", $cod_pedido);
-    $pedido_info = $pedidos->info();
+    $pedido_info = $pedidos->view();
 }
 
-switch ($pedido_info["estado"]) {
+switch ($pedido_info['data']["estado"]) {
     case 0:
         $estado = "CARRITO NO CERRADO";
         break;
@@ -69,7 +69,7 @@ $datos_usuario .= "<b>Teléfono:</b> " . $_SESSION["usuarios"]["telefono"] . "<b
 if($_SESSION["usuarios"]["doc"] != '') {
     $datos_usuario .= "<b>SOLICITÓ FACTURA A CON EL CUIT:</b> " . $_SESSION["usuarios"]["doc"] . "<br/>";
     $pedidos->set("detalle","<b>SOLICITÓ FACTURA A CON EL CUIT:</b> " . $_SESSION["usuarios"]["doc"]);
-    $pedidos->cambiar_valor("detalle");
+    $pedidos->changeValue("detalle");
 }
 
 
@@ -77,7 +77,7 @@ if($_SESSION["usuarios"]["doc"] != '') {
 $mensajeCompraUsuario = '¡Muchas gracias por tu nueva compra!<br/>En el transcurso de las 24 hs un operador se estará contactando con usted para pactar la entrega y/o pago del pedido. A continuación te dejamos el pedido que nos realizaste.<hr/> <h3>Pedido realizado:</h3>';
 $mensajeCompraUsuario .= $mensaje_carro;
 $mensajeCompraUsuario .= '<br/><hr/>';
-$mensajeCompraUsuario .= '<h3>MÉTODO DE PAGO ELEGIDO: ' . mb_strtoupper($pedido_info["tipo"]) . '</h3>';
+$mensajeCompraUsuario .= '<h3>MÉTODO DE PAGO ELEGIDO: ' . mb_strtoupper($pedido_info['data']["tipo"]) . '</h3>';
 $mensajeCompraUsuario .= '<br/><hr/>';
 $mensajeCompraUsuario .= '<h3>Tus datos:</h3>';
 $mensajeCompraUsuario .= $datos_usuario;
@@ -92,7 +92,7 @@ $correo->emailEnviar();
 $mensajeCompra = '¡Nueva compra desde la web!<br/>A continuación te dejamos el detalle del pedido.<hr/> <h3>Pedido realizado:</h3>';
 $mensajeCompra .= $mensaje_carro;
 $mensajeCompra .= '<br/><hr/>';
-$mensajeCompra .= '<h3>MÉTODO DE PAGO ELEGIDO: ' . mb_strtoupper($pedido_info["tipo"]) . '</h3>';
+$mensajeCompra .= '<h3>MÉTODO DE PAGO ELEGIDO: ' . mb_strtoupper($pedido_info['data']["tipo"]) . '</h3>';
 $mensajeCompra .= '<br/><hr/>';
 $mensajeCompra .= '<h3>Datos de usuario:</h3>';
 $mensajeCompra .= $datos_usuario;
@@ -145,7 +145,7 @@ $correo->emailEnviar();
                                 CÓDIGO: <span> <?= $cod_pedido ?></span></h2>
                             <p>
                                 <b>Estado:</b> <?= $estado ?><br/>
-                                <b>Método de pago:</b> <?= mb_strtoupper($pedido_info["tipo"]); ?>
+                                <b>Método de pago:</b> <?= mb_strtoupper($pedido_info['data']["tipo"]); ?>
                             </p>
                             <table class="table table-hover text-left">
                                 <thead>

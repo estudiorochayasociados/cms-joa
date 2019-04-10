@@ -15,7 +15,7 @@ if ($estado != '' && $cod != '') {
     $pedidos->set("cod", $cod);
     $pedidos->set("tipo", $tipo);
     $pedidos->set("usuario", $usuario);
-    $pedidos->cambiar_estado();
+    $pedidos->changeState();
     $funciones->headerMove(URL . '/?op=pedidos&accion=ver');
 }
 
@@ -23,19 +23,11 @@ $filter = '';
 if ($estado != '') {
     $filter = array("estado = $estado");
 }
-$data = $pedidos->list($filter);
-
-if ($estadoFiltro != '' && $estadoFiltro != 5) {
-    $filterPedidosAgrupados = array("estado = '" . $estadoFiltro . "' GROUP BY cod");
-    $filterPedidosSinAgrupar = array("estado = '" . $estadoFiltro . "'");
-} else {
-    $filterPedidosAgrupados = array("cod != '' GROUP BY cod");
-    $filterPedidosSinAgrupar = "";
+if ($estadoFiltro != '') {
+    $filter = array("estado ='". $estadoFiltro."'");
 }
 
-$pedidosArrayAgrupados = $pedidos->list($filterPedidosAgrupados);
-$pedidosArraySinAgrupar = $pedidos->list($filterPedidosSinAgrupar);
-asort($pedidosArraySinAgrupar);
+$pedidosData=$pedidos->listWithOps($filter,'','');
 ?>
 <div class="mt-20">
     <div class="col-lg-12 col-md-12">
@@ -79,40 +71,38 @@ asort($pedidosArraySinAgrupar);
             
         </h4>
         <hr/>
-        <?php foreach ($pedidosArrayAgrupados as $key => $value): ?>
-            <?php $usuarios->set("cod", $value["usuario"]); ?>
-            <?php $usuarioData = $usuarios->view(); ?>
+        <?php foreach ($pedidosData as $key => $value): ?>
             <?php $precioTotal = 0; ?>
-            <?php $fecha = explode(" ", $value["fecha"]); ?>
+            <?php $fecha = explode(" ", $value['data']["fecha"]); ?>
             <?php $fecha1 = explode("-", $fecha[0]); ?>
             <?php $fecha1 = $fecha1[2] . '-' . $fecha1[1] . '-' . $fecha1[0] . '-'; ?>
             <?php $fecha = $fecha1 . $fecha[1]; ?>
             <div class="card">
-                <a data-toggle="collapse" href="#collapse<?= $value["cod"] ?>" aria-expanded="false" aria-controls="collapse<?= $value["cod"] ?>" class="collapsed color_a">
+                <a data-toggle="collapse" href="#collapse<?= $value['data']["cod"] ?>" aria-expanded="false" aria-controls="collapse<?= $value['data']["cod"] ?>" class="collapsed color_a">
                     <div class="card-header bg-info" role="tab" id="heading">
-                        <span>Pedido <?= $value["cod"] ?></span>
+                        <span>Pedido <?= $value['data']["cod"] ?></span>
                         <span class="hidden-xs hidden-sm">- Fecha <?= $fecha ?></span>
-                        <?php if ($value["estado"] == 0): ?>
+                        <?php if ($value['data']["estado"] == 0): ?>
                             <span style="padding:5px;font-size:13px;margin-top:-5px;border-radius: 10px;"
                                   class="btn-primary pull-right">
                             Estado: Carrito no cerrado
                              </span>
-                        <?php elseif ($value["estado"] == 1): ?>
+                        <?php elseif ($value['data']["estado"] == 1): ?>
                             <span style="padding:5px;font-size:13px;margin-top:-5px;border-radius: 10px;"
                                   class="btn-warning pull-right">
                             Estado: Pago pendiente
                              </span>
-                        <?php elseif ($value["estado"] == 2): ?>
+                        <?php elseif ($value['data']["estado"] == 2): ?>
                             <span style="padding:5px;font-size:13px;margin-top:-5px;border-radius: 10px;"
                                   class="btn-success pull-right">
                             Estado: Pago aprobado
                              </span>
-                        <?php elseif ($value["estado"] == 3): ?>
+                        <?php elseif ($value['data']["estado"] == 3): ?>
                             <span style="padding:5px;font-size:13px;margin-top:-5px;border-radius: 10px;"
                                   class="btn-info pull-right">
                             Estado: Pago enviado
                              </span>
-                        <?php elseif ($value["estado"] == 4): ?>
+                        <?php elseif ($value['data']["estado"] == 4): ?>
                             <span style="padding:5px;font-size:13px;margin-top:-5px;border-radius: 10px;"
                                   class="btn-primary pull-right">
                             Estado: Pago rechazado
@@ -120,7 +110,7 @@ asort($pedidosArraySinAgrupar);
                         <?php endif; ?>
                     </div>
                 </a>
-                <div id="collapse<?= $value["cod"] ?>" class="collapse" role="tabpanel"
+                <div id="collapse<?= $value['data']["cod"] ?>" class="collapse" role="tabpanel"
                      aria-labelledby="headingOne" aria-expanded="false" style="height: 0px;">
                     <div class="card-body">
                         <div class="row">
@@ -143,8 +133,8 @@ asort($pedidosArraySinAgrupar);
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php foreach ($pedidosArraySinAgrupar as $key2 => $value2): ?>
-                                        <?php if ($value2['cod'] == $value["cod"]): ?>
+                                    <?php foreach ($value['detail']  as $key2 => $value2): ?>
+                                        <?php if ($value2['cod'] == $value['data']["cod"]): ?>
                                             <tr>
                                                 <td><?= $value2["producto"] ?></td>
                                                 <td><?= $value2["cantidad"] ?></td>
@@ -172,19 +162,19 @@ asort($pedidosArraySinAgrupar);
                                     </tr>
                                     <tr>
                                         <td>Nombre</td>
-                                        <td width="100%"><?= $usuarioData['nombre'] . ' ' . $usuarioData['apellido'] ?></td>
+                                        <td width="100%"><?=  $value['user']['nombre'] . ' ' .  $value['user']['apellido'] ?></td>
                                     </tr>
                                     <tr>
                                         <td>Dirección</td>
-                                        <td width="100%"><?= $usuarioData['direccion'] . ' - ' . $usuarioData['localidad'] . ' - ' . $usuarioData['provincia'] ?></td>
+                                        <td width="100%"><?=  $value['user']['direccion'] . ' - ' .  $value['user']['localidad'] . ' - ' .  $value['user']['provincia'] ?></td>
                                     </tr>
                                     <tr>
                                         <td>Teléfono</td>
-                                        <td width="100%"><?= $usuarioData['telefono'] ?></td>
+                                        <td width="100%"><?=  $value['user']['telefono'] ?></td>
                                     </tr>
                                     <tr>
                                         <td>Email</td>
-                                        <td width="100%"><?= $usuarioData['email'] ?></td>
+                                        <td width="100%"><?=  $value['user']['email'] ?></td>
                                     </tr>
                                     </thead>
                                 </table>
@@ -194,22 +184,22 @@ asort($pedidosArraySinAgrupar);
                         <h6><b>FORMA DE PAGO</b></h6>
                         <hr/>
                         <div class="alert alert-info" style="border-radius: 10px; padding: 10px;">
-                            <?= $value["tipo"] ?>
+                            <?= $value['data']["tipo"] ?>
                         </div>
                         <div class="clearfix"></div>
-                        <?php if($value["detalle"] != '') { ?>
+                        <?php if($value['data']["detalle"] != '') { ?>
                         <h6><b>OBSERVACIONES</b></h6>
                         <hr/>
                         <div class="alert alert-info" style="border-radius: 10px; padding: 10px;">
-                            <?= $value["detalle"]; ?>
+                            <?= $value['data']["detalle"]; ?>
                         </div>
                         <?php } ?>
                         <hr/>
                         <b>CAMBIAR ESTADO: </b>
-                        <a href="<?= CANONICAL ?>&estado=1&cod=<?= $value['cod'] ?>" class="btn btn-warning">Pendiente</a>
-                        <a href="<?= CANONICAL ?>&estado=2&cod=<?= $value['cod'] ?>" class="btn btn-success">Aprobado</a>
-                        <a href="<?= CANONICAL ?>&estado=3&cod=<?= $value['cod'] ?>" class="btn btn-info">Enviado</a>
-                        <a href="<?= CANONICAL ?>&estado=4&cod=<?= $value['cod'] ?>" class="btn btn-primary">Rechazado</a>
+                        <a href="<?= CANONICAL ?>&estado=1&cod=<?= $value['data']['cod'] ?>" class="btn btn-warning">Pendiente</a>
+                        <a href="<?= CANONICAL ?>&estado=2&cod=<?= $value['data']['cod'] ?>" class="btn btn-success">Aprobado</a>
+                        <a href="<?= CANONICAL ?>&estado=3&cod=<?= $value['data']['cod'] ?>" class="btn btn-info">Enviado</a>
+                        <a href="<?= CANONICAL ?>&estado=4&cod=<?= $value['data']['cod'] ?>" class="btn btn-primary">Rechazado</a>
                     </div>
                 </div>
             </div>

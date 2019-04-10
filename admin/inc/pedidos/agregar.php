@@ -1,5 +1,6 @@
 <?php
 $pedidos = new Clases\Pedidos();
+$detalle = new Clases\DetallePedidos();
 $productos = new Clases\Productos();
 $carrito = new Clases\Carrito();
 $envios = new Clases\Envios();
@@ -38,18 +39,18 @@ if (isset($_POST["id_carrito"])) {
     <div class="row">
         <div class="col-md-8">
             <h4>Agregar Pedido</h4>
-            
+
         </div>
-        
+
         <div class="col-md-3">
             <form method="post">
                 <input type="text" placeholder="buscar en productos" name="buscar" value="<?= isset($_POST["buscar"]) ? $_POST["buscar"] : '' ?>"/>
             </form>
-            
+
         </div>
         <div class='pull-right'>
-                <a href="<?= URL ?>/index.php?op=pedidos&accion=ver" class="btn btn-success">VER PEDIDOS</a>
-            </div>
+            <a href="<?= URL ?>/index.php?op=pedidos&accion=ver" class="btn btn-success">VER PEDIDOS</a>
+        </div>
     </div>
     <div class="clearfix"></div>
     <hr/>
@@ -58,8 +59,8 @@ if (isset($_POST["id_carrito"])) {
     <div class="row">
         <!-- CARRITO -->
         <div class="col-md-4">
-            <h5>Pedido</h5>  
-            
+            <h5>Pedido</h5>
+
             <table class="table table-bordered table-condensed table-hover">
                 <thead>
                 <th>PRODUCTO</th>
@@ -118,7 +119,7 @@ if (isset($_POST["id_carrito"])) {
                 </tr>
                 </tbody>
             </table>
-            <div class="envio" id="formulario-envio" >
+            <div class="envio" id="formulario-envio">
                 <?php
                 $metodos_de_envios = $envios->list(array("peso >= " . $carrito->peso_final() . " OR peso = 0"));
                 if ($carroEnvio == '') {
@@ -158,143 +159,155 @@ if (isset($_POST["id_carrito"])) {
                 }
                 ?>
             </div>
-            <div class="pago" id="formulario-pago" >
-            <form method="post">
-                <?php
-                if ($carroPago == '') {
-                    echo "<b>Seleccioná el método de pago que más te convenga:</b>";
-                    $metodo = $funciones->antihack_mysqli(isset($_POST["metodos-pago"]) ? $_POST["metodos-pago"] : '');
-                    $metodo_get = $funciones->antihack_mysqli(isset($_GET["metodos-pago"]) ? $_GET["metodos-pago"] : '');
-                    if ($metodo != '') {
-                        $key_metodo = $carrito->checkPago();
-                        $carrito->delete($key_metodo);
-                        $pagos->set("cod", $metodo);
-                        $pago__ = $pagos->view();
-                        $precio_final_metodo = $carrito->precio_total();
-                        if ($pago__["aumento"] != 0 || $pago__["disminuir"] != '') {
-                            if ($pago__["aumento"]) {
-                                $numero = (($precio_final_metodo * $pago__["aumento"]) / 100);
-                                $carrito->set("id", "Metodo-Pago");
-                                $carrito->set("cantidad", 1);
-                                $carrito->set("titulo", "CARGO +" . $pago__['aumento'] . "% / " . mb_strtoupper($pago__["titulo"]));
-                                $carrito->set("precio", $numero);
-                                $carrito->add();
-                                $funciones->headerMove(CANONICAL . "");
-                            } else {
-                                $numero = (($precio_final_metodo * $pago__["disminuir"]) / 100);
-                                $carrito->set("id", "Metodo-Pago");
-                                $carrito->set("cantidad", 1);
-                                $carrito->set("titulo", "DESCUENTO -" . $pago__['disminuir'] . "% / " . mb_strtoupper($pago__["titulo"]));
-                                $carrito->set("precio", "-" . $numero);
-                                $carrito->add();
-                                $funciones->headerMove(CANONICAL . "");
+            <div class="pago" id="formulario-pago">
+                <form method="post">
+                    <?php
+                    if ($carroPago == '') {
+                        echo "<b>Seleccioná el método de pago que más te convenga:</b>";
+                        $metodo = $funciones->antihack_mysqli(isset($_POST["metodos-pago"]) ? $_POST["metodos-pago"] : '');
+                        $metodo_get = $funciones->antihack_mysqli(isset($_GET["metodos-pago"]) ? $_GET["metodos-pago"] : '');
+                        if ($metodo != '') {
+                            $key_metodo = $carrito->checkPago();
+                            $carrito->delete($key_metodo);
+                            $pagos->set("cod", $metodo);
+                            $pago__ = $pagos->view();
+                            $precio_final_metodo = $carrito->precio_total();
+                            if ($pago__["aumento"] != 0 || $pago__["disminuir"] != '') {
+                                if ($pago__["aumento"]) {
+                                    $numero = (($precio_final_metodo * $pago__["aumento"]) / 100);
+                                    $carrito->set("id", "Metodo-Pago");
+                                    $carrito->set("cantidad", 1);
+                                    $carrito->set("titulo", "CARGO +" . $pago__['aumento'] . "% / " . mb_strtoupper($pago__["titulo"]));
+                                    $carrito->set("precio", $numero);
+                                    $carrito->add();
+                                    $funciones->headerMove(CANONICAL . "");
+                                } else {
+                                    $numero = (($precio_final_metodo * $pago__["disminuir"]) / 100);
+                                    $carrito->set("id", "Metodo-Pago");
+                                    $carrito->set("cantidad", 1);
+                                    $carrito->set("titulo", "DESCUENTO -" . $pago__['disminuir'] . "% / " . mb_strtoupper($pago__["titulo"]));
+                                    $carrito->set("precio", "-" . $numero);
+                                    $carrito->add();
+                                    $funciones->headerMove(CANONICAL . "");
+                                }
                             }
                         }
+                        ?>
+                        <div class="form-bd">
+                            <?php $lista_pagos = $pagos->list(array(" estado = 0 ")); ?>
+                            <select name="metodos-pago" class="form-control" id="metodos-pago" onchange="this.form.submit()">
+                                <option value="" selected disabled>Elegir metodo de pago</option>
+                                <?php
+                                foreach ($lista_pagos as $pago) {
+                                    echo "<option value='" . $pago["cod"] . "'>" . mb_strtoupper($pago["titulo"]) . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <?php
                     }
                     ?>
-                    <div class="form-bd">
-                        <?php $lista_pagos = $pagos->list(array(" estado = 0 ")); ?>
-                        <select name="metodos-pago" class="form-control" id="metodos-pago" onchange="this.form.submit()">
-                            <option value="" selected disabled>Elegir metodo de pago</option>
-                            <?php
-                            foreach ($lista_pagos as $pago) {
-                                echo "<option value='" . $pago["cod"] . "'>" . mb_strtoupper($pago["titulo"]) . "</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <?php
-                }
-                ?>
-            </form>
+                </form>
             </div>
             <div class="usuario" id="formulario-usuario">
-            <form method="post" class="row" >
-                <?php
-                if ($carroPago != '' && $carroEnvio != '') {
-                    ?>
-                    <h3 class="col-md-12"><b>Compra N°: <?= $_SESSION["cod_pedido"] ?></b><hr/></h3>
-                    <div class="clearfix"></div>
+                <form method="post" class="row">
                     <?php
-                     if (isset($_POST["registrarmeBtn"])) {
-                        $error = 0;
-                        $cod = substr(md5(uniqid(rand())), 0, 10);
-                        $nombre = $funciones->antihack_mysqli(isset($_POST["nombre"]) ? $_POST["nombre"] : '');
-                        $apellido = $funciones->antihack_mysqli(isset($_POST["apellido"]) ? $_POST["apellido"] : '');
-                        $doc = $funciones->antihack_mysqli(isset($_POST["doc"]) ? $_POST["doc"] : '');
-                        $email = $funciones->antihack_mysqli(isset($_POST["email"]) ? $_POST["email"] : '');
-                        $password1 = $funciones->antihack_mysqli(isset($_POST["password1"]) ? $_POST["password1"] : '');
-                        $password2 = $funciones->antihack_mysqli(isset($_POST["password2"]) ? $_POST["password2"] : '');
-                        $postal = $funciones->antihack_mysqli(isset($_POST["postal"]) ? $_POST["postal"] : '');
-                        $localidad = $funciones->antihack_mysqli(isset($_POST["localidad"]) ? $_POST["localidad"] : '');
-                        $provincia = $funciones->antihack_mysqli(isset($_POST["provincia"]) ? $_POST["provincia"] : '');
-                        $pais = $funciones->antihack_mysqli(isset($_POST["pais"]) ? $_POST["pais"] : '');
-                        $telefono = $funciones->antihack_mysqli(isset($_POST["telefono"]) ? $_POST["telefono"] : '');
-                        $celular = $funciones->antihack_mysqli(isset($_POST["celular"]) ? $_POST["celular"] : '');
-                        $invitado = $funciones->antihack_mysqli(isset($_POST["invitado"]) ? $_POST["invitado"] : 0);
-                        $descuento = $funciones->antihack_mysqli(isset($_POST["descuento"]) ? $_POST["descuento"] : 0);
-                        $fecha = $funciones->antihack_mysqli(isset($_POST["fecha"]) ? $_POST["fecha"] : date("Y-m-d"));
+                    if ($carroPago != '' && $carroEnvio != '') {
+                        ?>
+                        <h3 class="col-md-12"><b>Compra N°: <?= $_SESSION["cod_pedido"] ?></b>
+                            <hr/>
+                        </h3>
+                        <div class="clearfix"></div>
+                        <?php
+                        if (isset($_POST["registrarmeBtn"])) {
+                            $error = 0;
+                            $cod = substr(md5(uniqid(rand())), 0, 10);
+                            $nombre = $funciones->antihack_mysqli(isset($_POST["nombre"]) ? $_POST["nombre"] : '');
+                            $apellido = $funciones->antihack_mysqli(isset($_POST["apellido"]) ? $_POST["apellido"] : '');
+                            $doc = $funciones->antihack_mysqli(isset($_POST["doc"]) ? $_POST["doc"] : '');
+                            $email = $funciones->antihack_mysqli(isset($_POST["email"]) ? $_POST["email"] : '');
+                            $password1 = $funciones->antihack_mysqli(isset($_POST["password1"]) ? $_POST["password1"] : '');
+                            $password2 = $funciones->antihack_mysqli(isset($_POST["password2"]) ? $_POST["password2"] : '');
+                            $postal = $funciones->antihack_mysqli(isset($_POST["postal"]) ? $_POST["postal"] : '');
+                            $localidad = $funciones->antihack_mysqli(isset($_POST["localidad"]) ? $_POST["localidad"] : '');
+                            $provincia = $funciones->antihack_mysqli(isset($_POST["provincia"]) ? $_POST["provincia"] : '');
+                            $pais = $funciones->antihack_mysqli(isset($_POST["pais"]) ? $_POST["pais"] : '');
+                            $telefono = $funciones->antihack_mysqli(isset($_POST["telefono"]) ? $_POST["telefono"] : '');
+                            $celular = $funciones->antihack_mysqli(isset($_POST["celular"]) ? $_POST["celular"] : '');
+                            $invitado = $funciones->antihack_mysqli(isset($_POST["invitado"]) ? $_POST["invitado"] : 0);
+                            $descuento = $funciones->antihack_mysqli(isset($_POST["descuento"]) ? $_POST["descuento"] : 0);
+                            $fecha = $funciones->antihack_mysqli(isset($_POST["fecha"]) ? $_POST["fecha"] : date("Y-m-d"));
 
-                        $usuarios->set("cod", $cod);
-                        $usuarios->set("nombre", $nombre);
-                        $usuarios->set("apellido", $apellido);
-                        $usuarios->set("doc", $doc);
-                        $usuarios->set("email", $email);
-                        $usuarios->set("password1", $password1);
-                        $usuarios->set("postal", $postal);
-                        $usuarios->set("localidad", $localidad);
-                        $usuarios->set("provincia", $provincia);
-                        $usuarios->set("pais", $pais);
-                        $usuarios->set("telefono", $telefono);
-                        $usuarios->set("celular", $celular);
-                        $usuarios->set("invitado", $invitado);
-                        $usuarios->set("descuento", $descuento);
-                        $usuarios->set("fecha", $fecha);
+                            $usuarios->set("cod", $cod);
+                            $usuarios->set("nombre", $nombre);
+                            $usuarios->set("apellido", $apellido);
+                            $usuarios->set("doc", $doc);
+                            $usuarios->set("email", $email);
+                            $usuarios->set("password1", $password1);
+                            $usuarios->set("postal", $postal);
+                            $usuarios->set("localidad", $localidad);
+                            $usuarios->set("provincia", $provincia);
+                            $usuarios->set("pais", $pais);
+                            $usuarios->set("telefono", $telefono);
+                            $usuarios->set("celular", $celular);
+                            $usuarios->set("invitado", $invitado);
+                            $usuarios->set("descuento", $descuento);
+                            $usuarios->set("fecha", $fecha);
 
-                        if ($invitado == 1) {
-                            if ($password1 != $password2) {
-                                $error = 1;
-                                echo "Error las contraseñas no coinciden.<br/>";
+                            $precio = $carrito->precio_total();
+
+                            if ($invitado == 1) {
+                                if ($password1 != $password2) {
+                                    $error = 1;
+                                    echo "Error las contraseñas no coinciden.<br/>";
+                                } else {
+                                    $error = 0;
+                                    $usuarios->add();
+                                    $pedidos->set("cod", $_SESSION["cod_pedido"]);
+                                    $pedidos->set("total", $precio);
+                                    $pedidos->set("estado", 1);
+                                    $pedidos->set("tipo", $carro_return[$carroPago]["titulo"]);
+                                    $pedidos->set("usuario", $cod);
+                                    $pedidos->set("detalle", "");
+                                    $pedidos->set("fecha", $fecha);
+                                    $pedidos->add();
+
+                                    foreach ($carro_return as $carroItem) {
+                                        $detalle->set("cod", $_SESSION["cod_pedido"]);
+                                        $detalle->set("producto", $carroItem["titulo"]);
+                                        $detalle->set("cantidad", $carroItem["cantidad"]);
+                                        $detalle->set("precio", $carroItem["precio"]);
+                                        $detalle->add();
+                                    }
+                                }
                             } else {
-                                $error = 0;
-                                $usuarios->add();
-                                foreach ($carro_return as $carroItem) {
+                                if ($error == 0) {
+                                    $usuarios->invitado_sesion();
                                     $pedidos->set("cod", $_SESSION["cod_pedido"]);
-                                    $pedidos->set("producto", $carroItem["titulo"]);
-                                    $pedidos->set("cantidad", $carroItem["cantidad"]);
-                                    $pedidos->set("precio", $carroItem["precio"]);
+                                    $pedidos->set("total", $precio);
                                     $pedidos->set("estado", 1);
                                     $pedidos->set("tipo", $carro_return[$carroPago]["titulo"]);
                                     $pedidos->set("usuario", $cod);
                                     $pedidos->set("detalle", "");
                                     $pedidos->set("fecha", $fecha);
                                     $pedidos->add();
-                                }
-                            }
-                        } else {
-                            if ($error == 0) {
-                                $usuarios->invitado_sesion();
-                                foreach ($carro_return as $carroItem) {
-                                    $pedidos->set("cod", $_SESSION["cod_pedido"]);
-                                    $pedidos->set("producto", $carroItem["titulo"]);
-                                    $pedidos->set("cantidad", $carroItem["cantidad"]);
-                                    $pedidos->set("precio", $carroItem["precio"]);
-                                    $pedidos->set("estado", 1);
-                                    $pedidos->set("tipo", $carro_return[$carroPago]["titulo"]);
-                                    $pedidos->set("usuario", $cod);
-                                    $pedidos->set("detalle", "");
-                                    $pedidos->set("fecha", $fecha);
-                                    $pedidos->add();
-                                }
-                            }
-                        }
 
-                        unset($_SESSION["cod_pedido"]);
-                        $carrito->destroy();
-                        echo "<script>alert('Perfecto, tu carrito fue cargado exitosamente');</script>";
-                        $funciones->headerMove(URL . "/index.php?op=pedidos&accion=agregar");
-                    }
-                    ?>
+                                    foreach ($carro_return as $carroItem) {
+                                        $detalle->set("cod", $_SESSION["cod_pedido"]);
+                                        $detalle->set("producto", $carroItem["titulo"]);
+                                        $detalle->set("cantidad", $carroItem["cantidad"]);
+                                        $detalle->set("precio", $carroItem["precio"]);
+                                        $detalle->add();
+                                    }
+                                }
+                            }
+
+                            unset($_SESSION["cod_pedido"]);
+                            $carrito->destroy();
+                            echo "<script>alert('Perfecto, tu carrito fue cargado exitosamente');</script>";
+                            $funciones->headerMove(URL . "/index.php?op=pedidos&accion=agregar");
+                        }
+                        ?>
                         <input type="hidden" name="metodos-pago"/>
                         <div class="col-md-6">Nombre:<br/>
                             <input class="form-control  mb-10" type="text" value="<?php echo isset($_POST["nombre"]) ? $_POST["nombre"] : '' ?>" placeholder="Escribir nombre" name="nombre" required/>
@@ -336,15 +349,15 @@ if (isset($_POST["id_carrito"])) {
                         <div class="col-md-12 col-xs-12 mb-50">
                             <input class="btn btn-success" type="submit" value="¡Finalizar la compra!" name="registrarmeBtn"/>
                         </div>
-                    <?php
-                }
-                ?>
-            </form>
+                        <?php
+                    }
+                    ?>
+                </form>
             </div>
         </div>
         <!-- FIN CARRITO -->
         <!-- LISTADO Y MODAL -->
-        <div class="col-md-8" >
+        <div class="col-md-8">
             <h5>Productos</h5>
             <table class="table table-bordered table-condensed table-hover">
                 <thead>
