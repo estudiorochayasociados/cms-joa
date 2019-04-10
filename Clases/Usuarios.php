@@ -48,7 +48,7 @@ class Usuarios
         if (!is_array($validar)) {
             $sql = "INSERT INTO `usuarios` (`cod`, `nombre`, `apellido`, `doc`, `email`, `password`, `direccion`, `postal`, `localidad`, `provincia`, `pais`, `telefono`, `celular`, `invitado`, `descuento`, `fecha`) VALUES
                     ('{$this->cod}', '{$this->nombre}', '{$this->apellido}', '{$this->doc}', '{$this->email}', '{$this->password}', '{$this->direccion}', '{$this->postal}', '{$this->localidad}', '{$this->provincia}', '{$this->pais}', '{$this->telefono}', '{$this->celular}', '{$this->invitado}', '{$this->descuento}', '{$this->fecha}')";
-            $this->con->sql($sql);
+            $this->con->sql($sql);            
             return true;
         } else {
             return false;
@@ -97,6 +97,7 @@ class Usuarios
 
         $sql = "INSERT INTO `usuarios` (`cod`, `nombre`, `apellido`, `doc`, `email`, `password`, `direccion`, `postal`, `localidad`, `provincia`, `pais`, `telefono`, `celular`, `invitado`, `descuento`, `fecha`) VALUES ('{$this->cod}', '{$this->nombre}', '{$this->apellido}', '{$this->doc}', '{$this->email}', '{$this->password}', '{$this->direccion}', '{$this->postal}', '{$this->localidad}', '{$this->provincia}', '{$this->pais}', '{$this->telefono}', '{$this->celular}',1, '{$this->descuento}', '{$this->fecha}')";
         $this->con->sql($sql);
+        echo $sql;
     }
 
 

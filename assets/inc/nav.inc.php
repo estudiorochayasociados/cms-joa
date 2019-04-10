@@ -22,8 +22,10 @@ foreach ($categoriasDataNav as $valNav) {
     }
 }
 ?>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?= GOOGLE_TAG ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<div class="loading pt-150" id="loader"><h4 class="pt-150 mt-120"><img src="<?= LOGO ?>" class="mb-20" width="150" /><br/><b>¡CARGANDO!</b></h4></div>
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=<?= GOOGLE_TAG ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<div class="loading pt-150" id="loader"><h4 class="pt-150 mt-120"><img src="<?= LOGO ?>" class="mb-20" width="150"/><br/><b>¡CARGANDO!</b></h4></div>
 <div id="sns_wrapper">
     <!-- HEADER -->
     <div id="sns_header" class="wrap">
@@ -49,7 +51,7 @@ foreach ($categoriasDataNav as $valNav) {
                             </div>
                             <div class="customer-ct content">
                                 <ul class="links">
-                                    <?php if (isset($_SESSION["usuarios"])){ ?>
+                                    <?php if (isset($_SESSION["usuarios"])) { ?>
                                         <li>
                                             <a class="top-link-myaccount" title="cuenta" href="<?= URL ?>/sesion">Mi
                                                 cuenta</a>
@@ -93,7 +95,7 @@ foreach ($categoriasDataNav as $valNav) {
                                 $bannersNav->set("vistas", $valueNav);
                                 $bannersNav->increaseViews();
                                 ?>
-                                <div class="block banner_left2 block_cat text-right mt-20" >
+                                <div class="block banner_left2 block_cat text-right mt-20">
                                     <a class="banner5" href="<?= $banRandBotonera['link'] ?>">
                                         <img src="<?= URL . '/' . $imgRandBotonera['ruta'] ?>" alt="<?= $banRandBotonera['nombre'] ?>" style="width:70%;">
                                     </a>
@@ -107,9 +109,9 @@ foreach ($categoriasDataNav as $valNav) {
             </div>
         </div>
         <!-- Menu -->
-        <div id="sns_menu"  >
+        <div id="sns_menu">
             <div class="container">
-                <div class="sns_mainmenu" >
+                <div class="sns_mainmenu">
                     <div id="sns_mainnav" class="col-md-5">
                         <div id="sns_custommenu" class="visible-md visible-lg visible-sm">
                             <ul class="mainnav">
@@ -120,7 +122,7 @@ foreach ($categoriasDataNav as $valNav) {
                                 </li>
                                 <li class="level0 nav-2 no-group drop-submenu parent">
                                     <a class=" menu-title-lv0" href="<?= URL . '/productos' ?>">
-                                        <span class="title">Todos los productos</span>
+                                        <span class="title">Productos</span>
                                     </a>
                                     <div class="wrap_submenu">
                                         <ul class="level0">
@@ -191,6 +193,15 @@ foreach ($categoriasDataNav as $valNav) {
                                             </div>
                                         </li>
 
+
+                                        <?php foreach ($rubrosArrayCategorias as $key => $value): ?>
+                                            <li class="level0 nav-5 first active">
+                                                <a class=" menu-title-lv0" href="<?= URL ?>/productos?linea=<?= strtolower($funcionesNav->normalizar_link($value['categoria'])) ?>&id=<?= $value['id'] ?>">
+                                                    <span class="title"><?= $value['categoria'] ?></span>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
+
                                         <li class="level0 nav-5 first active">
                                             <div class="accr_header">
                                                 <a class=" menu-title-lv0" href="<?= URL . '/blogs' ?>">
@@ -217,7 +228,9 @@ foreach ($categoriasDataNav as $valNav) {
                                     <div class="form-search mt-5">
                                         <div class="input-group">
                                             <input class="form-control h40" type="text" placeholder="Buscar.."
-                                                   name="buscar" value="<?php if($buscar != ''){ echo $buscar; }; ?>"/>
+                                                   name="buscar" value="<?php if ($buscar != '') {
+                                                echo $buscar;
+                                            }; ?>"/>
                                             <span class="input-group-addon"> <i
                                                         class="login_icon glyphicon glyphicon-search"></i></span>
                                         </div>

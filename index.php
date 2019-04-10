@@ -40,7 +40,7 @@ foreach ($categoriasData as $val) {
 //Productos
 $categorias->set("area", "productos");
 $categoriasParaProductos = $categorias->listForArea('');
-$arrayProductos = $productos->listWithOps('', ' RAND() ', '28');
+$arrayProductos = $productos->list_with_options(array("stock > 0"), ' RAND() ', '28');
 $productDataCenter1 = array();
 $productDataCenter2 = array();
 $productDataCenter3 = array();
@@ -194,19 +194,9 @@ for ($i = 24; $i < 28; $i++) {
                                                     <div class="item-inner">
                                                         <div class="prd">
                                                             <div class="item-img clearfix">
-                                                                <div class="ico-label">
-                                                                    <?php
-                                                                    if ($productosCenter1['precioDescuento'] > 0) {
-                                                                        ?>
-                                                                        <span class="ico-product ico-sale">Promo</span>
-                                                                        <?php
-                                                                    }
-                                                                    ?>
-                                                                </div>
                                                                 <a class="product-image have-additional"
                                                                    href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter1['titulo']) . "/" . $productosCenter1['id'] ?>">
-                                                                <span class="img-main"
-                                                                      style="height:200px;background:url(<?= $rutaImg; ?>) no-repeat center center/70%;">
+                                                                <span class="img-main" style="height:200px;background:url(<?= $rutaImg; ?>) no-repeat center center/70%;">
                                                                 </span>
                                                                 </a>
                                                             </div>
@@ -220,19 +210,7 @@ for ($i = 24; $i < 28; $i++) {
                                                                         <div class="price-box">
                                                                             <span class="regular-price">
                                                                                 <span class="price">
-                                                                                    <?php
-                                                                                    if ($productosCenter1['precioDescuento'] > 0) {
-                                                                                        ?>
-                                                                                        <span class="precio1">$ <?= $productosCenter1['precioDescuento']; ?></span>
-                                                                                        <span class="precio2">$ <?= $productosCenter1['precio']; ?></span>
-                                                                                        <?php
-
-                                                                                    } else {
-                                                                                        ?>
-                                                                                        <span class="precio1">$ <?= $productosCenter1['precio']; ?></span>
-                                                                                        <?php
-                                                                                    }
-                                                                                    ?>
+                                                                                    <span class="precio1">$ <?= $productosCenter1['precio']; ?></span>
                                                                                 </span>
                                                                             </span>
                                                                         </div>
@@ -301,15 +279,6 @@ for ($i = 24; $i < 28; $i++) {
                                                         <div class="item-inner">
                                                             <div class="prd">
                                                                 <div class="item-img clearfix">
-                                                                    <div class="ico-label">
-                                                                        <?php
-                                                                        if ($productosCenter2['precioDescuento'] > 0) {
-                                                                            ?>
-                                                                            <span class="ico-product ico-sale">Promo</span>
-                                                                            <?php
-                                                                        }
-                                                                        ?>
-                                                                    </div>
                                                                     <a class="product-image have-additional"
                                                                        href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter2['titulo']) . "/" . $productosCenter2['id'] ?>">
                                                             <span class="img-main"
@@ -328,20 +297,7 @@ for ($i = 24; $i < 28; $i++) {
                                                                             <div class="price-box">
                                                                 <span class="regular-price">
                                                                     <span class="price">
-                                                                        <?php
-                                                                        if ($productosCenter2['precioDescuento'] > 0) {
-                                                                            ?>
-                                                                            <span class="precio1">$ <?= $productosCenter2['precioDescuento']; ?></span>
-                                                                            <span class="precio2">$ <?= $productosCenter2['precio']; ?></span>
-                                                                            <?php
-
-                                                                        } else {
-                                                                            ?>
                                                                             <span class="precio1">$ <?= $productosCenter2['precio']; ?></span>
-                                                                            <?php
-
-                                                                        }
-                                                                        ?>
                                                                     </span>
                                                                 </span>
                                                                             </div>
@@ -378,16 +334,6 @@ for ($i = 24; $i < 28; $i++) {
                                                         <div class="item-inner">
                                                             <div class="prd">
                                                                 <div class="item-img clearfix">
-                                                                    <div class="ico-label">
-                                                                        <?php
-                                                                        if ($productosCenter2['precioDescuento'] > 0) {
-                                                                            ?>
-                                                                            <span class="ico-product ico-sale">Promo</span>
-                                                                            <?php
-
-                                                                        }
-                                                                        ?>
-                                                                    </div>
                                                                     <a class="product-image have-additional" href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter2['titulo']) . "/" . $productosCenter2['id'] ?>">
                                                                                     <span class="img-main"
                                                                                           style="height:200px;background:url(<?= $rutaImg; ?>)no-repeat center center/contain;">
@@ -405,20 +351,7 @@ for ($i = 24; $i < 28; $i++) {
                                                                             <div class="price-box">
                                                                                         <span class="regular-price">
                                                                                             <span class="price">
-                                                                                                <?php
-                                                                                                if ($productosCenter2['precioDescuento'] > 0) {
-                                                                                                    ?>
-                                                                                                    <span class="precio1">$ <?= $productosCenter2['precioDescuento']; ?></span>
-                                                                                                    <span class="precio2">$ <?= $productosCenter2['precio']; ?></span>
-                                                                                                    <?php
-
-                                                                                                } else {
-                                                                                                    ?>
                                                                                                     <span class="precio1">$ <?= $productosCenter2['precio']; ?></span>
-                                                                                                    <?php
-
-                                                                                                }
-                                                                                                ?>
                                                                                             </span>
                                                                                         </span>
                                                                             </div>
@@ -460,15 +393,6 @@ for ($i = 24; $i < 28; $i++) {
                                                         <div class="item-inner">
                                                             <div class="prd">
                                                                 <div class="item-img clearfix">
-                                                                    <div class="ico-label">
-                                                                        <?php
-                                                                        if ($productosCenter2['precioDescuento'] > 0) {
-                                                                            ?>
-                                                                            <span class="ico-product ico-sale">Promo</span>
-                                                                            <?php
-                                                                        }
-                                                                        ?>
-                                                                    </div>
                                                                     <a class="product-image have-additional" href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter2['titulo']) . "/" . $productosCenter2['id'] ?>">
                                                                                 <span class="img-main"
                                                                                       style="height:200px;background:url(<?= URL . '/' . $imgProCenter2['ruta'] ?>)no-repeat center center/70%;">
@@ -486,19 +410,7 @@ for ($i = 24; $i < 28; $i++) {
                                                                             <div class="price-box">
                                                                                         <span class="regular-price">
                                                                                             <span class="price">
-                                                                                                <?php
-                                                                                                if ($productosCenter2['precioDescuento'] > 0) {
-                                                                                                    ?>
-                                                                                                    <span class="precio1">$ <?= $productosCenter2['precioDescuento']; ?></span>
-                                                                                                    <span class="precio2">$ <?= $productosCenter2['precio']; ?></span>
-                                                                                                    <?php
-
-                                                                                                } else {
-                                                                                                    ?>
-                                                                                                    <span class="precio1">$ <?= $productosCenter2['precio']; ?></span>
-                                                                                                    <?php
-                                                                                                }
-                                                                                                ?>
+                                                                                                  <span class="precio1">$ <?= $productosCenter2['precio']; ?></span>
                                                                                             </span>
                                                                                         </span>
                                                                             </div>
@@ -535,16 +447,7 @@ for ($i = 24; $i < 28; $i++) {
                                                         <div class="item-inner">
                                                             <div class="prd">
                                                                 <div class="item-img clearfix">
-                                                                    <div class="ico-label">
-                                                                        <?php
-                                                                        if ($productosCenter2['precioDescuento'] > 0) {
-                                                                            ?>
-                                                                            <span class="ico-product ico-sale">Promo</span>
-                                                                            <?php
 
-                                                                        }
-                                                                        ?>
-                                                                    </div>
                                                                     <a class="product-image have-additional" href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter2['titulo']) . "/" . $productosCenter2['id'] ?>">
                                                                                 <span class="img-main"
                                                                                       style="height:200px;background:url(<?= $rutaImg; ?>)no-repeat center center/contain;">
@@ -562,20 +465,7 @@ for ($i = 24; $i < 28; $i++) {
                                                                             <div class="price-box">
                                                                                         <span class="regular-price">
                                                                                             <span class="price">
-                                                                                                <?php
-                                                                                                if ($productosCenter2['precioDescuento'] > 0) {
-                                                                                                    ?>
-                                                                                                    <span class="precio1">$ <?= $productosCenter2['precioDescuento']; ?></span>
-                                                                                                    <span class="precio2">$ <?= $productosCenter2['precio']; ?></span>
-                                                                                                    <?php
-
-                                                                                                } else {
-                                                                                                    ?>
                                                                                                     <span class="precio1">$ <?= $productosCenter2['precio']; ?></span>
-                                                                                                    <?php
-
-                                                                                                }
-                                                                                                ?>
                                                                                             </span>
                                                                                         </span>
                                                                             </div>
@@ -674,16 +564,6 @@ for ($i = 24; $i < 28; $i++) {
                                                         <div class="item-inner">
                                                             <div class="prd">
                                                                 <div class="item-img clearfix">
-                                                                    <div class="ico-label">
-                                                                        <?php
-                                                                        if ($productosCenter3['precioDescuento'] > 0) {
-                                                                            ?>
-                                                                            <span class="ico-product ico-sale">Promo</span>
-                                                                            <?php
-
-                                                                        }
-                                                                        ?>
-                                                                    </div>
                                                                     <a class="product-image have-additional"
                                                                        href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter3['titulo']) . "/" . $productosCenter3['id'] ?>">
                                             <span class="img-main"
@@ -702,20 +582,7 @@ for ($i = 24; $i < 28; $i++) {
                                                                             <div class="price-box">
                                                 <span class="regular-price">
                                                     <span class="price">
-                                                        <?php
-                                                        if ($productosCenter3['precioDescuento'] > 0) {
-                                                            ?>
-                                                            <span class="precio1">$ <?= $productosCenter3['precioDescuento']; ?></span>
-                                                            <span class="precio2">$ <?= $productosCenter3['precio']; ?></span>
-                                                            <?php
-
-                                                        } else {
-                                                            ?>
                                                             <span class="precio1">$ <?= $productosCenter3['precio']; ?></span>
-                                                            <?php
-
-                                                        }
-                                                        ?>
                                                     </span>
                                                 </span>
                                                                             </div>
@@ -753,16 +620,6 @@ for ($i = 24; $i < 28; $i++) {
                                                         <div class="item-inner">
                                                             <div class="prd">
                                                                 <div class="item-img clearfix">
-                                                                    <div class="ico-label">
-                                                                        <?php
-                                                                        if ($productosCenter3['precioDescuento'] > 0) {
-                                                                            ?>
-                                                                            <span class="ico-product ico-sale">Promo</span>
-                                                                            <?php
-
-                                                                        }
-                                                                        ?>
-                                                                    </div>
                                                                     <a class="product-image have-additional"
                                                                        href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter3['titulo']) . "/" . $productosCenter3['id'] ?>">
                         <span class="img-main"
@@ -781,19 +638,7 @@ for ($i = 24; $i < 28; $i++) {
                                                                             <div class="price-box">
                             <span class="regular-price">
                                 <span class="price">
-                                    <?php
-                                    if ($productosCenter3['precioDescuento'] > 0) {
-                                        ?>
-                                        <span class="precio1">$ <?= $productosCenter3['precioDescuento']; ?></span>
-                                        <span class="precio2">$ <?= $productosCenter3['precio']; ?></span>
-                                        <?php
-
-                                    } else {
-                                        ?>
                                         <span class="precio1">$ <?= $productosCenter3['precio']; ?></span>
-                                        <?php
-                                    }
-                                    ?>
                                 </span>
                             </span>
                                                                             </div>
@@ -835,16 +680,6 @@ for ($i = 24; $i < 28; $i++) {
                                                         <div class="item-inner">
                                                             <div class="prd">
                                                                 <div class="item-img clearfix">
-                                                                    <div class="ico-label">
-                                                                        <?php
-                                                                        if ($productosCenter3['precioDescuento'] > 0) {
-                                                                            ?>
-                                                                            <span class="ico-product ico-sale">Promo</span>
-                                                                            <?php
-
-                                                                        }
-                                                                        ?>
-                                                                    </div>
                                                                     <a class="product-image have-additional"
                                                                        href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter3['titulo']) . "/" . $productosCenter3['id'] ?>">
                                             <span class="img-main"
@@ -863,20 +698,7 @@ for ($i = 24; $i < 28; $i++) {
                                                                             <div class="price-box">
                                                 <span class="regular-price">
                                                     <span class="price">
-                                                        <?php
-                                                        if ($productosCenter3['precioDescuento'] > 0) {
-                                                            ?>
-                                                            <span class="precio1">$ <?= $productosCenter3['precioDescuento']; ?></span>
-                                                            <span class="precio2">$ <?= $productosCenter3['precio']; ?></span>
-                                                            <?php
-
-                                                        } else {
-                                                            ?>
                                                             <span class="precio1">$ <?= $productosCenter3['precio']; ?></span>
-                                                            <?php
-
-                                                        }
-                                                        ?>
                                                     </span>
                                                 </span>
                                                                             </div>
@@ -914,16 +736,7 @@ for ($i = 24; $i < 28; $i++) {
                                                         <div class="item-inner">
                                                             <div class="prd">
                                                                 <div class="item-img clearfix">
-                                                                    <div class="ico-label">
-                                                                        <?php
-                                                                        if ($productosCenter3['precioDescuento'] > 0) {
-                                                                            ?>
-                                                                            <span class="ico-product ico-sale">Promo</span>
-                                                                            <?php
 
-                                                                        }
-                                                                        ?>
-                                                                    </div>
                                                                     <a class="product-image have-additional"
                                                                        href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosCenter3['titulo']) . "/" . $productosCenter3['id'] ?>">
                         <span class="img-main"
@@ -942,19 +755,7 @@ for ($i = 24; $i < 28; $i++) {
                                                                             <div class="price-box">
                             <span class="regular-price">
                                 <span class="price">
-                                    <?php
-                                    if ($productosCenter3['precioDescuento'] > 0) {
-                                        ?>
-                                        <span class="precio1">$ <?= $productosCenter3['precioDescuento']; ?></span>
-                                        <span class="precio2">$ <?= $productosCenter3['precio']; ?></span>
-                                        <?php
-
-                                    } else {
-                                        ?>
                                         <span class="precio1">$ <?= $productosCenter3['precio']; ?></span>
-                                        <?php
-                                    }
-                                    ?>
                                 </span>
                             </span>
                                                                             </div>

@@ -110,8 +110,8 @@ switch ($orden_pagina) {
         break;
 }
 
-$productData = $productos->listWithOps($filter, $order_final, (24 * $pagina) . ',' . 24);
-$productDataSide = $productos->listWithOps($filter, 'titulo ASC', '8');
+$productData = $productos->list_with_options($filter, $order_final, (24 * $pagina) . ',' . 24);
+$productDataSide = $productos->list_with_options($filter, 'titulo ASC', '8');
 $productosPaginador = $productos->paginador($filter, 24);
 ?>
 <body id="bd"
@@ -150,7 +150,61 @@ $productosPaginador = $productos->paginador($filter, 24);
         <div class="container">
             <div class="row">
                 <!-- sns_left -->
-                <div class="col-md-3">
+                <div class="col-md-12 hidden-md hidden-lg">
+                    <?php
+                    if ($linea != '') {
+                        $filterRubrosSubcategorias = array("categoria = '" . $value['categoria'] . "' GROUP BY subcategoria");
+                        $rubrosArraySubcategorias = $rubros->list($filterRubrosSubcategorias, "subcategoria ASC", "");
+                        ?>
+                        <hr/>
+                        <h1 class="fs-16 text-uppercase text-left">
+                            <strong>Categoría:</strong> <?= mb_strtoupper(str_replace("-", " ", $linea)) ?>
+                            <hr/>
+                            <strong>Subcategoría:</strong> <?= mb_strtoupper(str_replace("-", " ", $rubro)) ?>
+                        </h1>
+                        <form method="get" action="<?= URL ?>/productos" id="select">
+                            <input type="hidden" name="linea" value="<?= $linea ?>"/>
+                            <input type="hidden" id="productos-id" name="id" value=""/>
+                            <select name="rubro" class="form-control" onchange="getChangeMobileSelectProduct($('option:selected', this).attr('idRubro'))">
+                                <option>Elegí más filtros</option>
+                                <?php
+                                foreach ($rubrosArraySubcategorias as $key2 => $value2) {
+                                    if ($value2['id'] == $id) {
+                                        $mostrarCollapse = $value['id'];
+                                    }
+                                    ?>
+                                    <option value="<?= strtolower($funciones->normalizar_link($value2['subcategoria'])); ?>" idRubro="<?= $value2["id"] ?>"><?= $value2['subcategoria'] ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                        </form>
+                        <?php
+                    } else {
+                        ?>
+                        <h1 class="fs-17 text-uppercase text-center">Elegí que categoría queres ver</h1>
+                        <form method="get" action="<?= URL ?>/productos" id="select">
+                            <input type="hidden" id="productos-id" name="id" value=""/>
+                            <select name="linea" class="form-control" onchange="getChangeMobileSelectProduct($('option:selected', this).attr('idRubro'))">
+                                <option>Elegí más filtros</option>
+                                <?php
+                                foreach ($rubrosArrayCategorias as $key2 => $value2) {
+                                    if ($value2['id'] == $id) {
+                                        $mostrarCollapse = $value['id'];
+                                    }
+                                    ?>
+                                    <option value="<?= strtolower($funciones->normalizar_link($value2['categoria'])); ?>" idRubro="<?= $value2["id"] ?>"><?= $value2['categoria'] ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                        </form>
+                        <?php
+                    }
+                    ?>
+
+                </div>
+                <div class="col-md-3 hidden-xs hidden-sm">
                     <div class="wrap-in">
                         <div class="block block-layered-nav block-layered-nav--no-filters">
                             <div class="block-title">
@@ -158,7 +212,7 @@ $productosPaginador = $productos->paginador($filter, 24);
                                     <span>Categorías</span>
                                 </strong>
                             </div>
-                            <div class="block-content toggle-content">
+                            <div class="block-content toggle-content ">
                                 <dl id="narrow-by-list">
                                     <ol class="catLista">
                                         <?php
@@ -237,7 +291,7 @@ $productosPaginador = $productos->paginador($filter, 24);
                             $banners->increaseViews();
                             ?>
                             <div class="category-cms-block"></div>
-                            <p class="category-image banner5">
+                            <p class="category-image banner5 hidden-xs hidden-sm">
                                 <a href="<?= $banRandPie['link'] ?>">
                                     <img src="<?= URL . '/' . $imgRandPie['ruta'] ?>"
                                          alt="<?= $banRandPie['nombre'] ?>">
@@ -329,7 +383,7 @@ $productosPaginador = $productos->paginador($filter, 24);
                                         <?php } else { ?>
                                             <?php $rutaImg = URL . '/assets/archivos/sin_imagen.jpg'; ?>
                                         <?php } ?>
-                                        <div class="item col-lg-3 col-md-4 col-sm-4 col-xs-6 col-phone-12">
+                                        <div class="item col-lg-3 col-md-4 col-sm-4 col-xs-6 col-phone-6">
                                             <div class="item-inner">
                                                 <div class="prd">
                                                     <div class="item-img clearfix">
@@ -438,13 +492,25 @@ $productosPaginador = $productos->paginador($filter, 24);
 </body>
 <?php
 $template->themeEnd();
-?>
-<?php if ($linea != ''): ?>
+
+if ($linea != '') {
+    ?>
     <script>
         $(document).ready(function () {
             $('#collapse<?=$mostrarCollapse?>').collapse("toggle");
         });
+
+        function getChangeMobileSelectProduct(id) {
+            $('#productos-id').val(id);
+            $("#select").submit();
+        }
     </script>
-<?php else: ?>
-<?php endif; ?>
+<?php } else { ?>
+    <script>
+        function getChangeMobileSelectProduct(id) {
+            $('#productos-id').val(id);
+            $("#select").submit();
+        }
+    </script>
+<?php } ?>
 

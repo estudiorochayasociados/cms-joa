@@ -81,7 +81,7 @@ class Productos
 
     public function import_meli()
     {
-        $productos = $this->listWithOps("", "", "0,300");
+        $productos = $this->list_with_options("", "", "0,300");
         foreach ($productos as $producto) {
             $meli = $this->funciones->curl("GET", "https://api.mercadolibre.com/sites/MLA/category_predictor/predict?title=" . $this->funciones->normalizar_meli($producto["titulo"]) . "", "");
             $meli = json_decode($meli, true);
@@ -137,7 +137,7 @@ class Productos
 
     public function edit_meli()
     {
-            $data = '{
+        $data = '{
         "title": "' . $this->titulo . '",  
         "price": ' . $this->precio . ', 
         "available_quantity": ' . $this->stock . ',      
@@ -150,9 +150,9 @@ class Productos
     public function delete_meli()
     {
         $data_status = '{ "status":"closed" }';
-        $data_delete = '{ "deleted":"true" }';
+        //$data_delete = '{ "deleted":"true" }';
         $meli = $this->funciones->curl("PUT", "https://api.mercadolibre.com/items/$this->meli?access_token=" . $_SESSION["access_token"], $data_status);
-        $meli = $this->funciones->curl("PUT", "https://api.mercadolibre.com/items/$this->meli?access_token=" . $_SESSION["access_token"], $data_delete);
+        //$meli = $this->funciones->curl("PUT", "https://api.mercadolibre.com/items/$this->meli?access_token=" . $_SESSION["access_token"], $data_delete);
         return $meli;
     }
 
@@ -186,7 +186,7 @@ class Productos
         }
     }
 
-    function listWithOps($filter, $order, $limit)
+    function list_with_options($filter, $order, $limit)
     {
         $array = array();
         if (is_array($filter)) {
@@ -208,7 +208,7 @@ class Productos
             $limitSql = '';
         }
 
-        $sql = "SELECT * FROM `productos` $filterSql  ORDER BY $orderSql $limitSql";
+        $sql = "SELECT id,cod_producto,titulo,precio,precio_mayorista,stock FROM `productos` $filterSql  ORDER BY $orderSql $limitSql";
 
         $notas = $this->con->sqlReturn($sql);
         if ($notas) {

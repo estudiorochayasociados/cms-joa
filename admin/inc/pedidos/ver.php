@@ -10,7 +10,7 @@ $cod = $funciones->antihack_mysqli(isset($_GET["cod"]) ? $_GET["cod"] : '');
 $tipo = $funciones->antihack_mysqli(isset($_GET["tipo"]) ? $_GET["tipo"] : '');
 $usuario = $funciones->antihack_mysqli(isset($_GET["usuario"]) ? $_GET["usuario"] : '');
 
-if ($estado != '' && $cod != '' && $tipo != '' && $usuario != '') {
+if ($estado != '' && $cod != '') {
     $pedidos->set("estado", $estado);
     $pedidos->set("cod", $cod);
     $pedidos->set("tipo", $tipo);
@@ -41,8 +41,11 @@ asort($pedidosArraySinAgrupar);
     <div class="col-lg-12 col-md-12">
         <h4>
             Pedidos
+            <div class='pull-right'>
+                <a href="<?= URL ?>/index.php?op=pedidos&accion=agregar" class="btn btn-success">AGREGAR PEDIDOS</a>
+            </div>
             <div class='col-md-2 pull-right'>
-                <form method="get">
+                <form method="get" action="<?= CANONICAL ?>">
                     <input type="hidden" name="op" value="pedidos"/>
                     <input type="hidden" name="accion" value="ver"/>
                     <select name="estadoFiltro" onchange="this.form.submit()">
@@ -73,6 +76,7 @@ asort($pedidosArraySinAgrupar);
                     </select>
                 </form>
             </div>
+            
         </h4>
         <hr/>
         <?php foreach ($pedidosArrayAgrupados as $key => $value): ?>

@@ -19,7 +19,7 @@ foreach (($data=$novedades->list("")) as $novedad) {
     $xml .= '<url><loc>'.URL.'/blog/'.$titulo.'/'.$cod.'</loc><lastmod>'.$novedad["fecha"].'</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>';
 }
 
-foreach (($data=$productos->listWithOps("","titulo desc",'')) as $producto) {
+foreach (($data=$productos->list_with_options("","titulo desc",'')) as $producto) {
     $cod = $producto["id"];
     $titulo = $funciones->normalizar_link($producto["titulo"]);
     $xml .=  '<url><loc>'.URL.'/producto/'.$titulo.'/'.$cod.'</loc><lastmod>'.date("Y-m-d").'</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>';

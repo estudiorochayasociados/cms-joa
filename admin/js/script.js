@@ -28,3 +28,41 @@ $(document).ready(function() {
         });
     });
 });
+
+function ajaxPost(url) {
+    event.preventDefault();
+    var form = $("#formAjax").serialize();
+    $.ajax({method: "POST", url: url, data: form, dataType: "html",
+        beforeSend: function() {
+            $("#resultado").html("CARGANDO");
+        },
+        success: function(result){
+            $("#resultado").html(result);
+        }});
+    event.preventDefault();
+}
+
+function ajaxGet(url) {
+    console.log(url);
+    $.ajax({method: "GET", url: url, dataType: "html",
+        beforeSend: function() {
+            $("#resultado").html("CARGANDO");
+        },
+        success: function(result){
+            $("#resultado").html(result);
+            console.log(result);
+        }});
+    event.preventDefault();
+}
+
+$('.linkModal').click(function(e) {
+    e.preventDefault();
+    var url = $(this).attr('href');
+    var titulo = $(this).attr('data-title');
+    $('#contenidoForm').load(url,function(result){
+        $('#myModal').modal({show:true});
+        $('.modal-title').html(titulo);
+        console.log(result);
+        e.preventDefault();
+    })
+});

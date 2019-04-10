@@ -16,7 +16,7 @@ $productos->set("id", $id);
 $productData = $productos->view();
 
 $filter = array("categoria ='" . $productData['categoria'] . "'");
-$productDataRel = $productos->listWithOps($filter, '', '0,12');
+$productDataRel = $productos->list_with_options($filter, '', '0,12');
 if (($key = array_search($productData, $productDataRel)) !== false) {
     unset($productDataRel[$key]);
 }
@@ -311,15 +311,6 @@ $template->themeInit();
                                                     <div class="item-inner">
                                                         <div class="prd">
                                                             <div class="item-img clearfix">
-                                                                <div class="ico-label">
-                                                                    <?php
-                                                                    if ($productosRel1['precioDescuento'] > 0) {
-                                                                        ?>
-                                                                        <span class="ico-product ico-sale">Promo</span>
-                                                                        <?php
-                                                                    }
-                                                                    ?>
-                                                                </div>
                                                                 <a class="product-image have-additional" href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productosRel1['titulo']) . "/" . $productosRel1['id'] ?>">
                                                                     <span class="img-main" style="height:200px;background:url(<?= $rutaImg; ?>) no-repeat center center/contain;">
                                                                     </span>
@@ -336,18 +327,7 @@ $template->themeInit();
                                                                         <div class="price-box">
                                                                             <span class="regular-price">
                                                                                 <span class="price">
-                                                                                    <?php
-                                                                                    if ($productosRel1['precioDescuento'] > 0) {
-                                                                                        ?>
-                                                                                        <span class="precio1">$ <?= $productosRel1['precioDescuento']; ?></span>
-                                                                                        <span class="precio2">$ <?= $productosRel1['precio']; ?></span>
-                                                                                        <?php
-                                                                                    } else {
-                                                                                        ?>
-                                                                                        <span class="precio1">$ <?= $productosRel1['precio']; ?></span>
-                                                                                        <?php
-                                                                                    }
-                                                                                    ?>
+                                                                                    <span class="precio1">$ <?= $productosRel1['precio']; ?></span>
                                                                                 </span>
                                                                             </span>
                                                                         </div>

@@ -19,11 +19,11 @@ RewriteRule ^landing/(.*)/(.*)$ ./landing.php?cod=$2
 RewriteRule ^servicios/(.*)/(.*)$ ./servicios.php?cod=$2
 RewriteRule ^portfolio/(.*)/(.*)$ ./portfolio.php?cod=$2
 
-ErrorDocument 404 http://www.pintureriasariel.com.ar/404
-ErrorDocument 400 http://www.pintureriasariel.com.ar/404
-ErrorDocument 401 http://www.pintureriasariel.com.ar/404
-ErrorDocument 403 http://www.pintureriasariel.com.ar/404
-ErrorDocument 500 http://www.pintureriasariel.com.ar/404
+#ErrorDocument 404 http://www.pintureriasariel.com.ar/404
+#ErrorDocument 400 http://www.pintureriasariel.com.ar/404
+#ErrorDocument 401 http://www.pintureriasariel.com.ar/404
+#ErrorDocument 403 http://www.pintureriasariel.com.ar/404
+#ErrorDocument 500 http://www.pintureriasariel.com.ar/404
 
 
 <IfModule mod_headers.c>

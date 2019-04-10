@@ -84,7 +84,7 @@ if (count($usuarioSesion) == 0) {
                                             if ($usuarioSesion["descuento"] == 1) {
                                                 ?>
                                                 <li>
-                                                    <a href="<?= URL ?>/sesion/lista-de-precios">
+                                                    <a href="<?= URL ?>/lista-de-precios">
                                                 <span class="no_line_h">
                                                     <i class="fa fa-list" aria-hidden="true"></i>
                                                 </span>

@@ -23,7 +23,7 @@ if (@count($_GET) == 0) {
     }
 }
 
-$data = $productos->listWithOps("", "", (75 * $pagina) . ',' . 75);
+$data = $productos->list_with_options("", "", (75 * $pagina) . ',' . 75);
 $productosPaginador = $productos->paginador("", 75);
 ?>
     <div class="mt-20">

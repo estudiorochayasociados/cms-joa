@@ -43,16 +43,16 @@ class TemplateSite
         <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="<?= URL ?>/assets/font/font-awesome/css/font-awesome.min.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" href="<?= URL ?>/assets/js/owl-carousel/owl.carousel.css">
-        <link rel="stylesheet" href="<?= URL ?>/assets/js/owl-carousel/owl.theme.css">
-        <link rel="stylesheet" href="<?= URL ?>/assets/css/style.css"/>
-        <link rel="stylesheet" href="<?= URL ?>/assets/css/estilos.css">
+        <link rel="stylesheet" href="<?= URL ?>/assets/js/owl-carousel/owl.carousel.min.css">
+        <link rel="stylesheet" href="<?= URL ?>/assets/js/owl-carousel/owl.theme.min.css">
+        <link rel="stylesheet" href="<?= URL ?>/assets/css/style.min.css"/>
+        <link rel="stylesheet" href="<?= URL ?>/assets/css/estilos.min.css">
         <meta name="viewport" content="width=device-width"/>
         <link rel="shortcut icon" href="<?= URL ?>/assets/images/favicon.ico">
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.min.css">
-        <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-        <script src="<?= URL ?>/assets/js/jquery-1.9.1.min.js"></script>
+         <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/4852794.js"></script>
+        <script type='text/javascript' data-cfasync='false'>window.purechatApi = { l: [], t: [], on: function () { this.l.push(arguments); } }; (function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({c: '225158be-d376-4357-b284-119878634be3', f: true }); done = true; } }; })();</script>
         <?php
 
         echo '<meta charset="utf-8"/>';

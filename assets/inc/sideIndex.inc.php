@@ -18,7 +18,7 @@ foreach ($categoriasIncSideData as $valIncSide) {
 $filterRubrosCategorias = array("categoria != '' GROUP BY categoria");
 $rubrosArrayCategorias = $rubros->list($filterRubrosCategorias, "categoria ASC", "");
 
-$productDataIncSide = $productosIncSide->listWithOps('', ' RAND() ', '4');
+$productDataIncSide = $productosIncSide->list_with_options('', ' RAND() ', '4');
 $novedades = new Clases\Novedades();
 $novedadesData = $novedades->list('');
 ?>
@@ -30,7 +30,8 @@ $novedadesData = $novedades->list('');
                 <strong>
                     <span>Categorías</span>
                 </strong>
-            </div><br/>
+            </div>
+            <br/>
             <div class="block-content toggle-content">
                 <dl id="narrow-by-list">
                     <ol class="catLista">
@@ -139,18 +140,7 @@ $novedadesData = $novedades->list('');
                                             </div>
                                             <div class="item-price">
                                                         <span class="price">
-                                                            <?php
-                                                            if ($proRandIncSide['precioDescuento'] > 0) {
-                                                                ?>
-                                                                <span class="precioS1">$ <?= $proRandIncSide['precioDescuento']; ?></span>
-                                                                <span class="precioS2">$ <?= $proRandIncSide['precio']; ?></span>
-                                                                <?php
-                                                            } else {
-                                                                ?>
                                                                 <span class="precioS1">$ <?= $proRandIncSide['precio']; ?></span>
-                                                                <?php
-                                                            }
-                                                            ?>
                                                         </span>
                                             </div>
                                         </div>
