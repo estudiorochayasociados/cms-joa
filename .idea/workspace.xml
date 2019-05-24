@@ -2,31 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d06e5cdf-69fd-40c2-9307-1de6517dce6d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/DB/actualizar.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/inc/productos/exportar.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clases/Carrito.php" beforeDir="false" afterPath="$PROJECT_DIR$/Clases/Carrito.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clases/Conexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/Clases/Conexion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clases/Envios.php" beforeDir="false" afterPath="$PROJECT_DIR$/Clases/Envios.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clases/Pedidos.php" beforeDir="false" afterPath="$PROJECT_DIR$/Clases/Pedidos.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clases/Productos.php" beforeDir="false" afterPath="$PROJECT_DIR$/Clases/Productos.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clases/Usuarios.php" beforeDir="false" afterPath="$PROJECT_DIR$/Clases/Usuarios.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/Autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/Config/Autoload.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/ckeditor/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/ckeditor/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/inc/footer.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/inc/footer.inc.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/inc/nav.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/inc/nav.inc.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/inc/productos/importar.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/inc/productos/importar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/inc/productos/importar_meli.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/inc/productos/importar_meli.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/inc/productos/importar_phpexcel.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/inc/productos/importar_phpexcel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/inc/nav.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/assets/inc/nav.inc.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carrito.php" beforeDir="false" afterPath="$PROJECT_DIR$/carrito.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/checkout.php" beforeDir="false" afterPath="$PROJECT_DIR$/checkout.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compra-finalizada.php" beforeDir="false" afterPath="$PROJECT_DIR$/compra-finalizada.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lista-de-precios.php" beforeDir="false" afterPath="$PROJECT_DIR$/lista-de-precios.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/producto.php" beforeDir="false" afterPath="$PROJECT_DIR$/producto.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/productos.php" beforeDir="false" afterPath="$PROJECT_DIR$/productos.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usuarios.php" beforeDir="false" afterPath="$PROJECT_DIR$/usuarios.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,13 +29,38 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Clases/Productos.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="875">
-              <caret line="119" column="63" selection-start-line="119" selection-start-column="63" selection-end-line="119" selection-end-column="63" />
-              <caret line="165" column="77" selection-start-line="165" selection-start-column="77" selection-end-line="165" selection-end-column="77" />
-              <caret line="207" column="85" selection-start-line="207" selection-start-column="85" selection-end-line="207" selection-end-column="85" />
+            <state relative-caret-position="233">
+              <caret line="108" column="73" selection-start-line="108" selection-start-column="72" selection-end-line="108" selection-end-column="73" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/inc/productos/exportar.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="30" lean-forward="true" selection-end-line="35" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lista-de-precios.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="141">
+              <caret line="17" column="43" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/inc/nav.inc.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="292">
+              <caret line="105" column="104" selection-start-line="105" selection-start-column="104" selection-end-line="105" selection-end-column="104" />
             </state>
           </provider>
         </entry>
@@ -75,8 +78,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>precioD</find>
-      <find>precioDescuento</find>
       <find>precioDesc</find>
       <find>border-rad</find>
       <find>Productos_Front</find>
@@ -105,6 +106,8 @@
       <find>truncate</find>
       <find>lista de precios</find>
       <find>prod</find>
+      <find>exportar</find>
+      <find>public</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -145,7 +148,6 @@
         <option value="Z:/Anca/carrito.php" />
         <option value="$PROJECT_DIR$/Clases/Envios.php" />
         <option value="Z:/Anca/carrito.php" />
-        <option value="$PROJECT_DIR$/lista-de-precios.php" />
         <option value="$PROJECT_DIR$/carrito.php" />
         <option value="$PROJECT_DIR$/Clases/TemplateSite.php" />
         <option value="$PROJECT_DIR$/checkout.php" />
@@ -160,10 +162,11 @@
         <option value="Z:/Working360-Joa/neww/web/Config/Autoload.php" />
         <option value="Z:/Working360-Joa/neww/web/assets/inc/sesion/situacion-laboral/situacion-laboral-mod.sesion.php" />
         <option value="Z:/Working360-Joa/neww/web/assets/inc/sesion/situacion-laboral/situacion-laboral.sesion.php" />
-        <option value="$PROJECT_DIR$/admin/inc/nav.inc.php" />
         <option value="$PROJECT_DIR$/compra-finalizada.php" />
         <option value="$PROJECT_DIR$/DB/actualizar.php" />
         <option value="$PROJECT_DIR$/Clases/Productos.php" />
+        <option value="$PROJECT_DIR$/admin/inc/nav.inc.php" />
+        <option value="$PROJECT_DIR$/lista-de-precios.php" />
       </list>
     </option>
   </component>
@@ -177,8 +180,8 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1920" />
-    <option name="height" value="1057" />
+    <option name="width" value="1440" />
+    <option name="height" value="877" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -376,18 +379,18 @@
       <workItem from="1558610344297" duration="8901000" />
       <workItem from="1558639263479" duration="5918000" />
       <workItem from="1558700912684" duration="178000" />
-      <workItem from="1558728472658" duration="19000" />
+      <workItem from="1558728472658" duration="1024000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="399063000" />
+    <option name="totallyTimeSpent" value="400068000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1920" height="1057" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="877" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4984456" visible="true" weight="0.22790202" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4984456" visible="true" weight="0.30615166" />
       <window_info id="Structure" order="1" sideWeight="0.50063694" side_tool="true" weight="0.25608012" />
       <window_info id="Favorites" order="2" sideWeight="0.5015544" side_tool="true" weight="0.1656017" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -624,20 +627,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lista-de-precios.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="2" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/inc/productos/exportar.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="59" selection-start-line="14" selection-start-column="59" selection-end-line="14" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://Z:/Working360-Joa/neww/web/assets/inc/sesion/situacion-laboral/situacion-laboral.sesion.php" />
     <entry file="file://Z:/Working360-Joa/neww/web/assets/inc/sesion/situacion-laboral/situacion-laboral-mod.sesion.php" />
     <entry file="file://Z:/lasilleria/Clases/Productos.php" />
@@ -673,13 +662,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/inc/nav.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="681">
-          <caret line="134" column="55" lean-forward="true" selection-start-line="134" selection-start-column="55" selection-end-line="134" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://Z:/Working360-Joa/neww/web/Config/Autoload.php" />
     <entry file="file://$PROJECT_DIR$/admin/inc/productos/importar_meli.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -697,10 +679,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Clases/Productos.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="875">
-          <caret line="119" column="63" selection-start-line="119" selection-start-column="63" selection-end-line="119" selection-end-column="63" />
-          <caret line="165" column="77" selection-start-line="165" selection-start-column="77" selection-end-line="165" selection-end-column="77" />
-          <caret line="207" column="85" selection-start-line="207" selection-start-column="85" selection-end-line="207" selection-end-column="85" />
+        <state relative-caret-position="233">
+          <caret line="108" column="73" selection-start-line="108" selection-start-column="72" selection-end-line="108" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/inc/nav.inc.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="105" column="104" selection-start-line="105" selection-start-column="104" selection-end-line="105" selection-end-column="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/inc/productos/exportar.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="30" lean-forward="true" selection-end-line="35" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lista-de-precios.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="17" column="43" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
         </state>
       </provider>
     </entry>

@@ -103,7 +103,7 @@ $pages = ["ecommerce", "contenidos", "novedades", "multimedia", "usuarios", "ban
                         <a class="dropdown-item" href="<?= URL ?>/index.php?op=productos&accion=importar">
                             Importar Productos
                         </a>
-                        <a class="dropdown-item" href="<?= URL ?>/inc/productos/exportar.php">
+                        <a class="dropdown-item" href="<?= URL ?>/index.php?op=productos&accion=exportar">
                             Exportar Productos
                         </a>
 

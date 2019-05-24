@@ -4,25 +4,44 @@ Config\Autoload::runSitio();
 $productos = new Clases\Productos();
 $usuario = new Clases\Usuarios();
 $funciones = new Clases\PublicFunction();
+
+include "vendor/phpoffice/phpexcel/Classes/PHPExcel.php";
+require "vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php";
+
 $usuarioData = $usuario->view_sesion();
 if (count($usuarioData) != 0) {
     //var_dump($usuarioData);
     if ($usuarioData["descuento"] == 1) {
-        $filename = "LISTA DE PRECIOS ".date("d-m-Y").".xls";
-        header("Content-Type: application/vnd.ms-excel");
-        header("Content-Disposition: attachment; filename=" . $filename);
+
+        $filename = "LISTA DE PRECIOS " . date("d-m-Y") . ".xls";
 
         $productosTotal = $productos->list("");
-        echo "<table>";
-        echo "<thead><th>CODIGO</th><th>TITULO</th><th>PRECIO</th></thead><tbody>";
+
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        $objPHPExcel->getActiveSheet()->SetCellValue('A1', "CODIGO PRODUCTO");
+        $objPHPExcel->getActiveSheet()->SetCellValue('B1', "TITULO");
+        //$objPHPExcel->getActiveSheet()->SetCellValue('C1', "PRECIO");
+        $objPHPExcel->getActiveSheet()->SetCellValue('C1', "PRECIO MAYORISTA");
+        //$objPHPExcel->getActiveSheet()->SetCellValue('E1', "MELI");
+
+        $rowCount = 2;
+
         foreach ($productosTotal as $producto) {
-            echo "<tr>";
-            echo "<td style='text-align: left'>" . $producto["cod_producto"] . "</td>";
-            echo "<td style='text-align: left'>" . $producto["titulo"] . "</td>";
-            echo "<td style='text-align: left'>$" . $producto["precio_mayorista"] . "</td>";
-            echo "</tr>";
+            $objPHPExcel->getActiveSheet()->SetCellValue('A'.$rowCount, $producto["cod_producto"]);
+            $objPHPExcel->getActiveSheet()->SetCellValue('B'.$rowCount, $producto["titulo"]);
+            //$objPHPExcel->getActiveSheet()->SetCellValue('C'.$rowCount, $producto["precio"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue('C'.$rowCount, "$".$producto["precio_mayorista"]);
+            //$objPHPExcel->getActiveSheet()->SetCellValue('E'.$rowCount, $producto["meli"]);
+            $rowCount++;
         }
-        echo "</tbody></table>";
+
+        $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
+
+        $objWriter->save($filename);
+
+        $funciones->headerMove($filename);
     } else {
         $funciones->headerMove(URL . "/index.php");
     }
