@@ -11,6 +11,13 @@ $template->set("description", "Registrate y comprá online en nuestra plataforma
 $template->set("keywords", "compra online de pintura, registro de usuario, registro de usuario para compra online de pintura");
 $template->set("favicon", LOGO);
 $template->themeInit();
+
+$sesion = $usuario->view_sesion();
+
+if(!empty($sesion)) {
+    $funciones->headerMove(URL."/sesion");
+}
+
 ?>
     <body id="bd" class="cms-index-index2 header-style2 prd-detail sns-contact-us cms-simen-home-page-v2 default cmspage">
     <div id="sns_wrapper">

@@ -10,7 +10,6 @@ $template->set("favicon", LOGO);
 $template->themeInit();
 //Clases
 $productos = new Clases\Productos();
-$imagenes = new Clases\Imagenes();
 $categorias = new Clases\Categorias();
 $banners = new Clases\Banner();
 $slider = new Clases\Sliders();

@@ -47,6 +47,7 @@ class Carrito
 
             if (is_numeric($condition)) {
                 $_SESSION["carrito"][$condition]["cantidad"] = $_SESSION["carrito"][$condition]["cantidad"] + $this->cantidad;
+                $_SESSION["carrito"][$condition]["peso"] = $_SESSION["carrito"][$condition]["peso"] + $this->peso;
             } else {
                 array_push($_SESSION["carrito"], $add);
             }

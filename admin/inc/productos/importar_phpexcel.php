@@ -4,15 +4,11 @@ $imagenes = new Clases\Imagenes();
 $conexion = new Clases\Conexion();
 $con = $conexion->con();
 include "../vendor/phpoffice/phpexcel/Classes/PHPExcel.php";
-$error = 0;
-$query = '';
-$headerTabla = "<thead><th>Articulo</th><th>Producto</th><th>Precio Minorista</th><th>Precio Mayorista</th><th>Stock</th><th>Peso</th><th>Categoria</th><th>Subcategoria</th></thead>";
-$columnaImagen = 0;
-$columnaDescripcion = 1;
-$maximoColumnas = "F";
+require "../vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php";
+$sql_variables = array('cod', 'titulo', 'precio', 'peso', 'precio_mayorista', 'precioDescuento', 'stock', 'desarrollo', 'categoria', 'subcategoria', 'keywords', 'description', 'fecha', 'meli', 'url', 'cod_producto');
 ?>
 <div class="col-md-12">
-    <form action="index.php?op=productos&accion=importar" method="post" enctype="multipart/form-data">
+    <form action="index.php?op=productos&accion=importar_phpexcel" method="post" enctype="multipart/form-data">
         <h3>Importar productos de Excel a la Web (<a href="upload/modelo.xlsx" target="_blank">descargar modelo</a>)
         </h3>
         <hr/>
@@ -29,94 +25,49 @@ $maximoColumnas = "F";
     if (isset($_POST['submit'])) {
         if (isset($_FILES['uploadFile']['name']) && $_FILES['uploadFile']['name'] != "") {
             $allowedExtensions = array("xls", "xlsx");
-            $ext = pathinfo($_FILES['uploadFile']['name'], PATHINFO_EXTENSION);
-            if (in_array($ext, $allowedExtensions)) {
-                @mkdir("upload", 0644);
-                $file_size = $_FILES['uploadFile']['size'] / 1024;
-                $file = "upload/" . $_FILES['uploadFile']['name'];
-                $isUploaded = copy($_FILES['uploadFile']['tmp_name'], $file);
-                if ($isUploaded) {
-                    try {
-                        $objPHPExcel = PHPExcel_IOFactory::load($file);
-                    } catch (Exception $e) {
-                        die('Error loading file "' . pathinfo($file, PATHINFO_BASENAME) . '": ' . $e->getMessage());
-                    }
-                    $sheet = $objPHPExcel->getSheet(0);
-                    $total_rows = $sheet->getHighestRow();
-                    $highest_column = $sheet->getHighestColumn();
-                    if ($highest_column != $maximoColumnas) {
-                        echo 'Error en el formato del excel, hay más de las 3 columnas permitidas';
-                        $error = 1;
-                    }
+            $objPHPExcel = PHPEXCEL_IOFactory::load($_FILES['uploadFile']['tmp_name']);
 
-                    if ($error == 0) {
-                        echo "<form method='post'><input type='submit' class='btn  btn-success' name='subir' value='Ya lo revisé solo queda guardar'></form>";
-                    } else {
-                        echo "hay algun error para poder subir";
-                    }
+            $objPHPExcel->setActiveSheetIndex(0);
+            $numRows = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+            $numCols = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
+            $numCols = (ord(strtolower($numCols)) - 96);
+            if ($numCols == 10) {
+                $productos->truncate();
+                for ($row = 2; $row <= $numRows; $row++) {
+                    $cod = substr(md5(uniqid(rand())), 0, 5);
+                    $titulo = $objPHPExcel->getActiveSheet()->getCell("A" . $row)->getCalculatedValue();
+                    $precio = $objPHPExcel->getActiveSheet()->getCell("B" . $row)->getCalculatedValue();
+                    $peso = $objPHPExcel->getActiveSheet()->getCell("C" . $row)->getCalculatedValue();
+                    $precio_mayorista = $objPHPExcel->getActiveSheet()->getCell("D" . $row)->getCalculatedValue();
+                    $precioDescuento = $objPHPExcel->getActiveSheet()->getCell("E" . $row)->getCalculatedValue();
+                    $stock = $objPHPExcel->getActiveSheet()->getCell("F" . $row)->getCalculatedValue();
+                    $desarrollo = $objPHPExcel->getActiveSheet()->getCell("G" . $row)->getCalculatedValue();
+                    $categoria = $objPHPExcel->getActiveSheet()->getCell("H" . $row)->getCalculatedValue();
+                    $subcategoria = $objPHPExcel->getActiveSheet()->getCell("I" . $row)->getCalculatedValue();
+                    $cod_producto = $objPHPExcel->getActiveSheet()->getCell("j" . $row)->getCalculatedValue();
 
-                    echo "<hr/>Total de Productos: " . $total_rows;
-
-                    echo '<h4>Datos traídos del excel:</h4>';
-                    echo '<table cellpadding="5" cellspacing="1"   class=" table table-hover table-bordered responsive">';
-                    echo $headerTabla;
-
-
-                    $query = "insert into `productos` (`cod_producto`, `titulo`, `precio`,  `precio_mayorista`, `stock`, `peso`,  `categoria`, `subcategoria`) VALUES ";
-                    for ($row = 2; $row <= $total_rows; $row++) {
-                        $single_row = $sheet->rangeToArray('A' . $row . ':' . $highest_column . $row, null, true, false);
-                        if ($single_row[0][0] != '') {
-                            $explotarId = explode("/", $single_row[0][0]);
-                            $categoria = $explotarId[0];
-                            $subcategoria = $explotarId[1];
-                            echo "<tr>";
-                            $query .= "(";
-                            $single_row[0][2] = number_format($single_row[0][2] * 1.21, 2,".","");
-                            $single_row[0][3] = number_format($single_row[0][3] * 1.21, 2,".","");
-                            $single_row[0][4] = isset($single_row[0][4]) ? $single_row[0][4] : 0;
-                            $single_row[0][5] = isset($single_row[0][5]) ? $single_row[0][5] : 0;
-                            foreach ($single_row[0] as $key => $value) {
-                                $value = trim(str_replace("'", "", $value));
-                                $value = trim(str_replace('"', "", $value));
-                                echo "<td>" . $value . "</td>";
-                                $query .= "'" . trim($value) . "',";
-                            }
-                            $query = substr($query, 0, -1);
-                            $query .= ",'" . trim($categoria) . "',";
-                            echo "<td>" . $categoria . "</td>";
-                            $query .= "'" . trim($subcategoria) . "'";
-                            echo "<td>" . $subcategoria . "</td>";
-                            $query .= "),";
-                            echo "</tr>";
-                        }
-                    }
-                    $query = substr($query, 0, -1);
-                    echo '</table>';
-                    unlink($file);
-                    $_SESSION["query"] = $query;
-                    echo $query;
-
-                } else {
-                    echo '<span class="alert alert-danger">Archivo no subido</span>';
+                    $productos->set("cod", isset($cod) ? $cod : substr(md5(uniqid(rand())), 0, 5));
+                    $productos->set("titulo", isset($titulo) ? $titulo : '');
+                    $productos->set("precio", isset($precio) ? $precio : 0);
+                    $productos->set("peso", isset($peso) ? $peso : 0);
+                    $productos->set("precio_mayorista", isset($precio_mayorista) ? $precio_mayorista : 0);
+                    $productos->set("precioDescuento", isset($precioDescuento) ? $precioDescuento : 0);
+                    $productos->set("stock", isset($stock) ? $stock : 0);
+                    $productos->set("desarrollo", isset($desarrollo) ? $desarrollo : '');
+                    $productos->set("categoria", isset($categoria) ? $categoria : 0);
+                    $productos->set("meli", '');
+                    $productos->set("subcategoria", isset($subcategoria) ? $subcategoria : 0);
+                    $productos->set("cod_producto", isset($cod_producto) ? $cod_producto : 0);
+                    $productos->set("fecha", date('Y-m-d'));
+                    $productos->add();
                 }
             } else {
-                echo '<span class="alert alert-danger">El tipo de archivo no es aceptado</span>';
+                echo '<span class="alert alert-danger">Hay errores en el excel que subis. Descargar aqui el ejemplo</span>';
             }
         } else {
             echo '<span class="alert alert-danger">Seleccionar primero el archivo a subir.</span>';
         }
     }
 
-    if (isset($_POST["subir"])) {
-        if (!empty($_SESSION["query"])) {
-            mysqli_query($con, "DELETE FROM `productos`");
-            mysqli_query($con, $_SESSION["query"]);
-            if (mysqli_affected_rows($con) > 0) {
-                echo '<span class="alert alert-success">Base de dato actualizada!</span>';
-            } else {
-                echo '<span class="alert alert-danger">No se pudo subir la base de datos.</span>';
-            }
-        }
-    }
     ?>
 </div>

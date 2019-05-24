@@ -28,7 +28,7 @@ $template->set("favicon", LOGO);
 $template->themeInit();
 
 
-$filter = array();
+$filter = array("stock < 0");
 
 //COMIENZO FILTRO POR LINEA Y RUBRO
 if (!empty($linea)) {
@@ -391,7 +391,7 @@ $productosPaginador = $productos->paginador($filter, 24);
                                                            href="<?php echo URL . '/producto/' . $funciones->normalizar_link($productos['titulo']) . "/" . $productos['id'] ?>">
                                                             <span class="img-main">
                                                                 <?php
-                                                                if (getimagesize($rutaImg)) { ?>
+                                                                if (@getimagesize($rutaImg)) { ?>
                                                              <div style="height:200px;background:url(<?= $rutaImg ?>)no-repeat center center/contain;">
                                                              <?php } else { ?>
                                                              <div style="height:200px;background:url('assets/images/sin_imagen.jpg')no-repeat center center/contain;">

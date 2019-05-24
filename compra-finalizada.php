@@ -26,10 +26,11 @@ if (count($_SESSION["carrito"]) == 0) {
 
 if ($estado_get != '') {
     $pedidos->set("estado", $estado_get);
-    $pedidos->changeState();
     $pedidos->set("cod", $cod_pedido);
+    $pedidos->changeState();
     $pedido_info = $pedidos->view();
 }
+
 
 switch ($pedido_info['data']["estado"]) {
     case 0:
@@ -66,9 +67,9 @@ $datos_usuario .= "<b>Provincia:</b> " . $_SESSION["usuarios"]["provincia"] . "<
 $datos_usuario .= "<b>Localidad:</b> " . $_SESSION["usuarios"]["localidad"] . "<br/>";
 $datos_usuario .= "<b>Dirección:</b> " . $_SESSION["usuarios"]["direccion"] . "<br/>";
 $datos_usuario .= "<b>Teléfono:</b> " . $_SESSION["usuarios"]["telefono"] . "<br/>";
-if($_SESSION["usuarios"]["doc"] != '') {
+if ($_SESSION["usuarios"]["doc"] != '') {
     $datos_usuario .= "<b>SOLICITÓ FACTURA A CON EL CUIT:</b> " . $_SESSION["usuarios"]["doc"] . "<br/>";
-    $pedidos->set("detalle","<b>SOLICITÓ FACTURA A CON EL CUIT:</b> " . $_SESSION["usuarios"]["doc"]);
+    $pedidos->set("detalle", "<b>SOLICITÓ FACTURA A CON EL CUIT:</b> " . $_SESSION["usuarios"]["doc"]);
     $pedidos->changeValue("detalle");
 }
 

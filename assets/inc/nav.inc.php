@@ -121,7 +121,7 @@ foreach ($categoriasDataNav as $valNav) {
                                     </a>
                                 </li>
                                 <li class="level0 nav-2 no-group drop-submenu parent">
-                                    <a class=" menu-title-lv0" href="<?= URL . '/productos' ?>">
+                                    <a class=" menu-title-lv0" href="#">
                                         <span class="title">Productos</span>
                                     </a>
                                     <div class="wrap_submenu">
@@ -187,7 +187,7 @@ foreach ($categoriasDataNav as $valNav) {
 
                                         <li class="level0 nav-5 first active">
                                             <div class="accr_header">
-                                                <a class=" menu-title-lv0" href="<?= URL . '/productos' ?>">
+                                                <a class=" menu-title-lv0" href="#">
                                                     <span>Todos los productos</span>
                                                 </a>
                                             </div>

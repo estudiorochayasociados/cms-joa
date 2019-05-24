@@ -15,7 +15,7 @@ $id = $funciones->antihack_mysqli(isset($_GET["id"]) ? $_GET["id"] : '');
 $productos->set("id", $id);
 $productData = $productos->view();
 
-$filter = array("categoria ='" . $productData['categoria'] . "'");
+$filter = array("categoria ='" . $productData['categoria'] . "'","stock < 0");
 $productDataRel = $productos->list_with_options($filter, '', '0,12');
 if (($key = array_search($productData, $productDataRel)) !== false) {
     unset($productDataRel[$key]);
@@ -135,7 +135,7 @@ $template->themeInit();
                                                         if ($productData['stock'] > 0) {
                                                             echo '<p class="style1">Unidades: Disponible</p>';
                                                         } else {
-                                                            echo '<p class="style1">Unidades: No disponible</p>';
+                                                            echo '<p class="style1">Unidades: A pedido</p>';
                                                         }
                                                         ?>
                                                     </div>
@@ -160,6 +160,7 @@ $template->themeInit();
                                                             $carrito->set("id", $productData['id']);
                                                             $carrito->set("cantidad", $_POST["cantidad"]);
                                                             $carrito->set("titulo", $productData['titulo']);
+                                                            $carrito->set("peso",$productData['peso']*$_POST["cantidad"]) ;
                                                             if (($productData['precioDescuento'] <= 0) || $productData["precioDescuento"] == '') {
                                                                 $carrito->set("precio", $productData['precio']);
                                                             } else {

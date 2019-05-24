@@ -81,7 +81,7 @@ class Pedidos
         $sql = "SELECT * FROM `pedidos` WHERE cod = '{$this->cod}' ORDER BY id DESC";
         $pedidos = $this->con->sqlReturn($sql);
         $row = mysqli_fetch_assoc($pedidos);
-        $details = $this->detallePedido->list($this->cod);
+         $details = $this->detallePedido->list($this->cod);
         $this->user->set("cod",$row['usuario']);
         $user = $this->user->view();
         $array = array("data"=>$row, "user" => $user, "detail" => $details);

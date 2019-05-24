@@ -16,13 +16,11 @@ if (count($usuarioData) != 0) {
         echo "<table>";
         echo "<thead><th>CODIGO</th><th>TITULO</th><th>PRECIO</th></thead><tbody>";
         foreach ($productosTotal as $producto) {
-            if ($producto["precio_mayorista"] != 0) {
-                echo "<tr>";
-                echo "<td style='text-align: left'>" . $producto["cod_producto"] . "</td>";
-                echo "<td style='text-align: left'>" . $producto["titulo"] . "</td>";
-                echo "<td style='text-align: left'>$" . $producto["precio_mayorista"] . "</td>";
-                echo "</tr>";
-            }
+            echo "<tr>";
+            echo "<td style='text-align: left'>" . $producto["cod_producto"] . "</td>";
+            echo "<td style='text-align: left'>" . $producto["titulo"] . "</td>";
+            echo "<td style='text-align: left'>$" . $producto["precio_mayorista"] . "</td>";
+            echo "</tr>";
         }
         echo "</tbody></table>";
     } else {

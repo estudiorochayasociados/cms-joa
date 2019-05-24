@@ -7,9 +7,12 @@ class autoload
     {
         require_once "Config/Minify.php";
         session_start();
+        ini_set('display_startup_errors', true);
+        error_reporting(E_ALL);
+        ini_set('display_errors', true);
         $_SESSION["cod_pedido"] = mb_strtoupper(isset($_SESSION["cod_pedido"]) ? $_SESSION["cod_pedido"] : substr(md5(uniqid(rand())), 0, 10));
-        define('URL', "http://" . $_SERVER['HTTP_HOST'] . "/pintureria-ariel");
-        define('CANONICAL', "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+        define('URL', "https://" . $_SERVER['HTTP_HOST'] . "/pintureria-ariel");
+        define('CANONICAL', "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
         define('GOOGLE_TAG', "GTM-M4M4KJJ");
         define('TITULO', "Pintureria Ariel");
         define('TELEFONO', "5555555");
@@ -17,7 +20,7 @@ class autoload
         define('PROVINCIA', "Cordoba");
         define('EMAIL', "web@estudiorochayasoc.com.ar");
         define('PASS_EMAIL', "weAr2010");
-        define('SMTP_EMAIL', "estudiorochayasoc.com.ar");
+        define('SMTP_EMAIL', "cs1008.webhostbox.net");
         define('DIRECCION', "asdasdas a22");
         define('SALT',hash("sha256","salt@estudiorochayasoc.com.ar"));
         define('LOGO', URL . "/assets/images/logo.png");
@@ -46,9 +49,9 @@ class autoload
         session_start();
         $_SESSION["cod_pedido"] = mb_strtoupper(isset($_SESSION["cod_pedido"]) ? $_SESSION["cod_pedido"] : substr(md5(uniqid(rand())), 0, 10));
         define('SALT',hash("sha256","salt@estudiorochayasoc.com.ar"));
-        define('URLSITE', "http://" . $_SERVER['HTTP_HOST'] . "/pintureria-ariel");
-        define('URL', "http://" . $_SERVER['HTTP_HOST'] . "/pintureria-ariel/admin");
-        define('CANONICAL', "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+        define('URLSITE', "https://" . $_SERVER['HTTP_HOST'] . "/pintureria-ariel");
+        define('URL', "https://" . $_SERVER['HTTP_HOST'] . "/pintureria-ariel/admin");
+        define('CANONICAL', "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
         require_once "../Clases/Zebra_Image.php";
         spl_autoload_register(
             function ($clase) {

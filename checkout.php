@@ -11,24 +11,18 @@ $template->themeInit();
 
 $cod_pedido = $funciones->antihack_mysqli(isset($_GET["cod_pedido"]) ? $_GET["cod_pedido"] : '');
 $tipo_pedido = $funciones->antihack_mysqli(isset($_GET["tipo_pedido"]) ? $_GET["tipo_pedido"] : '');
-
 $carrito = new Clases\Carrito();
 $pedidos = new Clases\Pedidos();
 $detalle = new Clases\DetallePedidos();
 $usuarios = new Clases\Usuarios();
 $pagos = new Clases\Pagos();
-
 $pedidos->set("cod", $cod_pedido);
 $pedido = $pedidos->view();
-
 $pagos->set("cod", $tipo_pedido);
 $pago = $pagos->view();
-
 $usuarioSesion = $usuarios->view_sesion();
-
 $carro = $carrito->return();
 $precio = $carrito->precio_total();
-
 $timezone = -3;
 $fecha = gmdate("Y-m-j H:i:s", time() + 3600 * ($timezone + date("I")));
 ?>
@@ -40,7 +34,6 @@ $fecha = gmdate("Y-m-j H:i:s", time() + 3600 * ($timezone + date("I")));
     if (is_array($pedido)) {
         $pedidos->set("cod", $cod_pedido);
         $pedidos->delete();
-
         $pedidos->set("cod", $cod_pedido);
         $pedidos->set("total", $precio);
         $pedidos->set("estado", 0);
@@ -49,7 +42,6 @@ $fecha = gmdate("Y-m-j H:i:s", time() + 3600 * ($timezone + date("I")));
         $pedidos->set("detalle", "");
         $pedidos->set("fecha", $fecha);
         $pedidos->add();
-
         foreach ($carro as $carroItem) {
             $detalle->set("cod", $cod_pedido);
             $detalle->set("producto", $carroItem["titulo"]);
@@ -66,7 +58,6 @@ $fecha = gmdate("Y-m-j H:i:s", time() + 3600 * ($timezone + date("I")));
         $pedidos->set("detalle", "");
         $pedidos->set("fecha", $fecha);
         $pedidos->add();
-
         foreach ($carro as $carroItem) {
             $detalle->set("cod", $cod_pedido);
             $detalle->set("producto", $carroItem["titulo"]);
@@ -75,7 +66,6 @@ $fecha = gmdate("Y-m-j H:i:s", time() + 3600 * ($timezone + date("I")));
             $detalle->add();
         }
     }
-
     switch ($pago["tipo"]) {
         case 0:
             $pedidos->set("cod", $cod_pedido);

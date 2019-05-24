@@ -103,6 +103,41 @@ $pages = ["ecommerce", "contenidos", "novedades", "multimedia", "usuarios", "ban
                         <a class="dropdown-item" href="<?= URL ?>/index.php?op=productos&accion=importar">
                             Importar Productos
                         </a>
+                        <a class="dropdown-item" href="<?= URL ?>/inc/productos/exportar.php">
+                            Exportar Productos
+                        </a>
+
+                        <?php
+                        if (isset($_GET['code']) || isset($_SESSION['access_token'])) {
+                            if (isset($_GET['code']) && !isset($_SESSION['access_token'])) {
+                                try {
+                                    $user = $meli->authorize($_GET["code"], $redirectURI);
+                                    $_SESSION['access_token'] = $user['body']->access_token;
+                                    $_SESSION['expires_in'] = time() + $user['body']->expires_in;
+                                    $_SESSION['refresh_token'] = $user['body']->refresh_token;
+                                } catch (Exception $e) {
+                                    echo "Exception: ", $e->getMessage(), "\n";
+                                }
+                            } else {
+                                if ($_SESSION['expires_in'] < time()) {
+                                    try {
+                                        $refresh = $meli->refreshAccessToken();
+                                        $_SESSION['access_token'] = $refresh['body']->access_token;
+                                        $_SESSION['expires_in'] = time() + $refresh['body']->expires_in;
+                                        $_SESSION['refresh_token'] = $refresh['body']->refresh_token;
+                                    } catch (Exception $e) {
+                                        echo "Exception: ", $e->getMessage(), "\n";
+                                    }
+                                }
+                            }
+                            ?>
+                            <a class="dropdown-item" href="<?= URL ?>/index.php?op=productos&accion=importar_meli">
+                                Actualizar MercadoLibre
+                            </a>
+                            <?php
+                        }
+                        ?>
+
                     </div>
                 </li>
                 <li class="nav-item dropdown <?php if (!in_array('portfolio', $pages)) {

@@ -18,7 +18,6 @@ $envios = new Clases\Envios();
 $pagos = new Clases\Pagos();
 $carro = $carrito->return();
 $carroEnvio = $carrito->checkEnvio();
-
 ?>
     <body id="bd" class="cms-index-index2 header-style2 prd-detail sns-products-detail1 cms-simen-home-page-v2 default cmspage">
 <div id="sns_wrapper">
@@ -67,6 +66,7 @@ $carroEnvio = $carrito->checkEnvio();
                             $metodos_de_envios = $envios->list(array("peso BETWEEN " . $carrito->peso_final() . " AND " . $tope . " OR peso = 0"));
                             if ($carroEnvio == '') {
                                 echo "<h3>Seleccioná el envió que más te convenga:</h3>";
+
                                 if (isset($_POST["envio"])) {
                                     if ($carroEnvio != '') {
                                         $carrito->delete($carroEnvio);
@@ -92,7 +92,7 @@ $carroEnvio = $carrito->checkEnvio();
                                             } else {
                                                 $metodos_de_envio_precio = "$" . $metodos_de_envio_["precio"];
                                             }
-                                            echo "<option value='" . $metodos_de_envio_["cod"] . "'>" . $metodos_de_envio_["titulo"] . " -> " . $metodos_de_envio_precio . "</option>";
+                                            echo "<option value='" . $metodos_de_envio_["cod"] . "'>" . mb_strtoupper($metodos_de_envio_["titulo"]) . " -> " . $metodos_de_envio_precio . "</option>";
                                         }
                                         ?>
                                     </select>

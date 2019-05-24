@@ -84,6 +84,8 @@ class Envios
             return $tope = 25;
         } elseif ($peso > 25 && $peso <= 30) {
             return $tope = 30;
+        } else {
+            return $tope = 10000;
         }
     }
 
@@ -97,7 +99,7 @@ class Envios
             $filterSql = '';
         }
 
-        $sql = "SELECT * FROM `envios` $filterSql  ORDER BY precio ASC";
+        $sql = "SELECT * FROM `envios` $filterSql ORDER BY precio ASC ";
         $envios = $this->con->sqlReturn($sql);
         if ($envios) {
             while ($row = mysqli_fetch_assoc($envios)) {
