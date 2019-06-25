@@ -324,3 +324,11 @@ th:last-child {
 .twitter-typeahead {
     width: 100%;
 }
+.hidden{
+    display: none;
+}
+.prb{
+    height: 15px !important;
+    width: 100% !important;
+    background: red;
+}

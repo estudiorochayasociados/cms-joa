@@ -4,6 +4,9 @@
 <link rel="stylesheet" href="https://bootswatch.com/4/simplex/bootstrap.min.css"/>
 <link rel="stylesheet" href="<?= URL ?>/css/style.css"/>
 
+<link rel="stylesheet" type="text/css" href="<?=URL?>/css/loading.css"/>
+<link rel="stylesheet" type="text/css" href="<?=URL?>/css/loading-btn.css"/>
+
 <meta charset="UTF-8">
 <title>
     <?= $this->title ?>

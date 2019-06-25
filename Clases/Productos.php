@@ -117,7 +117,7 @@ class Productos
             //$this->desarrollo = $producto["titulo"];
             $cod_producto = str_replace("/", "-", $producto["cod_producto"]);
             $categoria = explode("/", $producto["cod_producto"]);
-            $this->img = '{"source":"http://c1361264.ferozo.com/assets/archivos/img_productos/' . $categoria[0] . '/' . $cod_producto . '.jpg"}';
+            $this->img = '{"source":"http://www.pintureriasariel.com.ar/assets/archivos/img_productos/' . $categoria[0] . '/' . $cod_producto . '.jpg"}';
             if ($producto["meli"] != '') {
                 $this->meli = $producto["meli"];
                 $edit_meli = $this->edit_meli();
@@ -163,7 +163,7 @@ class Productos
            "free_shipping": false,
            "free_methods": []
          },
-        "pictures": [' . $this->img . ',{"source":"http://c1361264.ferozo.com/assets/images/logo.png"}],
+        "pictures": [' . $this->img . ',{"source":"http://www.pintureriasariel.com.ar/assets/images/logo.png"}],
         "attributes": [
         {
           "id": "BRAND",
@@ -205,10 +205,10 @@ class Productos
                 "title": "' . $this->titulo . '",  
                 "price": ' . $this->precio . ', 
                 "available_quantity": ' . $this->stock . ',      
-                "pictures": [' . $this->img . ',{"source":"http://c1361264.ferozo.com/assets/images/logo.png"}]
+                "pictures": [' . $this->img . ',{"source":"http://www.pintureriasariel.com.ar/assets/images/logo.png"}]
         }';
 
-        //echo $data."<hr/>";
+        echo $data."<hr/>";
 
         $meli = $this->funciones->curl("PUT", "https://api.mercadolibre.com/items/$this->meli?access_token=" . $_SESSION["access_token"], $data);
         return $meli;
@@ -295,7 +295,7 @@ class Productos
             $limitSql = '';
         }
 
-        $sql = "SELECT id,cod_producto,titulo,precio,precio_mayorista,stock,meli FROM `productos` $filterSql  ORDER BY $orderSql $limitSql";
+        $sql = "SELECT id,cod_producto,titulo,precio,precio_mayorista,stock,meli,cod FROM `productos` $filterSql  ORDER BY $orderSql $limitSql";
 
         $notas = $this->con->sqlReturn($sql);
         if ($notas) {

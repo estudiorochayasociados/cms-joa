@@ -12,8 +12,17 @@ $template->themeInit();
 $usuarios = new Clases\Usuarios();
 $usuarioSesion = $usuarios->view_sesion();
 if (count($usuarioSesion) == 0) {
-   $funciones->headerMove(URL . "/index");
+    $funciones->headerMove(URL . "/index");
 }
+if(isset($_GET['d'])){ ?>
+    <script>
+        window.open(
+            '<?=$_SESSION['lista-de-precios']?>',
+            '_blank'
+        );
+        </script>
+<?php }
+
 ?>
 <body id="bd" class="cms-index-index2 header-style2 prd-detail sns-contact-us cms-simen-home-page-v2 default cmspage">
 <div id="sns_wrapper">

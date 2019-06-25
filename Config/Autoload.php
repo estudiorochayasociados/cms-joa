@@ -33,6 +33,19 @@ class autoload
         );
     }
 
+    public static function runCurl()
+    {
+        session_start();
+        $_SESSION["cod_pedido"] = isset($_SESSION["cod_pedido"]) ? $_SESSION["cod_pedido"] : strtoupper(substr(md5(uniqid(rand())), 0, 7));
+        define('URL', "https://" . $_SERVER['HTTP_HOST'] . "/pintureria-ariel");
+        define('LOGO', URL . "/assets/images/logo.png");
+        define('TITULO', '');
+        spl_autoload_register(function ($clase) {
+            $ruta = str_replace("\\", "/", $clase) . ".php";
+            include_once "../../" . $ruta;
+        });
+    }
+
     public static function runSitio2()
     {
         spl_autoload_register(

@@ -52,7 +52,7 @@ if (isset($_POST["agregar"])) {
 
             $imagenes->set("cod", $cod);
             $imagenes->set("ruta", str_replace("../", "", $destinoRecortado));
-            $img_meli .= '{"source":"'.URLSITE.str_replace("../", "/", $destinoRecortado).'"},';
+            $img_meli .= '{"source":"http://www.pintureriasariel.com.ar'.str_replace("../", "/", $destinoRecortado).'"},';
             $imagenes->add();
         }
         $count++;
@@ -61,11 +61,12 @@ if (isset($_POST["agregar"])) {
     if ($meli != '') {
         $productos->set("img",substr($img_meli, 0, -1));
         $add_meli = $productos->add_meli();
+        var_dump($add_meli);
         $productos->set("meli", $add_meli["id"]);
     }
 
     $productos->add();
-    $funciones->headerMove(URL . "/index.php?op=productos");
+    //$funciones->headerMove(URL . "/index.php?op=productos");
 }
 ?>
 

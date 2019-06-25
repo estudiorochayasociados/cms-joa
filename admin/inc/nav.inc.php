@@ -1,6 +1,10 @@
 <?php
+//$appId = '2850401307770843';
+//$secretKey = 'FAyHI1wvuM4Q0ylT0YrlaKh4uBmv1ZNv';
+
 $appId = '2850401307770843';
 $secretKey = 'FAyHI1wvuM4Q0ylT0YrlaKh4uBmv1ZNv';
+
 $redirectURI = URL;
 $siteId = 'MLA';
 require_once '../Clases/Meli.php';

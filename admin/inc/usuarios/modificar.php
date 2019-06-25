@@ -49,7 +49,7 @@ if (isset($_POST["agregar"])) {
             <input type="text" name="email" value="<?=$usuario['email'];?>" />
         </label>
         <label class="col-md-4">
-            Password:<br/>
+            Contraseña:<br/>
             <input type="password" class="form-control" name="password" value="<?=$usuario['password'];?>" />
         </label>
         <label class="col-md-4">
@@ -92,7 +92,7 @@ if (isset($_POST["agregar"])) {
         </label>
         <div class="clearfix"></div><br/>
         <div class="col-md-12">
-            <input type="submit" class="btn btn-primary" name="agregar" value="Crear Usuarios" />
+            <input type="submit" class="btn btn-primary" name="agregar" value="Modificar Usuario" />
         </div>
     </form>
 </div>

@@ -29,10 +29,10 @@ if (count($usuarioData) != 0) {
         $rowCount = 2;
 
         foreach ($productosTotal as $producto) {
-            $objPHPExcel->getActiveSheet()->SetCellValue('A'.$rowCount, $producto["cod_producto"]);
-            $objPHPExcel->getActiveSheet()->SetCellValue('B'.$rowCount, $producto["titulo"]);
+            $objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount, $producto["cod_producto"]);
+            $objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $producto["titulo"]);
             //$objPHPExcel->getActiveSheet()->SetCellValue('C'.$rowCount, $producto["precio"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue('C'.$rowCount, "$".$producto["precio_mayorista"]);
+            $objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, "$" . $producto["precio_mayorista"]);
             //$objPHPExcel->getActiveSheet()->SetCellValue('E'.$rowCount, $producto["meli"]);
             $rowCount++;
         }
@@ -41,10 +41,12 @@ if (count($usuarioData) != 0) {
 
         $objWriter->save($filename);
 
-        $funciones->headerMove($filename);
+        $_SESSION['lista-de-precios'] = $filename;
+
+        $funciones->headerMove(URL."/sesion?d");
     } else {
         $funciones->headerMove(URL . "/index.php");
     }
-}else {
+} else {
     $funciones->headerMove(URL . "/index.php");
 }
